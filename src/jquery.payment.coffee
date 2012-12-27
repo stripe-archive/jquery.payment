@@ -177,6 +177,18 @@ restrictCVC = (e) ->
   val     = $target.val()
   val.length <= 4
 
+setCardType = (e) ->
+  $target  = $(e.currentTarget)
+  val      = $target.val()
+  return if val.length <= 2
+
+  cardType = $.cardType(val) or 'unknown'
+
+  unless $target.hasClass(cardType)
+    $target.removeClass('visa amex mastercard discover dinersclub jcb unknown')
+    $target.addClass(cardType)
+    $target.trigger('payment.cardtype', cardType)
+
 # Public
 
 # Formatting
@@ -196,6 +208,7 @@ $.fn.formatCardNumber = ->
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
+  @on('keyup', setCardType)
 
 # Restrictions
 
