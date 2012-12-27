@@ -159,7 +159,7 @@ restrictCardNumber = (e) ->
     $target.prop('selectionStart') isnt $target.prop('selectionEnd')
 
   # If some text is selected in IE
-  return if document.selection?.createRange?().text
+  return if document?.selection?.createRange?().text
 
   # Restrict number of digits
   value = $target.val() + digit

@@ -125,3 +125,24 @@ describe 'jquery.payment', ->
     it 'that has unrecognized beginning numbers should return null', ->
       topic = $.cardType 'aoeu'
       assert.equal topic, null
+
+  describe 'formatCardNumber', ->
+    it 'should format cc number correctly', ->
+      $number = $('<input type=text>').formatCardNumber()
+      $number.val('4242')
+
+      e = $.Event('keypress');
+      e.which = 52 # '4'
+      $number.trigger(e)
+
+      assert.equal $number.val(), '4242 4'
+
+  describe 'formatCardExpiry', ->
+    it 'should format cc expiry correctly', ->
+      $expiry = $('<input type=text>').formatCardExpiry()
+
+      e = $.Event('keypress');
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '04 / '
