@@ -14,6 +14,7 @@ Formats card numbers:
 * Restricts input to numbers
 * Limits to 16 numbers
 * American Express formatting support
+* Adds a class of the card type (i.e. visa) to the input
 
 Example:
 
