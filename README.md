@@ -2,7 +2,7 @@
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-[Example](https://stripe.github.com/jquery.payment/example)
+[Example](http://stripe.github.com/jquery.payment/example)
 
 ## API
 
