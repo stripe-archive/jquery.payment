@@ -2,28 +2,7 @@
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-## Autocomplete recommendations
-
-We recommend you turn autocomplete on for credit card forms, except for the CVC field. You can do this by setting the `autocomplete` attribute:
-
-    <form autocomplete="on">
-      <input class="cc-number">
-      <input class="cc-cvc" autocomplete="off">
-    </form>
-
-You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
-
-    <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required>
-
-Set `x-autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
-
-## Mobile recommendations
-
-We recommend you set the `pattern` attribute which will cause the numeric keyboard to be displayed on mobiles:
-
-    <input class="cc-number" pattern="\d*">
-
-You may have to turn off HTML5 validation (using the `novalidate` form attribute) when using this `pattern`, as it won't match space formatting.
+[Example](https://stripe.github.com/jquery.payment/example)
 
 ## API
 
@@ -139,3 +118,26 @@ Run `cake build`
 ## Run tests
 
 Run `mocha --compilers coffee:coffee-script`
+
+## Autocomplete recommendations
+
+We recommend you turn autocomplete on for credit card forms, except for the CVC field. You can do this by setting the `autocomplete` attribute:
+
+    <form autocomplete="on">
+      <input class="cc-number">
+      <input class="cc-cvc" autocomplete="off">
+    </form>
+
+You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
+
+    <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required>
+
+Set `x-autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
+
+## Mobile recommendations
+
+We recommend you set the `pattern` attribute which will cause the numeric keyboard to be displayed on mobiles:
+
+    <input class="cc-number" pattern="\d*">
+
+You may have to turn off HTML5 validation (using the `novalidate` form attribute) when using this `pattern`, as it won't match space formatting.
