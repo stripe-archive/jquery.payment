@@ -89,8 +89,6 @@ Example:
     $.validateCardExpiry('05', '20'); //=> true
     $.validateCardExpiry('05', '2015'); //=> true
     $.validateCardExpiry('05', '05'); //=> false
-    $.validateCardExpiry('05 / 04'); //=> false
-    $.validateCardExpiry('03 / 2025'); //=> true
 
 ### $.validateCardCVC(cvc, type)
 
@@ -120,6 +118,16 @@ The function will return `null` if the card type can't be determined.
 Example:
 
     $.cardType('4242 4242 4242 4242'); //=> 'visa'
+
+### $.cardExpiryVal(string) and $.fn.cardExpiryVal()
+
+Parses a credit card expiry in the form of MM/YYYY, returning an object containing the `month` and `year`. Shorthand years, such as `13` are also supported (and converted into the longhand, e.g. `2013`).
+
+    $.cardExpiryVal('03 / 2025'); //=> {month: 3: year: 2025}
+    $.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
+    $('input.cc-exp').cardExpiryVal() //=> {month: 4, year: 2020}
+
+This function doesn't do any validation of the month or year, use `$.validateCardExpiry(month, year)` for that.
 
 ## Example
 

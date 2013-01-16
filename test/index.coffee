@@ -105,6 +105,23 @@ describe 'jquery.payment', ->
       topic = $.validateCardExpiry 'h12', '3300'
       assert.equal topic, false
 
+    it 'should fail if year or month is NaN', ->
+      topic = $.validateCardExpiry '12', NaN
+      assert.equal topic, false
+
+  describe 'Parsing an expiry value', ->
+    it 'should parse string expiry', ->
+      topic = $.cardExpiryVal('03 / 2025')
+      assert.deepEqual topic, month: 3, year: 2025
+
+    it 'should support shorthand year', ->
+      topic = $.cardExpiryVal('05/04')
+      assert.deepEqual topic, month: 5, year: 2004
+
+    it 'should return NaN when it cannot parse', ->
+      topic = $.cardExpiryVal('05/dd')
+      assert isNaN(topic.year)
+
   describe 'Getting a card type', ->
     it 'should return Visa that begins with 40', ->
       topic = $.cardType '4012121212121212'

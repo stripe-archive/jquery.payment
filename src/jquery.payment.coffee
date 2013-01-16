@@ -180,14 +180,13 @@ restrictCVC = (e) ->
 setCardType = (e) ->
   $target  = $(e.currentTarget)
   val      = $target.val()
-  return if val.length <= 2
-
   cardType = $.cardType(val) or 'unknown'
 
   unless $target.hasClass(cardType)
     $target.removeClass('visa amex mastercard discover dinersclub jcb unknown')
     $target.addClass(cardType)
-    $target.trigger('payment.cardtype', cardType)
+    $target.toggleClass('identified', cardType isnt 'unknown')
+    $target.trigger('payment.cardType', cardType)
 
 # Public
 
@@ -217,24 +216,33 @@ $.fn.restrictNumeric = ->
 
 # Validations
 
+$.fn.cardExpiryVal = ->
+  $.cardExpiryVal($(this).val())
+
+$.cardExpiryVal = (value) ->
+  value = value.replace(/\s/g, '')
+  [month, year] = value.split('/', 2)
+
+  # Allow for year shortcut
+  if year?.length is 2 and /^\d+$/.test(year)
+    prefix = (new Date).getFullYear()
+    prefix = prefix.toString()[0..1]
+    year   = prefix + year
+
+  month = parseInt(month, 10)
+  year  = parseInt(year, 10)
+
+  month: month, year: year
+
 $.validateCardNumber = (num) ->
   num = (num + '').replace(/\s+|-/g, '')
   num.length >= 10 and num.length <= 16 and luhnCheck(num)
 
 $.validateCardExpiry = (month, year) =>
-  if year?
-    month = trim(month)
-    year  = trim(year)
+  return false unless month and year
 
-  else
-    expiry = month.replace(/\s/g, '')
-    [month, year] = expiry.split('/', 2)
-
-    # Allow for year shortcut
-    if year?.length is 2
-      prefix = (new Date).getFullYear()
-      prefix = prefix.toString()[0..1]
-      year   = prefix + year
+  month = trim(month)
+  year  = trim(year)
 
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
