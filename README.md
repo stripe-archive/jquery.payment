@@ -2,7 +2,20 @@
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-[Example](http://stripe.github.com/jquery.payment/example)
+For example, you can make a input act like a credit card field (with number formatting, and length restriction):
+
+    $('input.cc-num').formatCardNumber();
+
+Then, when say the payment form is submitted, you can validate the card number on the client-side like so:
+
+    var valid = $.validateCardNumber($('input.cc-num').val());
+
+    if ( !valid ) {
+      alert('Your card is not valid!');
+      return false;
+    }
+
+You can find a full [demo here](http://stripe.github.com/jquery.payment/example).
 
 ## API
 
@@ -14,7 +27,7 @@ Formats card numbers:
 * Restricts input to numbers
 * Limits to 16 numbers
 * American Express formatting support
-* Adds a class of the card type (i.e. visa) to the input
+* Adds a class of the card type (i.e. 'visa') to the input
 
 Example:
 
@@ -131,9 +144,9 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 
 You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
 
-    <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required>
+    <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
 
-Set `x-autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
+Set `autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
 
 ## Mobile recommendations
 
