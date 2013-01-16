@@ -29,6 +29,16 @@ luhnCheck = (num) ->
 
   sum % 10 == 0
 
+hasTextSelected = ($target) ->
+  # If some text is selected
+  return true if $target.prop('selectionStart')? and
+    $target.prop('selectionStart') isnt $target.prop('selectionEnd')
+
+  # If some text is selected in IE
+  return true if document?.selection?.createRange?().text
+
+  false
+
 # Private
 
 # Format Card Number
@@ -120,14 +130,22 @@ formatBackExpiry = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
 
-  # Return if focus isn't at the end of the text
-  return if $target.prop('selectionStart')? and
-    $target.prop('selectionStart') isnt value.length
+  # Return unless backspacing
+  return unless e.which is 8
 
-  # If we're backspacing, remove the trailing space
-  if e.which is 8 and /\s\/\s?$/.test(value)
+  selectionStart = $target.prop('selectionStart')
+
+  # Remove the trailing space
+  if /\s\/\s?$/.test(value)
+    # Return if focus isn't at the end of the text
+    return if selectionStart? and selectionStart isnt value.length
+
     e.preventDefault()
     $target.val(value.replace(/\s\/\s?$/, ''))
+
+  # Prevent people removing the ' / '
+  else if selectionStart? and /\D/.test(value.charAt(selectionStart - 1))
+    e.preventDefault()
 
 #  Restrictions
 
@@ -154,12 +172,7 @@ restrictCardNumber = (e) ->
   digit   = String.fromCharCode(e.which)
   return unless /^\d+$/.test(digit)
 
-  # If some text is selected
-  return if $target.prop('selectionStart')? and
-    $target.prop('selectionStart') isnt $target.prop('selectionEnd')
-
-  # If some text is selected in IE
-  return if document?.selection?.createRange?().text
+  return if hasTextSelected($target)
 
   # Restrict number of digits
   value = $target.val() + digit
@@ -171,6 +184,18 @@ restrictCardNumber = (e) ->
   else
     # All other cards are 16 digits long
     value.length <= 16
+
+restrictExpiry = (e) ->
+  $target = $(e.currentTarget)
+  digit   = String.fromCharCode(e.which)
+  return unless /^\d+$/.test(digit)
+
+  return if hasTextSelected($target)
+
+  value = $target.val() + digit
+  value = value.replace(/\D/g, '')
+
+  return false if value.length > 6
 
 restrictCVC = (e) ->
   $target = $(e.currentTarget)
@@ -198,6 +223,7 @@ $.fn.formatCardCVC = ->
 
 $.fn.formatCardExpiry = ->
   @restrictNumeric()
+  @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
