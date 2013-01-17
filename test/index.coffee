@@ -155,7 +155,7 @@ describe 'jquery.payment', ->
       assert.equal $number.val(), '4242 4'
 
   describe 'formatCardExpiry', ->
-    it 'should format cc expiry correctly', ->
+    it 'should format month shorthand correctly', ->
       $expiry = $('<input type=text>').formatCardExpiry()
 
       e = $.Event('keypress');
@@ -163,3 +163,23 @@ describe 'jquery.payment', ->
       $expiry.trigger(e)
 
       assert.equal $expiry.val(), '04 / '
+
+    it 'should format forward slash shorthand correctly', ->
+      $expiry = $('<input type=text>').formatCardExpiry()
+      $expiry.val('1')
+
+      e = $.Event('keypress');
+      e.which = 47 # '/'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '01 / '
+
+    it 'should only allow numbers', ->
+      $expiry = $('<input type=text>').formatCardExpiry()
+      $expiry.val('1')
+
+      e = $.Event('keypress');
+      e.which = 100 # 'd'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '1'
