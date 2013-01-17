@@ -133,19 +133,14 @@ formatBackExpiry = (e) ->
   # Return unless backspacing
   return unless e.which is 8
 
-  selectionStart = $target.prop('selectionStart')
+  # Return if focus isn't at the end of the text
+  return if $target.prop('selectionStart')? and
+    $target.prop('selectionStart') isnt value.length
 
   # Remove the trailing space
   if /\s\/\s?$/.test(value)
-    # Return if focus isn't at the end of the text
-    return if selectionStart? and selectionStart isnt value.length
-
     e.preventDefault()
     $target.val(value.replace(/\s\/\s?$/, ''))
-
-  # Prevent people removing the ' / '
-  else if selectionStart? and /\D/.test(value.charAt(selectionStart - 1))
-    e.preventDefault()
 
 #  Restrictions
 
