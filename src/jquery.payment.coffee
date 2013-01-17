@@ -102,8 +102,7 @@ formatExpiry = (e) ->
   return unless /^\d+$/.test(digit)
 
   $target = $(e.currentTarget)
-  val     = $target.val()
-  val     += digit
+  val     = $target.val() + digit
 
   if /^\d$/.test(val) and val not in ['0', '1']
     e.preventDefault()
@@ -122,6 +121,16 @@ formatForwardExpiry = (e) ->
 
   if /^\d\d$/.test(val)
     $target.val("#{val} / ")
+
+formatForwardSlash = (e) ->
+  slash = String.fromCharCode(e.which)
+  return unless slash is '/'
+
+  $target = $(e.currentTarget)
+  val     = $target.val()
+
+  if /^\d$/.test(val) and val isnt '0'
+    $target.val("0#{val} / ")
 
 formatBackExpiry = (e) ->
   # If shift+backspace is pressed
@@ -220,6 +229,7 @@ $.fn.formatCardExpiry = ->
   @restrictNumeric()
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
+  @on('keypress', formatForwardSlash)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
 
@@ -260,6 +270,10 @@ $.validateCardNumber = (num) ->
   num.length >= 10 and num.length <= 16 and luhnCheck(num)
 
 $.validateCardExpiry = (month, year) =>
+  # Allow passing an object
+  if typeof month is 'object' and 'month' of month
+    {month, year} = month
+
   return false unless month and year
 
   month = trim(month)
