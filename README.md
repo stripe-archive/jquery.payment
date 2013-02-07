@@ -21,7 +21,6 @@ Supported card types are:
 
 * Visa
 * MasterCard
-* Discover
 * American Express
 * Discover
 * JCB
