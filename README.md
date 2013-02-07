@@ -29,6 +29,9 @@ Supported card types are:
 * Discover
 * JCB
 * Diners Club
+* Maestro
+* Laster
+* UnionPay
 
 ## API
 
@@ -139,6 +142,9 @@ Returns a card type. Either:
 * `mastercard`
 * `amex`
 * `dinersclub`
+* `maestro`
+* `laser`
+* `unionpay`
 
 The function will return `null` if the card type can't be determined.
 
