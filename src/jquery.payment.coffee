@@ -17,7 +17,7 @@ cards = [
   }
   {
       type: 'laser'
-      pattern: /^6[37]/
+      pattern: /^(6304|6706|6771|6709)/
       length: [16..19]
       cvcLength: [3]
   }
@@ -257,7 +257,7 @@ setCardType = (e) ->
   cardType = $.cardType(val) or 'unknown'
 
   unless $target.hasClass(cardType)
-    allTypes = card.type for card in cards
+    allTypes = (card.type for card in cards)
 
     $target.removeClass('unknown')
     $target.removeClass(allTypes.join(' '))
