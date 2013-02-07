@@ -140,7 +140,7 @@ describe 'jquery.payment', ->
       assert.equal topic, null
 
     it 'that has unrecognized beginning numbers should return null', ->
-      topic = $.cardType 'aoeu'
+      topic = $.cardType '1234'
       assert.equal topic, null
 
   describe 'formatCardNumber', ->
