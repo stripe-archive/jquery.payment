@@ -55,7 +55,7 @@ cards = [
       type: 'amex'
       pattern: /^3[47]/
       length: [15]
-      cvcLength: [4]
+      cvcLength: [3..4]
       luhn: true
   }
   {
