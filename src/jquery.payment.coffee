@@ -8,48 +8,62 @@ cards = [
       pattern: /^(5018|5020|5038|6304|6759|676[1-3])/
       length: [12..19]
       cvcLength: [3]
+      luhn: true
   }
   {
       type: 'dinersclub'
-      pattern: /^(36|30[0-5])/
+      pattern: /^(36|38|30[0-5])/
       length: [14]
       cvcLength: [3]
+      luhn: true
   }
   {
       type: 'laser'
       pattern: /^(6304|6706|6771|6709)/
       length: [16..19]
       cvcLength: [3]
+      luhn: true
   }
   {
       type: 'jcb'
       pattern: /^35/
       length: [16]
       cvcLength: [3]
+      luhn: true
+  }
+  {
+      type: 'unionpay'
+      pattern: /^62/
+      length: [16..19]
+      luhn: false
   }
   {
       type: 'discover'
-      pattern: /^6[0245]/
+      pattern: /^(6011|65|64[4-9]|622)/
       length: [16]
       cvcLength: [3]
+      luhn: true
   }
   {
       type: 'mastercard'
       pattern: /^5[1-5]/
       length: [16]
       cvcLength: [3]
+      luhn: true
   }
   {
       type: 'amex'
       pattern: /^3[47]/
       length: [15]
       cvcLength: [4]
+      luhn: true
   }
   {
       type: 'visa'
       pattern: /^4/
-      length: [16]
+      length: [13..16]
       cvcLength: [3]
+      luhn: true
   }
 ]
 
@@ -321,7 +335,8 @@ $.validateCardNumber = (num) ->
   card = cardFromNumber(num)
   return false unless card
 
-  num.length in card.length and luhnCheck(num)
+  num.length in card.length and
+    (card.luhn is false or luhnCheck(num))
 
 $.validateCardExpiry = (month, year) =>
   # Allow passing an object
