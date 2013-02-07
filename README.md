@@ -4,16 +4,20 @@ A general purpose library for building credit card forms, validating inputs and 
 
 For example, you can make a input act like a credit card field (with number formatting, and length restriction):
 
-    $('input.cc-num').formatCardNumber();
+``` javascript
+$('input.cc-num').formatCardNumber();
+```
 
 Then, when say the payment form is submitted, you can validate the card number on the client-side like so:
 
-    var valid = $.validateCardNumber($('input.cc-num').val());
+``` javascript
+var valid = $.validateCardNumber($('input.cc-num').val());
 
-    if ( !valid ) {
-      alert('Your card is not valid!');
-      return false;
-    }
+if ( !valid ) {
+  alert('Your card is not valid!');
+  return false;
+}
+```
 
 You can find a full [demo here](http://stripe.github.com/jquery.payment/example).
 
@@ -41,7 +45,9 @@ Formats card numbers:
 
 Example:
 
-    $('input.cc-num').formatCardNumber();
+``` javascript
+$('input.cc-num').formatCardNumber();
+```
 
 ### $.fn.formatCardExpiry()
 
@@ -53,7 +59,9 @@ Formats card expiry:
 
 Example:
 
-    $('input.cc-exp').formatCardExpiry();
+``` javascript
+$('input.cc-exp').formatCardExpiry();
+```
 
 ### $.fn.formatCardCVC()
 
@@ -64,7 +72,9 @@ Formats card CVC:
 
 Example:
 
-    $('input.cc-cvc').formatCardCVC();
+``` javascript
+$('input.cc-cvc').formatCardCVC();
+```
 
 ### $.fn.restrictNumeric()
 
@@ -72,7 +82,9 @@ General numeric input restriction.
 
 Example:
 
-    $('data-numeric').restrictNumeric();
+``` javascript
+$('data-numeric').restrictNumeric();
+```
 
 ### $.validateCardNumber(number)
 
@@ -84,7 +96,9 @@ Validates a card number:
 
 Example:
 
-    $.validateCardNumber('4242 4242 4242 4242'); //=> true
+``` javascript
+$.validateCardNumber('4242 4242 4242 4242'); //=> true
+```
 
 ### $.validateCardExpiry(month, year)
 
@@ -96,9 +110,11 @@ Validates a card expiry:
 
 Example:
 
-    $.validateCardExpiry('05', '20'); //=> true
-    $.validateCardExpiry('05', '2015'); //=> true
-    $.validateCardExpiry('05', '05'); //=> false
+``` javascript
+$.validateCardExpiry('05', '20'); //=> true
+$.validateCardExpiry('05', '2015'); //=> true
+$.validateCardExpiry('05', '05'); //=> false
+```
 
 ### $.validateCardCVC(cvc, type)
 
@@ -109,10 +125,12 @@ Validates a card CVC:
 
 Example:
 
-    $.validateCardCVC('123'); //=> true
-    $.validateCardCVC('123', 'amex'); //=> false
-    $.validateCardCVC('1234', 'amex'); //=> true
-    $.validateCardCVC('12344'); //=> false
+``` javascript
+$.validateCardCVC('123'); //=> true
+$.validateCardCVC('123', 'amex'); //=> false
+$.validateCardCVC('1234', 'amex'); //=> true
+$.validateCardCVC('12344'); //=> false
+```
 
 ### $.cardType(number)
 
@@ -127,15 +145,19 @@ The function will return `null` if the card type can't be determined.
 
 Example:
 
-    $.cardType('4242 4242 4242 4242'); //=> 'visa'
+``` javascript
+$.cardType('4242 4242 4242 4242'); //=> 'visa'
+```
 
 ### $.cardExpiryVal(string) and $.fn.cardExpiryVal()
 
 Parses a credit card expiry in the form of MM/YYYY, returning an object containing the `month` and `year`. Shorthand years, such as `13` are also supported (and converted into the longhand, e.g. `2013`).
 
-    $.cardExpiryVal('03 / 2025'); //=> {month: 3: year: 2025}
-    $.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
-    $('input.cc-exp').cardExpiryVal() //=> {month: 4, year: 2020}
+``` javascript
+$.cardExpiryVal('03 / 2025'); //=> {month: 3: year: 2025}
+$.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
+$('input.cc-exp').cardExpiryVal() //=> {month: 4, year: 2020}
+```
 
 This function doesn't do any validation of the month or year, use `$.validateCardExpiry(month, year)` for that.
 
@@ -155,14 +177,18 @@ Run `mocha --compilers coffee:coffee-script`
 
 We recommend you turn autocomplete on for credit card forms, except for the CVC field. You can do this by setting the `autocomplete` attribute:
 
-    <form autocomplete="on">
-      <input class="cc-number">
-      <input class="cc-cvc" autocomplete="off">
-    </form>
+``` html
+<form autocomplete="on">
+  <input class="cc-number">
+  <input class="cc-cvc" autocomplete="off">
+</form>
+```
 
 You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
 
-    <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
+``` html
+<input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
+```
 
 Set `autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
 
@@ -170,6 +196,8 @@ Set `autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for cred
 
 We recommend you set the `pattern` attribute which will cause the numeric keyboard to be displayed on mobiles:
 
-    <input class="cc-number" pattern="\d*">
+``` html
+<input class="cc-number" pattern="\d*">
+```
 
 You may have to turn off HTML5 validation (using the `novalidate` form attribute) when using this `pattern`, as it won't match space formatting.
