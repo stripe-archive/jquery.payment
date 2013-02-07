@@ -17,6 +17,16 @@ Then, when say the payment form is submitted, you can validate the card number o
 
 You can find a full [demo here](http://stripe.github.com/jquery.payment/example).
 
+Supported card types are:
+
+* Visa
+* MasterCard
+* Discover
+* American Express
+* Discover
+* JCB
+* Diners Club
+
 ## API
 
 ### $.fn.formatCardNumber()
