@@ -229,7 +229,7 @@ restrictCardNumber = (e) ->
   card  = cardFromNumber(value)
 
   if card
-    value.length in card.length
+    value.length <= card.length[card.length.length - 1]
   else
     # All other cards are 16 digits long
     value.length <= 16
