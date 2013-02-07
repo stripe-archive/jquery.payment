@@ -3,7 +3,7 @@
     "title": "jQuery Payment",
     "description": "A general purpose library for building credit card forms, validating inputs and formatting numbers.",
     "keywords": [
-        "credit cards",
+        "credit-cards",
         "payments"
     ],
     "version": "1.0.0",
