@@ -42,6 +42,33 @@ describe 'jquery.payment', ->
       topic = $.validateCardNumber '4242424e42424241'
       assert.equal topic, false
 
+    it 'should validate for all card types', ->
+      assert($.validateCardNumber('378282246310005'), 'amex')
+      assert($.validateCardNumber('371449635398431'), 'amex')
+      assert($.validateCardNumber('378734493671000'), 'amex')
+
+      assert($.validateCardNumber('30569309025904'), 'dinersclub')
+      assert($.validateCardNumber('38520000023237'), 'dinersclub')
+
+      assert($.validateCardNumber('6011111111111117'), 'discover')
+      assert($.validateCardNumber('6011000990139424'), 'discover')
+
+      assert($.validateCardNumber('3530111333300000'), 'jcb')
+      assert($.validateCardNumber('3566002020360505'), 'jcb')
+
+      assert($.validateCardNumber('5555555555554444'), 'mastercard')
+
+      assert($.validateCardNumber('4111111111111111'), 'visa')
+      assert($.validateCardNumber('4012888888881881'), 'visa')
+      assert($.validateCardNumber('4222222222222'), 'visa')
+
+      assert($.validateCardNumber('6759649826438453'), 'maestro')
+
+      assert($.validateCardNumber('6271136264806203568'), 'unionpay')
+      assert($.validateCardNumber('6236265930072952775'), 'unionpay')
+      assert($.validateCardNumber('6204679475679144515'), 'unionpay')
+      assert($.validateCardNumber('6216657720782466507'), 'unionpay')
+
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
       topic = $.validateCardCVC ''
@@ -128,7 +155,7 @@ describe 'jquery.payment', ->
       assert.equal topic, 'visa'
 
     it 'that begins with 5 should return MasterCard', ->
-      topic = $.cardType '5012121212121212'
+      topic = $.cardType '5555555555554444'
       assert.equal topic, 'mastercard'
 
     it 'that begins with 34 should return American Express', ->
@@ -142,6 +169,33 @@ describe 'jquery.payment', ->
     it 'that has unrecognized beginning numbers should return null', ->
       topic = $.cardType 'aoeu'
       assert.equal topic, null
+
+    it 'should return correct type for all test numbers', ->
+      assert.equal($.cardType('378282246310005'), 'amex')
+      assert.equal($.cardType('371449635398431'), 'amex')
+      assert.equal($.cardType('378734493671000'), 'amex')
+
+      assert.equal($.cardType('30569309025904'), 'dinersclub')
+      assert.equal($.cardType('38520000023237'), 'dinersclub')
+
+      assert.equal($.cardType('6011111111111117'), 'discover')
+      assert.equal($.cardType('6011000990139424'), 'discover')
+
+      assert.equal($.cardType('3530111333300000'), 'jcb')
+      assert.equal($.cardType('3566002020360505'), 'jcb')
+
+      assert.equal($.cardType('5555555555554444'), 'mastercard')
+
+      assert.equal($.cardType('4111111111111111'), 'visa')
+      assert.equal($.cardType('4012888888881881'), 'visa')
+      assert.equal($.cardType('4222222222222'), 'visa')
+
+      assert.equal($.cardType('6759649826438453'), 'maestro')
+
+      assert.equal($.cardType('6271136264806203568'), 'unionpay')
+      assert.equal($.cardType('6236265930072952775'), 'unionpay')
+      assert.equal($.cardType('6204679475679144515'), 'unionpay')
+      assert.equal($.cardType('6216657720782466507'), 'unionpay')
 
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', ->
