@@ -32,9 +32,11 @@
         $('input').removeClass('invalid');
         $('.validation').removeClass('passed failed');
 
+        var cardType = $.cardType($('.cc-number').val());
+
         $('.cc-number').toggleClass('invalid', !$.validateCardNumber($('.cc-number').val()));
         $('.cc-exp').toggleClass('invalid', !$.validateCardExpiry($('.cc-exp').cardExpiryVal()));
-        $('.cc-cvc').toggleClass('invalid', !$.validateCardCVC($('.cc-cvc').val()));
+        $('.cc-cvc').toggleClass('invalid', !$.validateCardCVC($('.cc-cvc').val(), cardType));
 
         if ( $('input.invalid').length ) {
           $('.validation').addClass('failed');
