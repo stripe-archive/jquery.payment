@@ -2,18 +2,66 @@ $ = jQuery
 
 # Utils
 
+cards = [
+  {
+      type: 'maestro'
+      pattern: /^(5018|5020|5038|6304|6759|676[1-3])/
+      length: [12..19]
+      cvcLength: [3]
+  }
+  {
+      type: 'dinersclub'
+      pattern: /^(36|30[0-5])/
+      length: [14]
+      cvcLength: [3]
+  }
+  {
+      type: 'laser'
+      pattern: /^6[37]/
+      length: [16..19]
+      cvcLength: [3]
+  }
+  {
+      type: 'jcb'
+      pattern: /^35/
+      length: [16]
+      cvcLength: [3]
+  }
+  {
+      type: 'discover'
+      pattern: /^6[0245]/
+      length: [16]
+      cvcLength: [3]
+  }
+  {
+      type: 'mastercard'
+      pattern: /^5[1-5]/
+      length: [16]
+      cvcLength: [3]
+  }
+  {
+      type: 'amex'
+      pattern: /^3[47]/
+      length: [15]
+      cvcLength: [4]
+  }
+  {
+      type: 'visa'
+      pattern: /^4/
+      length: [16]
+      cvcLength: [3]
+  }
+]
+
+cardFromNumber = (num) ->
+  num = (num + '').replace(/\D/g, '')
+  return card for card in cards when card.pattern.test(num)
+
+cardFromType = (type) ->
+  return card for card in cards when card.type is type
+
 trim = (str) ->
   (str + '').replace(/^\s+|\s+$/g, '')
-
-cardTypes = do ->
-    types = {}
-    types[num] = 'visa' for num in [40..49]
-    types[num] = 'mastercard' for num in [50..59]
-    types[34] = types[37] = 'amex'
-    types[60] = types[62] = types[64] = types[65] = 'discover'
-    types[35] = 'jcb'
-    types[30] = types[36] = types[38] = types[39] = 'dinersclub'
-    types
 
 luhnCheck = (num) ->
   odd = true
@@ -50,20 +98,18 @@ formatCardNumber = (e) ->
 
   $target = $(e.currentTarget)
   value   = $target.val()
-  type    = $.cardType(value + digit)
+  card    = cardFromNumber(value + digit)
   length  = (value.replace(/\D/g, '') + digit).length
 
-  if type is 'amex'
-    # Amex are 15 digits
-    return if length >= 15
-  else
-    return if length >= 16
+  upperLength = 16
+  upperLength = card.length[card.length.length - 1] if card
+  return if length >= upperLength
 
   # Return if focus isn't at the end of the text
   return if $target.prop('selectionStart')? and
     $target.prop('selectionStart') isnt value.length
 
-  if type is 'amex'
+  if card && card.type is 'amex'
     # Amex cards are formatted differently
     re = /^(\d{4}|\d{4}\s\d{6})$/
   else
@@ -179,12 +225,11 @@ restrictCardNumber = (e) ->
   return if hasTextSelected($target)
 
   # Restrict number of digits
-  value = $target.val() + digit
-  value = value.replace(/\D/g, '')
+  value = ($target.val() + digit).replace(/\D/g, '')
+  card  = cardFromNumber(value)
 
-  if $.cardType(value) is 'amex'
-    # Amex are 15 digits long
-    value.length <= 15
+  if card
+    value.length in card.length
   else
     # All other cards are 16 digits long
     value.length <= 16
@@ -212,7 +257,11 @@ setCardType = (e) ->
   cardType = $.cardType(val) or 'unknown'
 
   unless $target.hasClass(cardType)
-    $target.removeClass('visa amex mastercard discover dinersclub jcb unknown')
+    allTypes = card.type for card in cards
+
+    $target.removeClass('unknown')
+    $target.removeClass(allTypes.join(' '))
+
     $target.addClass(cardType)
     $target.toggleClass('identified', cardType isnt 'unknown')
     $target.trigger('payment.cardType', cardType)
@@ -267,7 +316,12 @@ $.cardExpiryVal = (value) ->
 
 $.validateCardNumber = (num) ->
   num = (num + '').replace(/\s+|-/g, '')
-  num.length >= 10 and num.length <= 16 and luhnCheck(num)
+  return false unless /^\d+$/.test(num)
+
+  card = cardFromNumber(num)
+  return false unless card
+
+  num.length in card.length and luhnCheck(num)
 
 $.validateCardExpiry = (month, year) =>
   # Allow passing an object
@@ -302,13 +356,11 @@ $.validateCardCVC = (cvc, type) ->
 
   if type
     # Check against a explicit card type
-    if type is 'amex'
-      cvc.length is 4
-    else
-      cvc.length is 3
+    cvc.length in cardFromType(type)?.cvcLength
   else
     # Check against all types
     cvc.length >= 3 and cvc.length <= 4
 
 $.cardType = (num) ->
-  cardTypes[num[0..1]] or null
+  return null unless num
+  cardFromNumber(num)?.type or null

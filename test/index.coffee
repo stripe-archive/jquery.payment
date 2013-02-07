@@ -128,7 +128,7 @@ describe 'jquery.payment', ->
       assert.equal topic, 'visa'
 
     it 'that begins with 5 should return MasterCard', ->
-      topic = $.cardType '5012121212121212'
+      topic = $.cardType '5555555555554444'
       assert.equal topic, 'mastercard'
 
     it 'that begins with 34 should return American Express', ->
@@ -142,6 +142,24 @@ describe 'jquery.payment', ->
     it 'that has unrecognized beginning numbers should return null', ->
       topic = $.cardType 'aoeu'
       assert.equal topic, null
+
+    it 'should return correct type for all test numbers': ->
+      assert.equal($.cardType('378282246310005'), 'amex')
+      assert.equal($.cardType('371449635398431'), 'amex')
+      assert.equal($.cardType('378734493671000'), 'amex')
+      assert.equal($.cardType('30569309025904'), 'dinersclub')
+      assert.equal($.cardType('38520000023237'), 'dinersclub')
+      assert.equal($.cardType('6011111111111117'), 'discover')
+      assert.equal($.cardType('6011000990139424'), 'discover')
+      assert.equal($.cardType('3530111333300000'), 'jcb')
+      assert.equal($.cardType('3566002020360505'), 'jcb')
+      assert.equal($.cardType('5555555555554444'), 'mastercard')
+      assert.equal($.cardType('4111111111111111'), 'visa')
+      assert.equal($.cardType('4012888888881881'), 'visa')
+      assert.equal($.cardType('4222222222222'), 'visa')
+      assert.equal($.cardType('630495060000000000'), 'laser')
+      assert.equal($.cardType('630490017740292441'), 'laser')
+      assert.equal($.cardType('6759649826438453'), 'maestro')
 
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', ->
