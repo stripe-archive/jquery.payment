@@ -19,7 +19,7 @@ cards = [
   }
   {
       type: 'laser'
-      pattern: /^(6304|6706|6771|6709)/
+      pattern: /^(6706|6771|6709)/
       length: [16..19]
       cvcLength: [3]
       luhn: true
