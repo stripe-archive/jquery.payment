@@ -5,7 +5,7 @@ A general purpose library for building credit card forms, validating inputs and 
 For example, you can make a input act like a credit card field (with number formatting, and length restriction):
 
 ``` javascript
-$('input.cc-num').formatCardNumber();
+$('input.cc-num').payment('formatCardNumber');
 ```
 
 Then, when say the payment form is submitted, you can validate the card number on the client-side like so:
