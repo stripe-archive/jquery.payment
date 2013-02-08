@@ -1,4 +1,9 @@
-$ = jQuery
+$            = jQuery
+$.payment    = {}
+$.payment.fn = {}
+$.fn.payment = (method, args...) ->
+  $.payment.fn[method].apply(this, args)
+  this
 
 # Utils
 
@@ -268,7 +273,7 @@ restrictCVC = (e) ->
 setCardType = (e) ->
   $target  = $(e.currentTarget)
   val      = $target.val()
-  cardType = $.cardType(val) or 'unknown'
+  cardType = $.payment.cardType(val) or 'unknown'
 
   unless $target.hasClass(cardType)
     allTypes = (card.type for card in cards)
@@ -284,20 +289,20 @@ setCardType = (e) ->
 
 # Formatting
 
-$.fn.formatCardCVC = ->
-  @restrictNumeric()
+$.payment.fn.formatCardCVC = ->
+  @payment('restrictNumeric')
   @on('keypress', restrictCVC)
 
-$.fn.formatCardExpiry = ->
-  @restrictNumeric()
+$.payment.fn.formatCardExpiry = ->
+  @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
   @on('keypress', formatForwardSlash)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
 
-$.fn.formatCardNumber = ->
-  @restrictNumeric()
+$.payment.fn.formatCardNumber = ->
+  @payment('restrictNumeric')
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
@@ -305,15 +310,15 @@ $.fn.formatCardNumber = ->
 
 # Restrictions
 
-$.fn.restrictNumeric = ->
+$.payment.fn.restrictNumeric = ->
   @on('keypress', restrictNumeric)
 
 # Validations
 
-$.fn.cardExpiryVal = ->
-  $.cardExpiryVal($(this).val())
+$.payment.fn.cardExpiryVal = ->
+  $.payment.cardExpiryVal($(this).val())
 
-$.cardExpiryVal = (value) ->
+$.payment.cardExpiryVal = (value) ->
   value = value.replace(/\s/g, '')
   [month, year] = value.split('/', 2)
 
@@ -328,7 +333,7 @@ $.cardExpiryVal = (value) ->
 
   month: month, year: year
 
-$.validateCardNumber = (num) ->
+$.payment.validateCardNumber = (num) ->
   num = (num + '').replace(/\s+|-/g, '')
   return false unless /^\d+$/.test(num)
 
@@ -338,7 +343,7 @@ $.validateCardNumber = (num) ->
   num.length in card.length and
     (card.luhn is false or luhnCheck(num))
 
-$.validateCardExpiry = (month, year) =>
+$.payment.validateCardExpiry = (month, year) =>
   # Allow passing an object
   if typeof month is 'object' and 'month' of month
     {month, year} = month
@@ -365,7 +370,7 @@ $.validateCardExpiry = (month, year) =>
 
   expiry > currentTime
 
-$.validateCardCVC = (cvc, type) ->
+$.payment.validateCardCVC = (cvc, type) ->
   cvc = trim(cvc)
   return false unless /^\d+$/.test(cvc)
 
@@ -376,6 +381,6 @@ $.validateCardCVC = (cvc, type) ->
     # Check against all types
     cvc.length >= 3 and cvc.length <= 4
 
-$.cardType = (num) ->
+$.payment.cardType = (num) ->
   return null unless num
   cardFromNumber(num)?.type or null
