@@ -35,7 +35,7 @@
         var cardType = $.payment.cardType($('.cc-number').val());
 
         $('.cc-number').toggleClass('invalid', !$.payment.validateCardNumber($('.cc-number').val()));
-        $('.cc-exp').toggleClass('invalid', !$.payment.validateCardExpiry($('.cc-exp').cardExpiryVal()));
+        $('.cc-exp').toggleClass('invalid', !$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
         $('.cc-cvc').toggleClass('invalid', !$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
 
         if ( $('input.invalid').length ) {

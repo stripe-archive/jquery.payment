@@ -3,7 +3,6 @@ $.payment    = {}
 $.payment.fn = {}
 $.fn.payment = (method, args...) ->
   $.payment.fn[method].apply(this, args)
-  this
 
 # Utils
 
@@ -292,6 +291,7 @@ setCardType = (e) ->
 $.payment.fn.formatCardCVC = ->
   @payment('restrictNumeric')
   @on('keypress', restrictCVC)
+  this
 
 $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
@@ -300,6 +300,7 @@ $.payment.fn.formatCardExpiry = ->
   @on('keypress', formatForwardSlash)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
+  this
 
 $.payment.fn.formatCardNumber = ->
   @payment('restrictNumeric')
@@ -307,11 +308,13 @@ $.payment.fn.formatCardNumber = ->
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
   @on('keyup', setCardType)
+  this
 
 # Restrictions
 
 $.payment.fn.restrictNumeric = ->
   @on('keypress', restrictNumeric)
+  this
 
 # Validations
 
