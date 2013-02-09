@@ -266,7 +266,10 @@ restrictExpiry = (e) ->
 
 restrictCVC = (e) ->
   $target = $(e.currentTarget)
-  val     = $target.val()
+  digit   = String.fromCharCode(e.which)
+  return unless /^\d+$/.test(digit)
+
+  val     = $target.val() + digit
   val.length <= 4
 
 setCardType = (e) ->
