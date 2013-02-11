@@ -78,9 +78,6 @@ cardFromNumber = (num) ->
 cardFromType = (type) ->
   return card for card in cards when card.type is type
 
-trim = (str) ->
-  (str + '').replace(/^\s+|\s+$/g, '')
-
 luhnCheck = (num) ->
   odd = true
   sum = 0
@@ -356,8 +353,8 @@ $.payment.validateCardExpiry = (month, year) =>
 
   return false unless month and year
 
-  month = trim(month)
-  year  = trim(year)
+  month = $.trim(month)
+  year  = $.trim(year)
 
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
@@ -377,7 +374,7 @@ $.payment.validateCardExpiry = (month, year) =>
   expiry > currentTime
 
 $.payment.validateCardCVC = (cvc, type) ->
-  cvc = trim(cvc)
+  cvc = $.trim(cvc)
   return false unless /^\d+$/.test(cvc)
 
   if type
