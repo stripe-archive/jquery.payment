@@ -287,6 +287,8 @@ setCardType = (e) ->
 formatFullCardNumber = (target) ->
   s = target.val()
   re = /\d/
+  amex = /^3[47]/
+  target.val s.replace(/^(\d{4})(.*?)/g, '$1 ').replace(/(\s\d{6})(.*?)/g,'$1 ').replace(/(^\s+|\s+$)/, "")  if re.test(s) and amex.test(s)
   target.val s.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "")  if re.test(s) and s.length is 16
   
 # Public
