@@ -121,7 +121,6 @@ formatCardNumber = (e) ->
   upperLength = card.length[card.length.length - 1]  if card
   return  if (digit > 0) and (length >= upperLength)
   if ($target.prop("selectionStart")?) and $target.prop("selectionStart") isnt value.length
-    alert "here"
     return
   if card and card.type is "amex"
     re = /^(\d{4}|\d{4}\s\d{6})$/
@@ -140,6 +139,8 @@ formatCardNumber = (e) ->
       if re.test(value) and amex.test(value)
         $target.val value.replace(/^(\d{4})(.*?)/g, "$1 ").replace(/(\s\d{6})(.*?)/g, "$1 ").replace(/(^\s+|\s+$)/, "")
       else $target.val value.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "")  if re.test(value)
+    else
+      $target.val ''
   
 formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
