@@ -287,7 +287,7 @@ setCardType = (e) ->
 formatFullCardNumber = (target) ->
   s = target.val()
   re = /\d/
-  target.val s.substring(0, 4) + " " + s.substring(4, 8) + " " + s.substring(8, 12) + " " + s.substring(12, (s.length))  if re.test(s) and s.length is 16
+  target.val s.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "")  if re.test(s) and s.length is 16
   
 # Public
 
