@@ -284,6 +284,11 @@ setCardType = (e) ->
     $target.toggleClass('identified', cardType isnt 'unknown')
     $target.trigger('payment.cardType', cardType)
 
+formatFullCardNumber = (target) ->
+  s = target.val()
+  re = /\d/
+  target.val s.substring(0, 4) + " " + s.substring(4, 8) + " " + s.substring(8, 12) + " " + s.substring(12, (s.length))  if re.test(s) and s.length is 16
+  
 # Public
 
 # Formatting
@@ -303,11 +308,16 @@ $.payment.fn.formatCardExpiry = ->
   this
 
 $.payment.fn.formatCardNumber = ->
+  a = this
   @payment('restrictNumeric')
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
   @on('keyup', setCardType)
+  a.on "paste", ->
+      setTimeout (->
+          formatFullCardNumber a
+      ), 5
   this
 
 # Restrictions
