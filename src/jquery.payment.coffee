@@ -109,7 +109,7 @@ hasTextSelected = ($target) ->
 formatCardNumber = (e) ->
   if e.which
     digit = String.fromCharCode(e.which)
-    return  unless /^\d+$/.test(digit)
+    return unless /^\d+$/.test(digit)
     $target = $(e.currentTarget)
   else
     digit = ""
@@ -138,7 +138,7 @@ formatCardNumber = (e) ->
       amex = /^3[47]/
       if re.test(value) and amex.test(value)
         $target.val value.replace(/^(\d{4})(.*?)/g, "$1 ").replace(/(\s\d{6})(.*?)/g, "$1 ").replace(/(^\s+|\s+$)/, "")
-      else $target.val value.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "")  if re.test(value)
+      else $target.val value.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "") if re.test(value)
     else
       $target.val '' if digit.length == 0
   
