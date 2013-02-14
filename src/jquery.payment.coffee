@@ -107,39 +107,41 @@ hasTextSelected = ($target) ->
 # Format Card Number
 
 formatCardNumber = (e) ->
-  # Only format if input is a number
-  digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
-
-  $target = $(e.currentTarget)
-  value   = $target.val()
-  card    = cardFromNumber(value + digit)
-  length  = (value.replace(/\D/g, '') + digit).length
-
+  if e.which
+    digit = String.fromCharCode(e.which)
+    return unless /^\d+$/.test(digit)
+    $target = $(e.currentTarget)
+  else
+    digit = ""
+    $target = e
+  value = $target.val()
+  card = cardFromNumber(value + digit)
+  length = (value.replace(/\D/g, "") + digit).length
   upperLength = 16
-  upperLength = card.length[card.length.length - 1] if card
-  return if length >= upperLength
-
-  # Return if focus isn't at the end of the text
-  return if $target.prop('selectionStart')? and
-    $target.prop('selectionStart') isnt value.length
-
-  if card && card.type is 'amex'
-    # Amex cards are formatted differently
+  upperLength = card.length[card.length.length - 1]  if card
+  return  if (digit.length > 0) and (length >= upperLength)
+  if ($target.prop("selectionStart")?) and $target.prop("selectionStart") isnt value.length
+    return
+  if card and card.type is "amex"
     re = /^(\d{4}|\d{4}\s\d{6})$/
   else
     re = /(?:^|\s)(\d{4})$/
-
-  # If '4242' + 4
   if re.test(value)
     e.preventDefault()
-    $target.val(value + ' ' + digit)
-
-  # If '424' + 2
+    $target.val value + " " + digit
   else if re.test(value + digit)
     e.preventDefault()
-    $target.val(value + digit + ' ')
-
+    $target.val value + digit + " "
+  else
+    if (length >= 15) and (length is value.length)
+      re = /\d/
+      amex = /^3[47]/
+      if re.test(value) and amex.test(value)
+        $target.val value.replace(/^(\d{4})(.*?)/g, "$1 ").replace(/(\s\d{6})(.*?)/g, "$1 ").replace(/(^\s+|\s+$)/, "")
+      else $target.val value.replace(/(\d{4})/g, "$1 ").replace(/(^\s+|\s+$)/, "") if re.test(value)
+    else
+      $target.val '' if digit.length == 0
+  
 formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
@@ -284,6 +286,7 @@ setCardType = (e) ->
     $target.toggleClass('identified', cardType isnt 'unknown')
     $target.trigger('payment.cardType', cardType)
 
+
 # Public
 
 # Formatting
@@ -303,11 +306,16 @@ $.payment.fn.formatCardExpiry = ->
   this
 
 $.payment.fn.formatCardNumber = ->
-  @payment('restrictNumeric')
-  @on('keypress', restrictCardNumber)
-  @on('keypress', formatCardNumber)
-  @on('keydown', formatBackCardNumber)
-  @on('keyup', setCardType)
+  a = this
+  a.payment('restrictNumeric')
+  a.on 'keypress', restrictCardNumber
+  a.on 'keypress', formatCardNumber
+  a.on 'keydown', formatBackCardNumber
+  a.on 'keyup', setCardType
+  a.on 'paste', ->
+      setTimeout (->
+          formatCardNumber a
+      ), 5
   this
 
 # Restrictions
