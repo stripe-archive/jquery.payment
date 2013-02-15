@@ -227,9 +227,9 @@ formatBackExpiry = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   # Remove the trailing space
-  if /\s\/\s?$/.test(value)
+  if /\s\/\s?\d?$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\s\/\s?$/, ''))
+    $target.val(value.replace(/\s\/\s?\d?$/, ''))
 
 #  Restrictions
 
@@ -411,7 +411,7 @@ $.payment.cardType = (num) ->
 $.payment.formatCardNumber = (num) ->
   card = cardFromNumber(num)
   return num unless card
-  
+
   upperLength = card.length[card.length.length - 1]
 
   num = num.replace(/\D/g, '')
