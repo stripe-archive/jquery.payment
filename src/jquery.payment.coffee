@@ -6,10 +6,13 @@ $.fn.payment = (method, args...) ->
 
 # Utils
 
+defaultFormat = /(\d{1,4})/g
+
 cards = [
   {
       type: 'maestro'
       pattern: /^(5018|5020|5038|6304|6759|676[1-3])/
+      format: defaultFormat
       length: [12..19]
       cvcLength: [3]
       luhn: true
@@ -17,6 +20,7 @@ cards = [
   {
       type: 'dinersclub'
       pattern: /^(36|38|30[0-5])/
+      format: defaultFormat
       length: [14]
       cvcLength: [3]
       luhn: true
@@ -24,6 +28,7 @@ cards = [
   {
       type: 'laser'
       pattern: /^(6706|6771|6709)/
+      format: defaultFormat
       length: [16..19]
       cvcLength: [3]
       luhn: true
@@ -31,6 +36,7 @@ cards = [
   {
       type: 'jcb'
       pattern: /^35/
+      format: defaultFormat
       length: [16]
       cvcLength: [3]
       luhn: true
@@ -38,12 +44,15 @@ cards = [
   {
       type: 'unionpay'
       pattern: /^62/
+      format: defaultFormat
       length: [16..19]
+      cvcLength: [3]
       luhn: false
   }
   {
       type: 'discover'
       pattern: /^(6011|65|64[4-9]|622)/
+      format: defaultFormat
       length: [16]
       cvcLength: [3]
       luhn: true
@@ -51,6 +60,7 @@ cards = [
   {
       type: 'mastercard'
       pattern: /^5[1-5]/
+      format: defaultFormat
       length: [16]
       cvcLength: [3]
       luhn: true
@@ -58,6 +68,7 @@ cards = [
   {
       type: 'amex'
       pattern: /^3[47]/
+      format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/
       length: [15]
       cvcLength: [3..4]
       luhn: true
@@ -65,6 +76,7 @@ cards = [
   {
       type: 'visa'
       pattern: /^4/
+      format: defaultFormat
       length: [13..16]
       cvcLength: [3]
       luhn: true
@@ -387,3 +399,14 @@ $.payment.validateCardCVC = (cvc, type) ->
 $.payment.cardType = (num) ->
   return null unless num
   cardFromNumber(num)?.type or null
+
+$.payment.formatCardNumber = (num) ->
+  card = cardFromNumber(num)
+  return num unless card
+
+  if card.format.global
+    num.match(card.format)?.join(' ')
+  else
+    groups = card.format.exec(num)
+    groups?.shift()
+    groups?.join(' ')
