@@ -118,6 +118,13 @@ hasTextSelected = ($target) ->
 
 # Format Card Number
 
+reFormatCardNumber = (e) ->
+  setTimeout =>
+    $target = $(e.currentTarget)
+    value   = $target.val()
+    value   = $.payment.formatCardNumber(value)
+    $target.val(value)
+
 formatCardNumber = (e) ->
   # Only format if input is a number
   digit = String.fromCharCode(e.which)
@@ -320,6 +327,7 @@ $.payment.fn.formatCardNumber = ->
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
   @on('keyup', setCardType)
+  @on('paste', reFormatCardNumber)
   this
 
 # Restrictions
@@ -403,6 +411,11 @@ $.payment.cardType = (num) ->
 $.payment.formatCardNumber = (num) ->
   card = cardFromNumber(num)
   return num unless card
+  
+  upperLength = card.length[card.length.length - 1]
+
+  num = num.replace(/\D/g, '')
+  num = num[0..upperLength]
 
   if card.format.global
     num.match(card.format)?.join(' ')
