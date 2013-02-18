@@ -246,10 +246,10 @@ restrictNumeric = (e) ->
   # If char is a special char (Firefox)
   return true if e.which < 33
 
-  char = String.fromCharCode(e.which)
+  input = String.fromCharCode(e.which)
 
   # Char is a number or a space
-  !!/[\d\s]/.test(char)
+  !!/[\d\s]/.test(input)
 
 restrictCardNumber = (e) ->
   $target = $(e.currentTarget)
