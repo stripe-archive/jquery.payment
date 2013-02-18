@@ -65,7 +65,7 @@ Example:
 $('input.cc-exp').payment('formatCardExpiry');
 ```
 
-### $.fn.payment('formatCardCVC()')
+### $.fn.payment('formatCardCVC')
 
 Formats card CVC:
 
