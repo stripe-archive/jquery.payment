@@ -235,7 +235,7 @@ formatBackExpiry = (e) ->
 
 restrictNumeric = (e) ->
   # Key event is for a browser shortcut
-  return true if e.metaKey
+  return true if e.metaKey or e.ctrlKey
 
   # If keycode is a space
   return false if e.which is 32
