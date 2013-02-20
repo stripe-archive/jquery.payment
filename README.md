@@ -53,6 +53,20 @@ $('input.cc-num').payment('formatCardNumber');
 
 ### $.fn.payment('formatCardExpiry')
 
+Formats card expiry:
+
+* Includes a `/` between the month and year
+* Restricts input to numbers
+* Restricts length
+
+Example:
+
+``` javascript
+$('input.cc-exp').payment('formatCardExpiry');
+```
+
+### $.fn.payment('formatMonthExpiry')
+
 Formats card month expiry:
 
 * Includes a leading 0 for single character inputs
