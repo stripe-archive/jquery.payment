@@ -135,8 +135,7 @@ formatCardNumber = (e) ->
   card    = cardFromNumber(value + digit)
   length  = (value.replace(/\D/g, '') + digit).length
 
-  upperLength = 16
-  upperLength = card.length[card.length.length - 1] if card
+  upperLength = if card then card.length[card.length.length - 1] else 16
   return if length >= upperLength
 
   # Return if focus isn't at the end of the text
