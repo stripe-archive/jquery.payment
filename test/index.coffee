@@ -261,7 +261,7 @@ describe 'jquery.payment', ->
       e.which = 52 # '4'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '4'
+      assert.equal $expiry.val(), '04'
 
     it 'should only allow numbers', ->
       $expiry = $('<input type=text>').payment('formatMonthExpiry')
