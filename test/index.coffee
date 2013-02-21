@@ -248,20 +248,14 @@ describe 'jquery.payment', ->
 
       assert.equal $expiry.val(), '04'
 
-    it 'should format month shorthand after second focus event', ->
+    it 'should append a leading zero on blur event if val is a single digit', ->
       $expiry = $('<input type=text>').payment('formatMonthExpiry')
-      $expiry.val('5')
+      $expiry.val('4')
 
-      e = $.Event('keypress')
       b = $.Event('blur')
-      f = $.Event('focus')
       $expiry.trigger(b)
-      $expiry.trigger(f)
-      
-      e.which = 52 # '4'
-      $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '04'
+      assert.equal $expiry.val(), '04'   
 
     it 'should only allow numbers', ->
       $expiry = $('<input type=text>').payment('formatMonthExpiry')

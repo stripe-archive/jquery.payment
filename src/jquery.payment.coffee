@@ -246,6 +246,13 @@ formatMonthExpiry = (e) ->
     e.preventDefault()
     $target.val("0#{digit}")
 
+appendLeadingZero = (e) ->
+  $target = $(e.currentTarget)
+  val     = $target.val()
+
+  if /^\d$/.test(val)
+    $target.val("0#{val}")
+
 formatYearExpiry = (e) -> 
   digit = String.fromCharCode(e.which)
   return unless /^\d+$/.test(digit)
@@ -387,6 +394,7 @@ $.payment.fn.formatMonthExpiry = ->
   @payment('restrictNumeric')
   @on('keypress', restrictMonthExpiry)
   @on('keypress', formatMonthExpiry)
+  @on('blur', appendLeadingZero)
   this
 
 $.payment.fn.formatTwoDigitYearExpiry = ->
