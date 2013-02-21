@@ -380,6 +380,8 @@ $.payment.validateCardExpiry = (month, year) =>
   return false unless /^\d+$/.test(year)
   return false unless parseInt(month, 10) <= 12
 
+  year = "20#{year}" unless year.length is 4
+
   expiry      = new Date(year, month)
   currentTime = new Date
 
