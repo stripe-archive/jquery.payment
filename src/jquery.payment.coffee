@@ -244,7 +244,7 @@ formatMonthExpiry = (e) ->
 
   else if /^\d\d$/.test(val) and val.match(/^(\d)(\d)$/)[1] not in ['0', '1']
     e.preventDefault()
-    $target.val("0#{val.match(/^(\d)(\d)$/)[2]}")
+    $target.val("0#{digit}")
 
 formatYearExpiry = (e) -> 
   digit = String.fromCharCode(e.which)
