@@ -287,6 +287,8 @@ describe 'jquery.payment', ->
       e.which = 100 # 'd'
       $expiry.trigger(e)
 
+      assert.equal $expiry.val(), '1'
+
     it 'should only allow 2 characters', ->
       $expiry = $('<input type=text>').payment('formatTwoDigitYearExpiry')
       $expiry.val('14')
@@ -315,6 +317,8 @@ describe 'jquery.payment', ->
       e = $.Event('keypress')
       e.which = 100 # 'd'
       $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '1'
 
     it 'should only allow 4 characters', ->
       $expiry = $('<input type=text>').payment('formatFourDigitYearExpiry')
