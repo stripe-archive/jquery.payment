@@ -237,3 +237,104 @@ describe 'jquery.payment', ->
       $expiry.trigger(e)
 
       assert.equal $expiry.val(), '1'
+
+  describe 'formatMonthExpiry', ->
+    it 'should format month shorthand correctly', ->
+      $expiry = $('<input type=text>').payment('formatMonthExpiry')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '04'
+
+    it 'should append a leading zero on blur event if val is a single digit', ->
+      $expiry = $('<input type=text>').payment('formatMonthExpiry')
+      $expiry.val('4')
+
+      b = $.Event('blur')
+      $expiry.trigger(b)
+
+      assert.equal $expiry.val(), '04'   
+
+    it 'should only allow numbers', ->
+      $expiry = $('<input type=text>').payment('formatMonthExpiry')
+      $expiry.val('1')
+
+      e = $.Event('keypress')
+      e.which = 100 # 'd'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '1'
+
+    it 'should only allow 2 characters', ->
+      $expiry = $('<input type=text>').payment('formatMonthExpiry')
+      $expiry.val('12')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '12'
+
+  describe 'formatTwoDigitYearExpiry', ->
+    it 'should format year correctly', ->
+      $expiry = $('<input type=text>').payment('formatTwoDigitYearExpiry')
+      $expiry.val('1')      
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '14'
+
+    it 'should only allow numbers', ->
+      $expiry = $('<input type=text>').payment('formatTwoDigitYearExpiry')
+      $expiry.val('1')
+
+      e = $.Event('keypress')
+      e.which = 100 # 'd'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '1'
+
+    it 'should only allow 2 characters', ->
+      $expiry = $('<input type=text>').payment('formatTwoDigitYearExpiry')
+      $expiry.val('14')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '14'
+
+  describe 'formatFourDigitYearExpiry', ->
+    it 'should format year correctly', ->
+      $expiry = $('<input type=text>').payment('formatFourDigitYearExpiry')
+      $expiry.val('201')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '2014'
+
+    it 'should only allow numbers', ->
+      $expiry = $('<input type=text>').payment('formatFourDigitYearExpiry')
+      $expiry.val('1')
+
+      e = $.Event('keypress')
+      e.which = 100 # 'd'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '1'
+
+    it 'should only allow 4 characters', ->
+      $expiry = $('<input type=text>').payment('formatFourDigitYearExpiry')
+      $expiry.val('2014')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '2014'

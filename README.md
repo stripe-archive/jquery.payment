@@ -65,6 +65,45 @@ Example:
 $('input.cc-exp').payment('formatCardExpiry');
 ```
 
+### $.fn.payment('formatMonthExpiry')
+
+Formats card month expiry:
+
+* Includes a leading 0 for single character inputs
+* Restricts input to numbers
+* Restricts length
+
+Example:
+
+``` javascript
+$('input.cc-exp-month').payment('formatMonthExpiry');
+```
+
+### $.fn.payment('formatTwoDigitYearExpiry')
+
+Formats card year expiry (2 digit year):
+
+* Restricts input to numbers
+* Restricts length
+
+Example:
+
+``` javascript
+$('input.cc-exp-yy').payment('formatTwoDigitYearExpiry');
+```
+### $.fn.payment('formatFourDigitYearExpiry')
+
+Formats card year expiry (4 digit year):
+
+* Restricts input to numbers
+* Restricts length
+
+Example:
+
+``` javascript
+$('input.cc-exp-yyyy').payment('formatFourDigitYearExpiry');
+```
+
 ### $.fn.payment('formatCardCVC')
 
 Formats card CVC:
