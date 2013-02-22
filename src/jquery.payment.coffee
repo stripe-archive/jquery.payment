@@ -128,7 +128,7 @@ reFormatCardNumber = (e) ->
 formatCardNumber = (e) ->
   # Only format if input is a number
   digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit,10)
 
   $target = $(e.currentTarget)
   value   = $target.val()
@@ -179,12 +179,12 @@ formatBackCardNumber = (e) ->
 formatExpiry = (e) ->
   # Only format if input is a number
   digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit, 10)
 
   $target = $(e.currentTarget)
   val     = $target.val() + digit
 
-  if /^\d$/.test(val) and val not in ['0', '1']
+  if !isNaN(parseInt(digit, 10)) and val not in ['0', '1']
     e.preventDefault()
     $target.val("0#{val} / ")
 
@@ -194,7 +194,7 @@ formatExpiry = (e) ->
 
 formatForwardExpiry = (e) ->
   digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit, 10)
 
   $target = $(e.currentTarget)
   val     = $target.val()
@@ -209,7 +209,7 @@ formatForwardSlash = (e) ->
   $target = $(e.currentTarget)
   val     = $target.val()
 
-  if /^\d$/.test(val) and val isnt '0'
+  if !isNaN(parseInt(val, 10)) and val isnt '0'
     $target.val("0#{val} / ")
 
 formatBackExpiry = (e) ->
@@ -254,7 +254,7 @@ restrictNumeric = (e) ->
 restrictCardNumber = (e) ->
   $target = $(e.currentTarget)
   digit   = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit, 10)
 
   return if hasTextSelected($target)
 
@@ -271,7 +271,7 @@ restrictCardNumber = (e) ->
 restrictExpiry = (e) ->
   $target = $(e.currentTarget)
   digit   = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit, 10)
 
   return if hasTextSelected($target)
 
@@ -283,7 +283,8 @@ restrictExpiry = (e) ->
 restrictCVC = (e) ->
   $target = $(e.currentTarget)
   digit   = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
+  return if isNaN parseInt(digit, 10)
+
 
   val     = $target.val() + digit
   val.length <= 4
@@ -346,7 +347,7 @@ $.payment.cardExpiryVal = (value) ->
   [month, year] = value.split('/', 2)
 
   # Allow for year shortcut
-  if year?.length is 2 and /^\d+$/.test(year)
+  if year?.length is 2 and !isNaN parseInt(year, 10)
     prefix = (new Date).getFullYear()
     prefix = prefix.toString()[0..1]
     year   = prefix + year
@@ -358,7 +359,7 @@ $.payment.cardExpiryVal = (value) ->
 
 $.payment.validateCardNumber = (num) ->
   num = (num + '').replace(/\s+|-/g, '')
-  return false unless /^\d+$/.test(num)
+  return false if isNaN parseInt(num, 10)
 
   card = cardFromNumber(num)
   return false unless card
@@ -376,8 +377,8 @@ $.payment.validateCardExpiry = (month, year) =>
   month = $.trim(month)
   year  = $.trim(year)
 
-  return false unless /^\d+$/.test(month)
-  return false unless /^\d+$/.test(year)
+  return false if isNaN parseInt(month, 10)
+  return false if isNaN parseInt(year, 10)
   return false unless parseInt(month, 10) <= 12
 
   expiry      = new Date(year, month)
@@ -395,7 +396,7 @@ $.payment.validateCardExpiry = (month, year) =>
 
 $.payment.validateCardCVC = (cvc, type) ->
   cvc = $.trim(cvc)
-  return false unless /^\d+$/.test(cvc)
+  return false if isNaN parseInt(cvc, 10)
 
   if type
     # Check against a explicit card type
