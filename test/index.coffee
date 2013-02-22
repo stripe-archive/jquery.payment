@@ -135,6 +135,9 @@ describe 'jquery.payment', ->
     it 'should fail if year or month is NaN', ->
       topic = $.payment.validateCardExpiry '12', NaN
       assert.equal topic, false
+    
+    it 'should support year shorthand', ->
+      assert.equal $.payment.validateCardExpiry('05', '20'), true
 
   describe 'Parsing an expiry value', ->
     it 'should parse string expiry', ->
