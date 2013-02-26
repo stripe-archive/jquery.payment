@@ -139,6 +139,31 @@ describe 'jquery.payment', ->
     it 'should support year shorthand', ->
       assert.equal $.payment.validateCardExpiry('05', '20'), true
 
+  describe 'Validating a CVC number', ->
+    it 'should validate a three digit number with no card type', ->
+      topic = $.payment.validateCardCVC('123')
+      assert.equal topic, true
+
+    it 'should validate a three digit number with card type amex', ->
+      topic = $.payment.validateCardCVC('123', 'amex')
+      assert.equal topic, true
+
+    it 'should validate a three digit number with card type other than amex', ->
+      topic = $.payment.validateCardCVC('123', 'visa')
+      assert.equal topic, true
+
+    it 'should not validate a four digit number with a card type other than amex', ->
+      topic = $.payment.validateCardCVC('1234', 'visa')
+      assert.equal topic, false
+
+    it 'should validate a four digit number with card type amex', ->
+      topic = $.payment.validateCardCVC('1234', 'amex')
+      assert.equal topic, true
+
+    it 'should not validate a number larger than 4 digits', ->
+      topic = $.payment.validateCardCVC('12344')
+      assert.equal topic, false
+
   describe 'Parsing an expiry value', ->
     it 'should parse string expiry', ->
       topic = $.payment.cardExpiryVal('03 / 2025')
