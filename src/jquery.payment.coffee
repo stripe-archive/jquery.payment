@@ -74,6 +74,14 @@ cards = [
       luhn: true
   }
   {
+      type: 'visa_electron'
+      pattern: /^(4026|417500|4405|4508|4844|4913|4917)/
+      format: defaultFormat
+      length: [16]
+      cvcLength: [3]
+      luhn: true
+  }
+  {
       type: 'visa'
       pattern: /^4/
       format: defaultFormat
