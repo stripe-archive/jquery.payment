@@ -83,6 +83,8 @@ cards = [
   }
 ]
 
+maxLength = Math.max.apply(@, (Math.max.apply(@, card.length) for card in cards))
+
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
   return card for card in cards when card.pattern.test(num)
@@ -379,7 +381,7 @@ $.payment.validateCardExpiry = (month, year) =>
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
   return false unless parseInt(month, 10) <= 12
-  
+
   if year.length is 2
     prefix = (new Date).getFullYear()
     prefix = prefix.toString()[0..1]
@@ -415,16 +417,15 @@ $.payment.cardType = (num) ->
 
 $.payment.formatCardNumber = (num) ->
   card = cardFromNumber(num)
-  return num unless card
-
-  upperLength = card.length[card.length.length - 1]
+  format = if card? then card.format else defaultFormat
+  upperLength = if card? then card.length[card.length.length - 1] else maxLength
 
   num = num.replace(/\D/g, '')
   num = num[0..upperLength]
 
-  if card.format.global
-    num.match(card.format)?.join(' ')
+  if format.global
+    num.match(format)?.join(' ')
   else
-    groups = card.format.exec(num)
+    groups = format.exec(num)
     groups?.shift()
     groups?.join(' ')
