@@ -83,7 +83,7 @@ cards = [
   }
 ]
 
-maxLength = Math.max.apply(@, (Math.max.apply(@, card.length) for card in cards))
+maxLength = Math.max(Math.max(card.length...) for card in cards...)
 
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
