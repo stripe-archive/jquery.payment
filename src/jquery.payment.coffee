@@ -83,6 +83,8 @@ cards = [
   }
 ]
 
+maxLength = Math.max(Math.max(card.length...) for card in cards...)
+
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
   return card for card in cards when card.pattern.test(num)
@@ -137,11 +139,20 @@ formatCardNumber = (e) ->
 
   upperLength = 16
   upperLength = card.length[card.length.length - 1] if card
-  return if length >= upperLength
+  return if length > upperLength or hasTextSelected($target)
 
-  # Return if focus isn't at the end of the text
-  return if $target.prop('selectionStart')? and
-    $target.prop('selectionStart') isnt value.length
+  # if focus is in middle of text, reformat and move cursor
+  cursor = $target.prop('selectionStart')
+  if cursor? and cursor isnt value.length
+    e.preventDefault()
+    value = value.slice(0, cursor) + digit + value.slice(cursor)
+    value = $.payment.formatCardNumber(value)
+    $target.val(value)
+    cursor = if value[cursor] is " " then cursor + 2 else cursor + 1
+    e.currentTarget.setSelectionRange(cursor, cursor)
+    return
+
+  return if length is upperLength
 
   if card && card.type is 'amex'
     # Amex cards are formatted differently
@@ -163,16 +174,27 @@ formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
 
-  return if e.meta
+  return if e.meta or hasTextSelected($target)
 
-  # Return if focus isn't at the end of the text
-  return if $target.prop('selectionStart')? and
-    $target.prop('selectionStart') isnt value.length
+  # If we're backspacing
+  if e.which is 8
+    # if focus is in middle of text, reformat and reposition cursor
+    cursor = $target.prop('selectionStart')
+    if cursor? and cursor isnt value.length
+      e.preventDefault()
+      if value.charAt(cursor-1) is " " and cursor >= 2
+        value = value.slice(0, cursor - 2) + value.slice(cursor-1)
+      else
+        value = value.slice(0, cursor - 1) + value.slice(cursor)
+      $target.val($.payment.formatCardNumber(value))
+      if value.charAt(cursor-2) is " " and cursor >= 2 then cursor -=2 else cursor -= 1
+      e.currentTarget.setSelectionRange(cursor, cursor)
+      return
 
-  # If we're backspacing, remove the trailing space
-  if e.which is 8 and /\s\d?$/.test(value)
-    e.preventDefault()
-    $target.val(value.replace(/\s\d?$/, ''))
+    # remove the trailing space
+    if /\s\d?$/.test(value)
+      e.preventDefault()
+      $target.val(value.replace(/\s\d?$/, ''))
 
 # Format Expiry
 
@@ -379,7 +401,7 @@ $.payment.validateCardExpiry = (month, year) =>
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
   return false unless parseInt(month, 10) <= 12
-  
+
   if year.length is 2
     prefix = (new Date).getFullYear()
     prefix = prefix.toString()[0..1]
@@ -415,16 +437,15 @@ $.payment.cardType = (num) ->
 
 $.payment.formatCardNumber = (num) ->
   card = cardFromNumber(num)
-  return num unless card
-
-  upperLength = card.length[card.length.length - 1]
+  format = if card? then card.format else defaultFormat
+  upperLength = if card? then card.length[card.length.length - 1] else maxLength
 
   num = num.replace(/\D/g, '')
   num = num[0..upperLength]
 
-  if card.format.global
-    num.match(card.format)?.join(' ')
+  if format.global
+    num.match(format)?.join(' ')
   else
-    groups = card.format.exec(num)
+    groups = format.exec(num)
     groups?.shift()
     groups?.join(' ')
