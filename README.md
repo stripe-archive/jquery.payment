@@ -140,6 +140,7 @@ Returns a card type. Either:
 
 * `visa`
 * `mastercard`
+* `discover`
 * `amex`
 * `dinersclub`
 * `maestro`
