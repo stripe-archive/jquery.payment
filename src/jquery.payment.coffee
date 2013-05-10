@@ -165,12 +165,18 @@ formatBackCardNumber = (e) ->
 
   return if e.meta
 
+  # Return unless backspacing
+  return unless e.which is 8
+
   # Return if focus isn't at the end of the text
   return if $target.prop('selectionStart')? and
     $target.prop('selectionStart') isnt value.length
 
-  # If we're backspacing, remove the trailing space
-  if e.which is 8 and /\s\d?$/.test(value)
+  # Remove the trailing space
+  if /\d\s$/.test(value)
+    e.preventDefault()
+    $target.val(value.replace(/\d\s$/, ''))
+  else if /\s\d?$/.test(value)
     e.preventDefault()
     $target.val(value.replace(/\s\d?$/, ''))
 
@@ -227,7 +233,10 @@ formatBackExpiry = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   # Remove the trailing space
-  if /\s\/\s?\d?$/.test(value)
+  if /\d(\s|\/)+$/.test(value)
+    e.preventDefault()
+    $target.val(value.replace(/\d(\s|\/)*$/, ''))
+  else if /\s\/\s?\d?$/.test(value)
     e.preventDefault()
     $target.val(value.replace(/\s\/\s?\d?$/, ''))
 
@@ -379,7 +388,7 @@ $.payment.validateCardExpiry = (month, year) =>
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
   return false unless parseInt(month, 10) <= 12
-  
+
   if year.length is 2
     prefix = (new Date).getFullYear()
     prefix = prefix.toString()[0..1]
