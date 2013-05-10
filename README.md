@@ -176,7 +176,7 @@ Run `cake build`
 
 ## Run tests
 
-Run `mocha --compilers coffee:coffee-script`
+Run `cake test`
 
 ## Autocomplete recommendations
 
