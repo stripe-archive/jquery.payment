@@ -294,6 +294,8 @@ restrictCVC = (e) ->
   digit   = String.fromCharCode(e.which)
   return unless /^\d+$/.test(digit)
 
+  return if hasTextSelected($target)
+
   val     = $target.val() + digit
   val.length <= 4
 
