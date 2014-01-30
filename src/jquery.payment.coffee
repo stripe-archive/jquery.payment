@@ -139,7 +139,7 @@ reFormatCardNumber = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
-    $target.val(value)
+    $target.val(value).trigger('payment.cardNumberFormatted')
 
 formatCardNumber = (e) ->
   # Only format if input is a number
@@ -168,12 +168,12 @@ formatCardNumber = (e) ->
   # If '4242' + 4
   if re.test(value)
     e.preventDefault()
-    $target.val(value + ' ' + digit)
+    $target.val(value + ' ' + digit).trigger('payment.cardNumberFormatted')
 
   # If '424' + 2
   else if re.test(value + digit)
     e.preventDefault()
-    $target.val(value + digit + ' ')
+    $target.val(value + digit + ' ').trigger('payment.cardNumberFormatted')
 
 formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
@@ -191,10 +191,10 @@ formatBackCardNumber = (e) ->
   # Remove the trailing space
   if /\d\s$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\d\s$/, ''))
+    $target.val(value.replace(/\d\s$/, '')).trigger('payment.cardNumberFormatted')
   else if /\s\d?$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\s\d?$/, ''))
+    $target.val(value.replace(/\s\d?$/, '')).trigger('payment.cardNumberFormatted')
 
 # Format Expiry
 
@@ -209,15 +209,15 @@ formatExpiry = (e) ->
 
   if /^\d$/.test(val) and val not in ['0', '1']
     e.preventDefault()
-    $target.val("0#{val} / ")
+    $target.val("0#{val} / ").trigger('payment.cardExpiryFormatted')
 
   else if /^\d{2}$/.test(val)
     e.preventDefault()
-    $target.val("#{val} / ")
+    $target.val("#{val} / ").trigger('payment.cardExpiryFormatted')
 
   else if /^\d{3}$/.test(val)
     e.preventDefault()
-    $target.val("#{val.slice(0, 2)} / #{val.slice(2, 3)}")
+    $target.val("#{val.slice(0, 2)} / #{val.slice(2, 3)}").trigger('payment.cardExpiryFormatted')
 
 formatForwardSlash = (e) ->
   slash = String.fromCharCode(e.which)
@@ -227,7 +227,7 @@ formatForwardSlash = (e) ->
   val     = $target.val()
 
   if /^\d$/.test(val) and val isnt '0'
-    $target.val("0#{val} / ")
+    $target.val("0#{val} / ").trigger('payment.cardExpiryFormatted')
 
 formatBackExpiry = (e) ->
   # If shift+backspace is pressed
@@ -246,10 +246,10 @@ formatBackExpiry = (e) ->
   # Remove the trailing space
   if /\d(\s|\/)+$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\d(\s|\/)*$/, ''))
+    $target.val(value.replace(/\d(\s|\/)*$/, '')).trigger('payment.cardExpiryFormatted')
   else if /\s\/\s?\d?$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\s\/\s?\d?$/, ''))
+    $target.val(value.replace(/\s\/\s?\d?$/, '')).trigger('payment.cardExpiryFormatted')
 
 #  Restrictions
 
