@@ -8,7 +8,7 @@ $.fn.payment = (method, args...) ->
 
 defaultFormat = /(\d{1,4})/g
 
-cards = [
+$.payment.cards = cards = [
   {
       type: 'maestro'
       pattern: /^(5018|5020|5038|6304|6759|676[1-3])/
