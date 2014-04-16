@@ -30,7 +30,7 @@ Supported card types are:
 * JCB
 * Diners Club
 * Maestro
-* Laster
+* Laser
 * UnionPay
 
 ## API
