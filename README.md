@@ -2,13 +2,13 @@
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-For example, you can make a input act like a credit card field (with number formatting, and length restriction):
+For example, you can make a input act like a credit card field (with number formatting and length restriction):
 
 ``` javascript
 $('input.cc-num').payment('formatCardNumber');
 ```
 
-Then, when say the payment form is submitted, you can validate the card number on the client-side like so:
+Then, when the payment form is submitted, you can validate the card number on the client-side like so:
 
 ``` javascript
 var valid = $.payment.validateCardNumber($('input.cc-num').val());
@@ -39,11 +39,11 @@ Supported card types are:
 
 Formats card numbers:
 
-* Including a space between every 4 digits
+* Includes a space between every 4 digits
 * Restricts input to numbers
 * Limits to 16 numbers
-* American Express formatting support
-* Adds a class of the card type (i.e. 'visa') to the input
+* Supports American Express formatting
+* Adds a class of the card type (e.g. 'visa') to the input
 
 Example:
 
@@ -85,7 +85,7 @@ General numeric input restriction.
 Example:
 
 ``` javascript
-$('data-numeric').payment('restrictNumeric');
+$('[data-numeric]').payment('restrictNumeric');
 ```
 
 ### $.payment.validateCardNumber(number)
@@ -165,19 +165,19 @@ $.payment.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
 $('input.cc-exp').payment('cardExpiryVal') //=> {month: 4, year: 2020}
 ```
 
-This function doesn't do any validation of the month or year, use `$.payment.validateCardExpiry(month, year)` for that.
+This function doesn't perform any validation of the month or year; use `$.payment.validateCardExpiry(month, year)` for that.
 
 ## Example
 
-Look in `./example/index.html`
+Look in [`./example/index.html`](example/index.html)
 
 ## Building
 
 Run `cake build`
 
-## Run tests
+## Running tests
 
-Run `mocha --compilers coffee:coffee-script`
+Run `cake test`
 
 ## Autocomplete recommendations
 
