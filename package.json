@@ -1,6 +1,6 @@
 {
   "name": "jquery.payment",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "jQuery Payment",
   "main": "lib/jquery.payment.js",
   "directories": {
