@@ -18,7 +18,7 @@ task 'watch', 'Watch src/ for changes', ->
     print data.toString()
 
 task 'test', 'Run tests', ->
-  mocha = spawn 'mocha', ['--compilers', 'coffee:coffee-script']
+  mocha = spawn 'mocha', ['--compilers', 'coffee:coffee-script/register']
   mocha.stderr.on 'data', (data) ->
     process.stderr.write data.toString()
   mocha.stdout.on 'data', (data) ->
