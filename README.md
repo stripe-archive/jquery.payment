@@ -167,6 +167,10 @@ $('input.cc-exp').payment('cardExpiryVal') //=> {month: 4, year: 2020}
 
 This function doesn't do any validation of the month or year, use `$.payment.validateCardExpiry(month, year)` for that.
 
+### $.payment.cardTypesList
+
+Array of detected card types.
+
 ## Example
 
 Look in `./example/index.html`
