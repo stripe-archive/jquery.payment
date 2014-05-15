@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cake test"
   },
   "repository": {
     "type": "git",
@@ -22,6 +22,7 @@
   "author": "Alex MacCaw",
   "license": "MIT",
   "dependencies": {
-    "jquery": "latest"
+    "jquery": "latest",
+    "jsdom": "^0.10.5"
   }
 }
