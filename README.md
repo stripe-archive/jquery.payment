@@ -1,4 +1,4 @@
-# jQuery.payment
+# jQuery.payment [![Build Status](https://travis-ci.org/stripe/jquery.payment.svg?branch=master)](https://travis-ci.org/stripe/jquery.payment)
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 

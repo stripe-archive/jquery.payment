@@ -1,4 +1,7 @@
 assert = require('assert')
+jsdom = require('jsdom').jsdom
+doc = jsdom('')
+global.window = doc.createWindow()
 $      = require('jquery')
 global.jQuery = $
 

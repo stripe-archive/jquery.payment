@@ -8,7 +8,7 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "cake test"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,11 @@
   "license": "MIT",
   "dependencies": {
     "jquery": "latest"
+  },
+  "devDependencies": {
+    "jsdom": "*",
+    "cake": "*",
+    "coffee-script": "*",
+    "mocha": "*"
   }
 }
