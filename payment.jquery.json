@@ -1,0 +1,19 @@
+{
+  "name": "payment",
+  "version": "1.0.2",
+  "title": "jQuery.payment",
+  "description": "A general purpose library for building credit card forms, validating inputs and formatting numbers.",
+  "keywords": [
+    "payment",
+    "cc",
+    "card"
+  ],
+  "author": {
+    "name": "Stripe",
+    "url": "https://www.stripe.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "jquery": ">=1.5"
+  }
+}
