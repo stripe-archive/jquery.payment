@@ -1,8 +1,6 @@
 assert = require('assert')
-jsdom = require('jsdom').jsdom
-doc = jsdom('')
-global.window = doc.createWindow()
-$      = require('jquery')
+window = require('jsdom').jsdom().createWindow()
+$      = require('jquery')(window)
 global.jQuery = $
 
 require('../src/jquery.payment')
@@ -138,7 +136,7 @@ describe 'jquery.payment', ->
     it 'should fail if year or month is NaN', ->
       topic = $.payment.validateCardExpiry '12', NaN
       assert.equal topic, false
-    
+
     it 'should support year shorthand', ->
       assert.equal $.payment.validateCardExpiry('05', '20'), true
 
