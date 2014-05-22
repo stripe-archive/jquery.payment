@@ -19,7 +19,7 @@ if ( !valid ) {
 }
 ```
 
-You can find a full [demo here](http://stripe.github.com/jquery.payment/example).
+You can find a full [demo here](http://stripe.github.io/jquery.payment/example).
 
 Supported card types are:
 
