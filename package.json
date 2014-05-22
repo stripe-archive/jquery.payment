@@ -1,21 +1,22 @@
 {
   "name": "jquery.payment",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A general purpose library for building credit card forms, validating inputs and formatting numbers.",
-  "license": "MIT",
   "keywords": [
     "payment",
     "cc",
     "card"
   ],
+  "author": "Stripe (https://www.stripe.com)",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/stripe/jquery.payment.git"
   },
+  "main": "lib/jquery.payment.js",
   "scripts": {
     "test": "cake test"
   },
-  "main": "lib/jquery.payment.js",
   "dependencies": {
     "jquery": ">=1.5"
   },
