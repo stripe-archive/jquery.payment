@@ -1,33 +1,28 @@
 {
   "name": "jquery.payment",
   "version": "1.0.2",
-  "description": "jQuery Payment",
-  "main": "lib/jquery.payment.js",
-  "directories": {
-    "example": "example",
-    "test": "test"
-  },
-  "scripts": {
-    "test": "cake test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/stripe/jquery.payment.git"
-  },
+  "description": "A general purpose library for building credit card forms, validating inputs and formatting numbers.",
+  "license": "MIT",
   "keywords": [
     "payment",
     "cc",
     "card"
   ],
-  "author": "Alex MacCaw",
-  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stripe/jquery.payment.git"
+  },
+  "scripts": {
+    "test": "cake test"
+  },
+  "main": "lib/jquery.payment.js",
   "dependencies": {
-    "jquery": "latest"
+    "jquery": ">=1.5"
   },
   "devDependencies": {
-    "jsdom": "*",
-    "cake": "*",
-    "coffee-script": "*",
-    "mocha": "*"
+    "cake": "~0.1",
+    "coffee-script": "~1.7",
+    "jsdom": "~0.10",
+    "mocha": "~1.18"
   }
 }
