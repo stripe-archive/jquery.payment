@@ -8,12 +8,12 @@ For example, you can make a input act like a credit card field (with number form
 $('input.cc-num').payment('formatCardNumber');
 ```
 
-Then, when the payment form is submitted, you can validate the card number on the client-side like so:
+Then, when the payment form is submitted, you can validate the card number on the client-side:
 
 ``` javascript
 var valid = $.payment.validateCardNumber($('input.cc-num').val());
 
-if ( !valid ) {
+if (!valid) {
   alert('Your card is not valid!');
   return false;
 }
