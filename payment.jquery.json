@@ -10,7 +10,8 @@
   ],
   "author": {
     "name": "Stripe",
-    "url": "https://www.stripe.com"
+    "url": "https://www.stripe.com",
+    "email": "support+github@stripe.com"
   },
   "licenses": [
     {
@@ -18,6 +19,10 @@
       "url": "https://github.com/stripe/jquery.payment/blob/master/LICENSE"
     }
   ],
+  "homepage": "https://github.com/stripe/jquery.payment",
+  "docs": "https://github.com/stripe/jquery.payment",
+  "bugs": "https://github.com/stripe/jquery.payment/issues",
+  "demo": "http://stripe.github.io/jquery.payment/example",
   "dependencies": {
     "jquery": ">=1.5"
   }
