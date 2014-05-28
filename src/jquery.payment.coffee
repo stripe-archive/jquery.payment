@@ -254,6 +254,9 @@ restrictNumeric = (e) ->
 
   # If char is a special char (Firefox)
   return true if e.which < 33
+  
+  # char is a ctrl+v key (uppercase and lowercase)
+  return true if e.which is 118 and e.ctrlKey or e.which is 86 and e.ctrlKey
 
   input = String.fromCharCode(e.which)
 
