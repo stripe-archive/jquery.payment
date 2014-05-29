@@ -142,6 +142,7 @@ Returns a card type. Either:
 * `mastercard`
 * `discover`
 * `amex`
+* `jcb`
 * `dinersclub`
 * `maestro`
 * `laser`
