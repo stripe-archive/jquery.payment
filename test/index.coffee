@@ -225,6 +225,28 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('6236265930072952775'), 'unionpay')
       assert.equal($.payment.cardType('6204679475679144515'), 'unionpay')
       assert.equal($.payment.cardType('6216657720782466507'), 'unionpay')
+      
+  describe 'Getting bank details', ->
+    it 'should return the bank name', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal data.bank, "LLOYDS TSB BANK PLC"
+    it 'should return the country', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal data.country, "United Kingdom"
+    it 'should return the country code', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal data.countryCode, "GB"
+    it 'should return the card type', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal data.type, "DEBIT"
+    it 'should return the card category', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal data.category, "PREMIER"
+    it 'should return first as true iff it\'s the first time', ->
+      $.payment.bankDetails '492182', (err, data, first) ->
+        assert.equal first, true
+        $.payment.bankDetails '492182', (err, data, first) ->
+          assert.equal first, false
 
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', ->
