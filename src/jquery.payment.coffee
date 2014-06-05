@@ -5,6 +5,20 @@ $.fn.payment = (method, args...) ->
   $.payment.fn[method].apply(this, args)
 
 # Utils
+binURL = 'http://www.binlist.net/json/{id}?callback=?'
+binFields = {
+  country_code: 'countryCode',
+  country_name: 'country',
+  bank: 'bank',
+  card_type: 'type',
+  card_category: 'category'
+}
+
+bankCache = {
+  cache: {}
+  list: []
+  limit: 10
+}
 
 defaultFormat = /(\d{1,4})/g
 
@@ -314,6 +328,15 @@ setCardType = (e) ->
     $target.toggleClass('identified', cardType isnt 'unknown')
     $target.trigger('payment.cardType', cardType)
 
+getBankDetails = (e) ->
+  $target   = $(e.currentTarget)
+  val       = $target.val()  
+  callback  = (err, data, first) ->
+    return if err
+    $target.trigger('payment.bankDetails', data) if first
+    
+  $.payment.bankDetails(val, callback)
+  
 # Public
 
 # Formatting
@@ -339,6 +362,10 @@ $.payment.fn.formatCardNumber = ->
   @on('keydown', formatBackCardNumber)
   @on('keyup', setCardType)
   @on('paste', reFormatCardNumber)
+  this
+  
+$.payment.fn.getBankDetails = ->
+  @on('keyup', getBankDetails)
   this
 
 # Restrictions
@@ -423,6 +450,28 @@ $.payment.validateCardCVC = (cvc, type) ->
 $.payment.cardType = (num) ->
   return null unless num
   cardFromNumber(num)?.type or null
+  
+$.payment.bankDetails = (num, cb) ->
+  sixDigits = num.replace(/[^0-9]/g, '').substr(0,6)
+  return false if sixDigits.length < 6
+
+  cacheHit = bankCache.cache[sixDigits]
+  return cb(null, cacheHit, false) if cacheHit
+
+  requestURL = binURL.replace('{id}', sixDigits);
+  requestHandler = (data) -> 
+    result = {}
+    for oldField,newField of binFields
+      result[newField] = data[oldField]
+  
+    bankCache.list.push(sixDigits)
+    if bankCache.list.length > bankCache.limit
+      delete bankCache.cache[bankCache.list.shift()]
+    bankCache.cache[sixDigits] = result
+    cb(null, result, true)
+  
+  $.getJSON(requestURL, requestHandler)
+  
 
 $.payment.formatCardNumber = (num) ->
   card = cardFromNumber(num)

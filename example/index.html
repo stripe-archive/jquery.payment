@@ -24,8 +24,10 @@
     jQuery(function($){
       $('[data-numeric]').payment('restrictNumeric');
       $('.cc-number').payment('formatCardNumber');
+      $('.cc-number').payment('getBankDetails');
       $('.cc-exp').payment('formatCardExpiry');
       $('.cc-cvc').payment('formatCardCVC');
+      
 
       $('form').submit(function(e){
         e.preventDefault();
