@@ -243,9 +243,9 @@ describe 'jquery.payment', ->
       $.payment.bankDetails '492182', (err, data, first) ->
         assert.equal data.category, "PREMIER"
     it 'should return first as true iff it\'s the first time', ->
-      $.payment.bankDetails '492182', (err, data, first) ->
+      $.payment.bankDetails '492183', (err, data, first) ->
         assert.equal first, true
-        $.payment.bankDetails '492182', (err, data, first) ->
+        $.payment.bankDetails '492183', (err, data, first) ->
           assert.equal first, false
 
   describe 'formatCardNumber', ->
