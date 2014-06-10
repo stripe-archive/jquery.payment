@@ -182,6 +182,13 @@ formatBackCardNumber = (e) ->
 
 # Format Expiry
 
+reFormatExpiry = (e) ->
+  setTimeout =>
+    $target = $(e.currentTarget)
+    value   = $target.val()
+    value   = $.payment.formatExpiry(value)
+    $target.val(value)
+
 formatExpiry = (e) ->
   # Only format if input is a number
   digit = String.fromCharCode(e.which)
@@ -330,6 +337,7 @@ $.payment.fn.formatCardExpiry = ->
   @on('keypress', formatForwardSlash)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
+  @on('paste', reFormatExpiry)
   this
 
 $.payment.fn.formatCardNumber = ->
@@ -439,3 +447,8 @@ $.payment.formatCardNumber = (num) ->
     groups = card.format.exec(num)
     groups?.shift()
     groups?.join(' ')
+
+$.payment.formatExpiry = (num) ->
+  return num unless /^\s*\d\d\s*\/?\s*\d\d\s*$/.test(num);
+  num = num.replace(/\D/g, '')
+  "#{num[0..1]} / #{num[2..4]}"
