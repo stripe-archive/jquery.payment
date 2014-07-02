@@ -325,11 +325,11 @@ $.payment.fn.formatCardCVC = ->
 
 $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
-  @on('keypress', restrictExpiry)
-  @on('keypress', formatExpiry)
-  @on('keypress', formatForwardSlash)
-  @on('keypress', formatForwardExpiry)
-  @on('keydown',  formatBackExpiry)
+  @on('keypress input', restrictExpiry)
+  @on('keypress input', formatExpiry)
+  @on('keypress input', formatForwardSlash)
+  @on('keypress input', formatForwardExpiry)
+  @on('keydown input',  formatBackExpiry)
   this
 
 $.payment.fn.formatCardNumber = ->
