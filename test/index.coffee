@@ -266,3 +266,12 @@ describe 'jquery.payment', ->
       $expiry.trigger(e)
 
       assert.equal $expiry.val(), '1'
+
+    it 'should work with "input" event', ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+
+      e = $.Event('input');
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      assert.equal $expiry.val(), '04 / '
