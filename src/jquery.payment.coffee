@@ -83,6 +83,11 @@ cards = [
   }
 ]
 
+# Limited feature detection of input event support.
+# It expose us to false negative for Firefox >= 4, but it won't lead to any feature degradation, so it's not a problem.
+oninput = 'keypress'
+oninput = 'input' if 'oninput' of document.createElement('input')
+
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
   return card for card in cards when card.pattern.test(num)
@@ -183,30 +188,25 @@ formatBackCardNumber = (e) ->
 # Format Expiry
 
 formatExpiry = (e) ->
-  # Only format if input is a number
-  digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
-
   $target = $(e.currentTarget)
-  val     = $target.val() + digit
+  val     = $target.val()
+
+  if e.which
+    digit = String.fromCharCode(e.which)
+    return unless /^\d+$/.test(digit)
+    val += digit
 
   if /^\d$/.test(val) and val not in ['0', '1']
     e.preventDefault()
     $target.val("0#{val} / ")
 
-  else if /^\d\d$/.test(val)
+  else if /^\d{2}$/.test(val)
     e.preventDefault()
     $target.val("#{val} / ")
 
-formatForwardExpiry = (e) ->
-  digit = String.fromCharCode(e.which)
-  return unless /^\d+$/.test(digit)
-
-  $target = $(e.currentTarget)
-  val     = $target.val()
-
-  if /^\d\d$/.test(val)
-    $target.val("#{val} / ")
+  else if /^\d{3}$/.test(val)
+    e.preventDefault()
+    $target.val("#{val.slice(0, 2)} / #{val.slice(2, 3)}")
 
 formatForwardSlash = (e) ->
   slash = String.fromCharCode(e.which)
@@ -326,9 +326,8 @@ $.payment.fn.formatCardCVC = ->
 $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
-  @on('keypress', formatExpiry)
+  @on(oninput,    formatExpiry)
   @on('keypress', formatForwardSlash)
-  @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
   this
 
