@@ -1,10 +1,18 @@
 {spawn} = require 'child_process'
+path    = require 'path'
+
+binPath = (bin) -> path.resolve(__dirname, "./node_modules/.bin/#{bin}")
+
+runExternal = (cmd, args) ->
+  child = spawn(binPath(cmd), args, {stdio: 'inherit'})
+  child.on('error', console.error)
+  child.on('close', process.exit)
 
 task 'build', 'Build lib/ from src/', ->
-  spawn 'coffee', ['-c', '-o', 'lib', 'src'], stdio: 'inherit'
+  runExternal 'coffee', ['-c', '-o', 'lib', 'src']
 
 task 'watch', 'Watch src/ for changes', ->
-  spawn 'coffee', ['-w', '-c', '-o', 'lib', 'src'], stdio: 'inherit'
+  runExternal 'coffee', ['-w', '-c', '-o', 'lib', 'src']
 
 task 'test', 'Run tests', ->
-  spawn 'mocha', ['--compilers', 'coffee:coffee-script/register'], stdio: 'inherit'
+  runExternal 'mocha', ['--compilers', 'coffee:coffee-script/register']
