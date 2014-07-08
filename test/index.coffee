@@ -2,6 +2,8 @@ assert = require('assert')
 window = require('jsdom').jsdom().createWindow()
 $      = require('jquery')(window)
 global.jQuery = $
+global.window = window
+global.document = window.document
 
 require('../src/jquery.payment')
 
