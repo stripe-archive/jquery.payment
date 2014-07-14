@@ -4,7 +4,7 @@ path    = require 'path'
 binPath = (bin) -> path.resolve(__dirname, "./node_modules/.bin/#{bin}")
 
 runExternal = (cmd, args) ->
-  child = spawn(binPath(cmd), args, {stdio: 'inherit'})
+  child = spawn(binPath(cmd), args, stdio: 'inherit')
   child.on('error', console.error)
   child.on('close', process.exit)
 
