@@ -46,31 +46,41 @@ describe 'jquery.payment', ->
       assert.equal topic, false
 
     it 'should validate for all card types', ->
+      assert($.payment.validateCardNumber('4917300800000000'), 'visaelectron')
+
+      assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
+
+      assert($.payment.validateCardNumber('630495060000000000'), 'laser')
+      assert($.payment.validateCardNumber('630490017740292441'), 'laser')
+
+      assert($.payment.validateCardNumber('4111111111111111'), 'visa')
+      assert($.payment.validateCardNumber('4012888888881881'), 'visa')
+      assert($.payment.validateCardNumber('4222222222222'), 'visa')
+      assert($.payment.validateCardNumber('4462030000000000'), 'visa')
+      assert($.payment.validateCardNumber('4484070000000000'), 'visa')
+
+      assert($.payment.validateCardNumber('5555555555554444'), 'mastercard')
+      assert($.payment.validateCardNumber('5454545454545454'), 'mastercard')
+
       assert($.payment.validateCardNumber('378282246310005'), 'amex')
       assert($.payment.validateCardNumber('371449635398431'), 'amex')
       assert($.payment.validateCardNumber('378734493671000'), 'amex')
 
       assert($.payment.validateCardNumber('30569309025904'), 'dinersclub')
       assert($.payment.validateCardNumber('38520000023237'), 'dinersclub')
+      assert($.payment.validateCardNumber('36700102000000'), 'dinersclub')
+      assert($.payment.validateCardNumber('36148900647913'), 'dinersclub')
 
       assert($.payment.validateCardNumber('6011111111111117'), 'discover')
       assert($.payment.validateCardNumber('6011000990139424'), 'discover')
-
-      assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
-      assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
-
-      assert($.payment.validateCardNumber('5555555555554444'), 'mastercard')
-
-      assert($.payment.validateCardNumber('4111111111111111'), 'visa')
-      assert($.payment.validateCardNumber('4012888888881881'), 'visa')
-      assert($.payment.validateCardNumber('4222222222222'), 'visa')
-
-      assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
 
       assert($.payment.validateCardNumber('6271136264806203568'), 'unionpay')
       assert($.payment.validateCardNumber('6236265930072952775'), 'unionpay')
       assert($.payment.validateCardNumber('6204679475679144515'), 'unionpay')
       assert($.payment.validateCardNumber('6216657720782466507'), 'unionpay')
+
+      assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
+      assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
 
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
@@ -202,31 +212,41 @@ describe 'jquery.payment', ->
       assert.equal topic, null
 
     it 'should return correct type for all test numbers', ->
+      assert.equal($.payment.cardType('4917300800000000'), 'visaelectron')
+
+      assert.equal($.payment.cardType('6759649826438453'), 'maestro')
+
+      assert.equal($.payment.cardType('630495060000000000'), 'laser')
+      assert.equal($.payment.cardType('630490017740292441'), 'laser')
+
+      assert.equal($.payment.cardType('4111111111111111'), 'visa')
+      assert.equal($.payment.cardType('4012888888881881'), 'visa')
+      assert.equal($.payment.cardType('4222222222222'), 'visa')
+      assert.equal($.payment.cardType('4462030000000000'), 'visa')
+      assert.equal($.payment.cardType('4484070000000000'), 'visa')
+
+      assert.equal($.payment.cardType('5555555555554444'), 'mastercard')
+      assert.equal($.payment.cardType('5454545454545454'), 'mastercard')
+
       assert.equal($.payment.cardType('378282246310005'), 'amex')
       assert.equal($.payment.cardType('371449635398431'), 'amex')
       assert.equal($.payment.cardType('378734493671000'), 'amex')
 
       assert.equal($.payment.cardType('30569309025904'), 'dinersclub')
       assert.equal($.payment.cardType('38520000023237'), 'dinersclub')
+      assert.equal($.payment.cardType('36700102000000'), 'dinersclub')
+      assert.equal($.payment.cardType('36148900647913'), 'dinersclub')
 
       assert.equal($.payment.cardType('6011111111111117'), 'discover')
       assert.equal($.payment.cardType('6011000990139424'), 'discover')
-
-      assert.equal($.payment.cardType('3530111333300000'), 'jcb')
-      assert.equal($.payment.cardType('3566002020360505'), 'jcb')
-
-      assert.equal($.payment.cardType('5555555555554444'), 'mastercard')
-
-      assert.equal($.payment.cardType('4111111111111111'), 'visa')
-      assert.equal($.payment.cardType('4012888888881881'), 'visa')
-      assert.equal($.payment.cardType('4222222222222'), 'visa')
-
-      assert.equal($.payment.cardType('6759649826438453'), 'maestro')
 
       assert.equal($.payment.cardType('6271136264806203568'), 'unionpay')
       assert.equal($.payment.cardType('6236265930072952775'), 'unionpay')
       assert.equal($.payment.cardType('6204679475679144515'), 'unionpay')
       assert.equal($.payment.cardType('6216657720782466507'), 'unionpay')
+
+      assert.equal($.payment.cardType('3530111333300000'), 'jcb')
+      assert.equal($.payment.cardType('3566002020360505'), 'jcb')
 
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', ->

@@ -26,12 +26,13 @@ Supported card types are:
 * Visa
 * MasterCard
 * American Express
-* Discover
-* JCB
 * Diners Club
+* Discover
+* UnionPay
+* JCB
+* Visa Electron
 * Maestro
 * Laser
-* UnionPay
 
 ## API
 
@@ -140,13 +141,14 @@ Returns a card type. Either:
 
 * `visa`
 * `mastercard`
-* `discover`
 * `amex`
-* `jcb`
 * `dinersclub`
+* `discover`
+* `unionpay`
+* `jcb`
+* `visaelectron`
 * `maestro`
 * `laser`
-* `unionpay`
 
 The function will return `null` if the card type can't be determined.
 
