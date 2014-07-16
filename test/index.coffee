@@ -253,17 +253,30 @@ describe 'jquery.payment', ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('4242')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 52 # '4'
       $number.trigger(e)
 
       assert.equal $number.val(), '4242 4'
 
+    it 'should trigger cardNumberFormatted event', (done) ->
+
+      $number = $('<input type=text>').payment('formatCardNumber')
+      $number.on 'payment.cardNumberFormatted', ->
+        assert.equal $number.val(), '4242 4'
+        done()
+
+      $number.val('4242')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $number.trigger(e)
+
   describe 'formatCardExpiry', ->
     it 'should format month shorthand correctly', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 52 # '4'
       $expiry.trigger(e)
 
@@ -273,7 +286,7 @@ describe 'jquery.payment', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 47 # '/'
       $expiry.trigger(e)
 
@@ -283,8 +296,33 @@ describe 'jquery.payment', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 100 # 'd'
       $expiry.trigger(e)
 
       assert.equal $expiry.val(), '1'
+
+    it 'should trigger cardExpiryFormatted event (month)', (done) ->
+
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+
+      $expiry.on 'payment.cardExpiryFormatted', ->
+        assert.equal $expiry.val(), '04 / '
+        done()
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+    it 'should trigger cardExpiryFormatted event (slash)', (done) ->
+
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('1')
+
+      $expiry.on 'payment.cardExpiryFormatted', ->
+        assert.equal $expiry.val(), '01 / '
+        done()
+
+      e = $.Event('keypress')
+      e.which = 47 # '/'
+      $expiry.trigger(e)
