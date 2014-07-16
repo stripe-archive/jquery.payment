@@ -124,7 +124,7 @@ hasTextSelected = ($target) ->
 # Format Card Number
 
 reFormatCardNumber = (e) ->
-  setTimeout =>
+  setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
@@ -376,7 +376,7 @@ $.payment.validateCardNumber = (num) ->
   num.length in card.length and
     (card.luhn is false or luhnCheck(num))
 
-$.payment.validateCardExpiry = (month, year) =>
+$.payment.validateCardExpiry = (month, year) ->
   # Allow passing an object
   if typeof month is 'object' and 'month' of month
     {month, year} = month
