@@ -241,6 +241,18 @@ describe 'jquery.payment', ->
         assert.equal $number.val(), '4242 4'
         done()
 
+    it 'should format amex cc number correctly', (done) ->
+      $number = $('<input type=text>').payment('formatCardNumber')
+      $number.val('3782')
+
+      e = $.Event('keypress');
+      e.which = 56 # '8'
+      $number.trigger(e)
+
+      setTimeout ->
+        assert.equal $number.val(), '3782 8'
+        done()
+
   describe 'formatCardExpiry', ->
     it 'should format month shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
