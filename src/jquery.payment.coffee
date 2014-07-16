@@ -436,5 +436,7 @@ $.payment.formatCardNumber = (num) ->
     num.match(card.format)?.join(' ')
   else
     groups = card.format.exec(num)
-    groups?.shift()
-    groups?.join(' ')
+    return unless groups?
+    groups.shift()
+    groups = $.grep(groups, (n) -> n) # Filter empty groups
+    groups.join(' ')
