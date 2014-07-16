@@ -398,7 +398,7 @@ $.payment.validateCardExpiry = (month, year) =>
   year  = $.trim(year)
 
   return false unless /^\d+$/.test(month)
-  return false unless /^\d+$/.test(year)
+  return false unless /^\d{1,4}$/.test(year)
   return false unless parseInt(month, 10) <= 12
 
   if year.length is 2

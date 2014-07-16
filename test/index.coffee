@@ -119,6 +119,11 @@ describe 'jquery.payment', ->
       topic = $.payment.validateCardExpiry 13, currentTime.getFullYear()
       assert.equal topic, false
 
+    it 'that has an invalid year, bigger than 4 digits', ->
+      currentTime = new Date()
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, 20131
+      assert.equal topic, false
+
     it 'that is this year and month', ->
       currentTime = new Date()
       topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, currentTime.getFullYear()
