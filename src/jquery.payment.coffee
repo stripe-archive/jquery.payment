@@ -430,7 +430,7 @@ $.payment.formatCardNumber = (num) ->
   upperLength = card.length[card.length.length - 1]
 
   num = num.replace(/\D/g, '')
-  num = num[0..upperLength]
+  num = num[0...upperLength]
 
   if card.format.global
     num.match(card.format)?.join(' ')
