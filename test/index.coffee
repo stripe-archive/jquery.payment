@@ -229,7 +229,7 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('6216657720782466507'), 'unionpay')
 
   describe 'formatCardNumber', ->
-    it 'should format cc number correctly', ->
+    it 'should format cc number correctly', (done) ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('4242')
 
@@ -237,19 +237,23 @@ describe 'jquery.payment', ->
       e.which = 52 # '4'
       $number.trigger(e)
 
-      assert.equal $number.val(), '4242 4'
+      setTimeout ->
+        assert.equal $number.val(), '4242 4'
+        done()
 
   describe 'formatCardExpiry', ->
-    it 'should format month shorthand correctly', ->
+    it 'should format month shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
 
       e = $.Event('keypress');
       e.which = 52 # '4'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '04 / '
+      setTimeout ->
+        assert.equal $expiry.val(), '04 / '
+        done()
 
-    it 'should format forward slash shorthand correctly', ->
+    it 'should format forward slash shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
@@ -257,9 +261,11 @@ describe 'jquery.payment', ->
       e.which = 47 # '/'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '01 / '
+      setTimeout ->
+        assert.equal $expiry.val(), '01 / '
+        done()
 
-    it 'should only allow numbers', ->
+    it 'should only allow numbers', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
@@ -267,4 +273,6 @@ describe 'jquery.payment', ->
       e.which = 100 # 'd'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '1'
+      setTimeout ->
+        assert.equal $expiry.val(), '1'
+        done()
