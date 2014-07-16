@@ -184,7 +184,7 @@ Run `cake test`
 
 ## Autocomplete recommendations
 
-We recommend you turn autocomplete on for credit card forms, except for the CVC field. You can do this by setting the `autocomplete` attribute:
+We recommend you turn autocomplete on for credit card forms, except for the CVC field (which should never be stored). You can do this by setting the `autocomplete` attribute:
 
 ``` html
 <form autocomplete="on">
@@ -199,7 +199,7 @@ You should also mark up your fields using the [Autocomplete Types spec](http://w
 <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
 ```
 
-Set `autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
+Set `autocompletetype` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
 
 ## Mobile recommendations
 
