@@ -144,7 +144,7 @@ formatCardNumber = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   if card && card.type is 'amex'
-    # Amex cards are formatted differently
+    # AMEX cards are formatted differently
     re = /^(\d{4}|\d{4}\s\d{6})$/
   else
     re = /(?:^|\s)(\d{4})$/
@@ -162,8 +162,6 @@ formatCardNumber = (e) ->
 formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
-
-  return if e.meta
 
   # Return unless backspacing
   return unless e.which is 8
@@ -226,9 +224,6 @@ formatForwardSlash = (e) ->
     $target.val("0#{val} / ")
 
 formatBackExpiry = (e) ->
-  # If shift+backspace is pressed
-  return if e.meta
-
   $target = $(e.currentTarget)
   value   = $target.val()
 
@@ -240,12 +235,9 @@ formatBackExpiry = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   # Remove the trailing space
-  if /\d(\s|\/)+$/.test(value)
+  if /\s\/\s\d?$/.test(value)
     e.preventDefault()
-    setTimeout -> $target.val(value.replace(/\d(\s|\/)*$/, ''))
-  else if /\s\/\s?\d?$/.test(value)
-    e.preventDefault()
-    setTimeout -> $target.val(value.replace(/\s\/\s?\d?$/, ''))
+    setTimeout -> $target.val(value.replace(/\s\/\s\d?$/, ''))
 
 #  Restrictions
 
@@ -337,6 +329,7 @@ $.payment.fn.formatCardExpiry = ->
   @on('keypress', formatForwardSlash)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
+  @on('change', reFormatExpiry)
   @on('input', reFormatExpiry)
   this
 
