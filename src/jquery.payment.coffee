@@ -92,6 +92,22 @@ cards = [
       cvcLength: [3]
       luhn: true
   }
+  {
+      type: 'forbrugsforeningen'
+      pattern: /^600722/
+      format: defaultFormat
+      length: [16]
+      cvcLength: [3]
+      luhn: true
+  }
+  {
+      type: 'dankort'
+      pattern: /^5019/
+      format: defaultFormat
+      length: [16]
+      cvcLength: [3]
+      luhn: true
+  }
 ]
 
 cardFromNumber = (num) ->
