@@ -404,12 +404,15 @@ $.payment.validateCardExpiry = (month, year) ->
 
   return false unless /^\d+$/.test(month)
   return false unless /^\d+$/.test(year)
-  return false unless parseInt(month, 10) <= 12
+  return false unless 1 <= month <= 12
 
-  if year.length is 2
-    prefix = (new Date).getFullYear()
-    prefix = prefix.toString()[0..1]
-    year   = prefix + year
+  if year.length == 2
+    if year < 70
+      year = "20#{year}"
+    else
+      year = "19#{year}"
+
+  return false unless year.length == 4
 
   expiry      = new Date(year, month)
   currentTime = new Date

@@ -135,6 +135,16 @@ describe 'jquery.payment', ->
       topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, currentTime.getFullYear() + 1
       assert.equal topic, true
 
+    it 'that is a two-digit year', ->
+      currentTime = new Date()
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, ('' + currentTime.getFullYear())[0...2]
+      assert.equal topic, true
+
+    it 'that is a two-digit year in the past (i.e. 1990s)', ->
+      currentTime = new Date()
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, 99
+      assert.equal topic, false
+
     it 'that has string numbers', ->
       currentTime = new Date()
       currentTime.setFullYear(currentTime.getFullYear() + 1, currentTime.getMonth() + 2)
