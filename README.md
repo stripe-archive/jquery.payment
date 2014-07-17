@@ -196,10 +196,10 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
 
 ``` html
-<input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
+<input type="text" class="cc-number" pattern="\d*" autocomplete="cc-number" placeholder="Card number" required>
 ```
 
-Set `autocompletetype` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
+Set `autocomplete` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
 
 ## Mobile recommendations
 

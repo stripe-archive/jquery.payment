@@ -21,13 +21,13 @@
   </style>
 
   <script>
-    jQuery(function($){
+    jQuery(function($) {
       $('[data-numeric]').payment('restrictNumeric');
       $('.cc-number').payment('formatCardNumber');
       $('.cc-exp').payment('formatCardExpiry');
       $('.cc-cvc').payment('formatCardCVC');
 
-      $('form').submit(function(e){
+      $('form').submit(function(e) {
         e.preventDefault();
         $('input').removeClass('invalid');
         $('.validation').removeClass('passed failed');
@@ -38,7 +38,7 @@
         $('.cc-exp').toggleClass('invalid', !$.payment.validateCardExpiry($('.cc-exp').payment('cardExpiryVal')));
         $('.cc-cvc').toggleClass('invalid', !$.payment.validateCardCVC($('.cc-cvc').val(), cardType));
 
-        if ( $('input.invalid').length ) {
+        if ($('input.invalid').length) {
           $('.validation').addClass('failed');
         } else {
           $('.validation').addClass('passed');
@@ -50,17 +50,18 @@
 </head>
 <body>
 
-  <form novalidate autocomplete="on">
+  <form novalidate autocomplete="on" method="POST">
     <h2>Card number formatting</h2>
 
-    <input type="text" class="cc-number" pattern="\d*" x-autocompletetype="cc-number" placeholder="Card number" required>
+    <input type="text" class="cc-number" pattern="\d*" autocomplete="cc-number" placeholder="Card number" required>
 
     <h2>Expiry formatting</h2>
 
-    <input type="text" class="cc-exp" pattern="\d*" x-autocompletetype="cc-exp" placeholder="Expires MM/YY" required maxlength="9">
+    <input type="text" class="cc-exp" pattern="\d*" autocomplete="cc-exp" placeholder="Expires MM/YY" required>
 
     <h2>CVC formatting</h2>
-    <input type="text" class="cc-cvc" pattern="\d*" x-autocompletetype="cc-csc" placeholder="Security code" required  autocomplete="off">
+
+    <input type="text" class="cc-cvc" pattern="\d*" autocomplete="off" placeholder="Security code" required>
 
     <h2>Restrict Numeric</h2>
 
