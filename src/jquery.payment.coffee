@@ -94,11 +94,6 @@ cards = [
   }
 ]
 
-# Limited feature detection of input event support.
-# It expose us to false negative for Firefox >= 4, but it won't lead to any feature degradation, so it's not a problem.
-oninput = 'keypress'
-oninput = 'input' if 'oninput' of document.createElement('input')
-
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
   return card for card in cards when card.pattern.test(num)
@@ -135,7 +130,7 @@ hasTextSelected = ($target) ->
 # Format Card Number
 
 reFormatCardNumber = (e) ->
-  setTimeout =>
+  setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
@@ -160,7 +155,7 @@ formatCardNumber = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   if card && card.type is 'amex'
-    # Amex cards are formatted differently
+    # AMEX cards are formatted differently
     re = /^(\d{4}|\d{4}\s\d{6})$/
   else
     re = /(?:^|\s)(\d{4})$/
@@ -168,18 +163,16 @@ formatCardNumber = (e) ->
   # If '4242' + 4
   if re.test(value)
     e.preventDefault()
-    $target.val(value + ' ' + digit)
+    setTimeout -> $target.val(value + ' ' + digit)
 
   # If '424' + 2
   else if re.test(value + digit)
     e.preventDefault()
-    $target.val(value + digit + ' ')
+    setTimeout -> $target.val(value + digit + ' ')
 
 formatBackCardNumber = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
-
-  return if e.meta
 
   # Return unless backspacing
   return unless e.which is 8
@@ -191,33 +184,45 @@ formatBackCardNumber = (e) ->
   # Remove the trailing space
   if /\d\s$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\d\s$/, ''))
+    setTimeout -> $target.val(value.replace(/\d\s$/, ''))
   else if /\s\d?$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\s\d?$/, ''))
+    setTimeout -> $target.val(value.replace(/\s\d?$/, ''))
 
 # Format Expiry
 
-formatExpiry = (e) ->
-  $target = $(e.currentTarget)
-  val     = $target.val()
+reFormatExpiry = (e) ->
+  setTimeout ->
+    $target = $(e.currentTarget)
+    value   = $target.val()
+    value   = $.payment.formatExpiry(value)
+    $target.val(value)
 
-  if e.which
-    digit = String.fromCharCode(e.which)
-    return unless /^\d+$/.test(digit)
-    val += digit
+formatExpiry = (e) ->
+  # Only format if input is a number
+  digit = String.fromCharCode(e.which)
+  return unless /^\d+$/.test(digit)
+
+  $target = $(e.currentTarget)
+  val     = $target.val() + digit
 
   if /^\d$/.test(val) and val not in ['0', '1']
     e.preventDefault()
-    $target.val("0#{val} / ")
+    setTimeout -> $target.val("0#{val} / ")
 
-  else if /^\d{2}$/.test(val)
+  else if /^\d\d$/.test(val)
     e.preventDefault()
+    setTimeout -> $target.val("#{val} / ")
+
+formatForwardExpiry = (e) ->
+  digit = String.fromCharCode(e.which)
+  return unless /^\d+$/.test(digit)
+
+  $target = $(e.currentTarget)
+  val     = $target.val()
+
+  if /^\d\d$/.test(val)
     $target.val("#{val} / ")
-
-  else if /^\d{3}$/.test(val)
-    e.preventDefault()
-    $target.val("#{val.slice(0, 2)} / #{val.slice(2, 3)}")
 
 formatForwardSlash = (e) ->
   slash = String.fromCharCode(e.which)
@@ -230,9 +235,6 @@ formatForwardSlash = (e) ->
     $target.val("0#{val} / ")
 
 formatBackExpiry = (e) ->
-  # If shift+backspace is pressed
-  return if e.meta
-
   $target = $(e.currentTarget)
   value   = $target.val()
 
@@ -244,12 +246,9 @@ formatBackExpiry = (e) ->
     $target.prop('selectionStart') isnt value.length
 
   # Remove the trailing space
-  if /\d(\s|\/)+$/.test(value)
+  if /\s\/\s\d?$/.test(value)
     e.preventDefault()
-    $target.val(value.replace(/\d(\s|\/)*$/, ''))
-  else if /\s\/\s?\d?$/.test(value)
-    e.preventDefault()
-    $target.val(value.replace(/\s\/\s?\d?$/, ''))
+    setTimeout -> $target.val(value.replace(/\s\/\s\d?$/, ''))
 
 #  Restrictions
 
@@ -337,9 +336,12 @@ $.payment.fn.formatCardCVC = ->
 $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
-  @on(oninput,    formatExpiry)
+  @on('keypress', formatExpiry)
   @on('keypress', formatForwardSlash)
+  @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
+  @on('change', reFormatExpiry)
+  @on('input', reFormatExpiry)
   this
 
 $.payment.fn.formatCardNumber = ->
@@ -349,6 +351,9 @@ $.payment.fn.formatCardNumber = ->
   @on('keydown', formatBackCardNumber)
   @on('keyup', setCardType)
   @on('paste', reFormatCardNumber)
+  @on('change', reFormatCardNumber)
+  @on('input', reFormatCardNumber)
+  @on('input', setCardType)
   this
 
 # Restrictions
@@ -387,7 +392,7 @@ $.payment.validateCardNumber = (num) ->
   num.length in card.length and
     (card.luhn is false or luhnCheck(num))
 
-$.payment.validateCardExpiry = (month, year) =>
+$.payment.validateCardExpiry = (month, year) ->
   # Allow passing an object
   if typeof month is 'object' and 'month' of month
     {month, year} = month
@@ -441,11 +446,30 @@ $.payment.formatCardNumber = (num) ->
   upperLength = card.length[card.length.length - 1]
 
   num = num.replace(/\D/g, '')
-  num = num[0..upperLength]
+  num = num[0...upperLength]
 
   if card.format.global
     num.match(card.format)?.join(' ')
   else
     groups = card.format.exec(num)
-    groups?.shift()
-    groups?.join(' ')
+    return unless groups?
+    groups.shift()
+    groups = $.grep(groups, (n) -> n) # Filter empty groups
+    groups.join(' ')
+
+$.payment.formatExpiry = (expiry) ->
+  parts = expiry.match(/^\D*(\d{1,2})(\D+)?(\d{1,4})?/)
+  return '' unless parts
+
+  mon = parts[1] || ''
+  sep = parts[2] || ''
+  year = parts[3] || ''
+
+  if year.length > 0 || (sep.length > 0 && !(/\ \/?\ ?/.test(sep)))
+    sep = ' / '
+
+  if mon.length == 1 and mon not in ['0', '1']
+    mon = "0#{mon}"
+    sep = ' / '
+
+  return mon + sep + year
