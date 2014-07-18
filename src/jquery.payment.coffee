@@ -1,4 +1,9 @@
-$            = jQuery
+if jQuery?
+  $ = jQuery
+
+if !jQuery? and Zepto?
+  $ = Zepto
+  
 $.payment    = {}
 $.payment.fn = {}
 $.fn.payment = (method, args...) ->
