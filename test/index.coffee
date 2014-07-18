@@ -320,3 +320,25 @@ describe 'jquery.payment', ->
       setTimeout ->
         assert.equal $expiry.val(), '1'
         done()
+
+  describe 'isDebitCard', ->
+    it 'returns true for debit card types', ->
+      assert.equal $.payment.isDebitCard('visaelectron'), true
+      assert.equal $.payment.isDebitCard('maestro'), true
+      assert.equal $.payment.isDebitCard('forbrugsforeningen'), true
+      assert.equal $.payment.isDebitCard('dankort'), true
+
+    it 'returns false for credit card types', ->
+      assert.equal $.payment.isDebitCard('visa'), false
+      assert.equal $.payment.isDebitCard('mastercard'), false
+      assert.equal $.payment.isDebitCard('amex'), false
+      assert.equal $.payment.isDebitCard('dinersclub'), false
+      assert.equal $.payment.isDebitCard('discover'), false
+      assert.equal $.payment.isDebitCard('unionpay'), false
+      assert.equal $.payment.isDebitCard('jcb'), false
+
+    it 'returns null for unknown types', ->
+      assert.equal $.payment.isDebitCard('hipstercard'), null
+
+    it 'returns null if no card type is given', ->
+      assert.equal $.payment.isDebitCard(), null
