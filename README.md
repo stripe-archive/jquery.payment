@@ -32,7 +32,8 @@ Supported card types are:
 * JCB
 * Visa Electron
 * Maestro
-* Laser
+* Forbrugsforeningen
+* Dankort
 
 ## API
 
@@ -148,7 +149,8 @@ Returns a card type. Either:
 * `jcb`
 * `visaelectron`
 * `maestro`
-* `laser`
+* `forbrugsforeningen`
+* `dankort`
 
 The function will return `null` if the card type can't be determined.
 

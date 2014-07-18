@@ -13,7 +13,7 @@ cards = [
   # specific patterns than their credit-card equivalents.
   {
       type: 'visaelectron'
-      pattern: /^(4026|417500|4405|4508|4844|4913|4917)/
+      pattern: /^4(026|17500|405|508|844|91[37])/
       format: defaultFormat
       length: [16]
       cvcLength: [3]
@@ -21,17 +21,25 @@ cards = [
   }
   {
       type: 'maestro'
-      pattern: /^(5018|5020|5038|5[68]|639|67[56])/
+      pattern: /^(5(018|0[23]|[68])|6(39|7))/
       format: defaultFormat
       length: [12..19]
       cvcLength: [3]
       luhn: true
   }
   {
-      type: 'laser'
-      pattern: /^(6304|67[07])/
+      type: 'forbrugsforeningen'
+      pattern: /^600/
       format: defaultFormat
-      length: [16..19]
+      length: [16]
+      cvcLength: [3]
+      luhn: true
+  }
+  {
+      type: 'dankort'
+      pattern: /^5019/
+      format: defaultFormat
+      length: [16]
       cvcLength: [3]
       luhn: true
   }
@@ -62,7 +70,7 @@ cards = [
   }
   {
       type: 'dinersclub'
-      pattern: /^(3[689]|30[0-59])/
+      pattern: /^3[0689]/
       format: defaultFormat
       length: [14]
       cvcLength: [3]
@@ -70,7 +78,7 @@ cards = [
   }
   {
       type: 'discover'
-      pattern: /^(6011|65|64[4-9]|622)/
+      pattern: /^6([045]|22)/
       format: defaultFormat
       length: [16]
       cvcLength: [3]
@@ -87,22 +95,6 @@ cards = [
   {
       type: 'jcb'
       pattern: /^35/
-      format: defaultFormat
-      length: [16]
-      cvcLength: [3]
-      luhn: true
-  }
-  {
-      type: 'forbrugsforeningen'
-      pattern: /^600722/
-      format: defaultFormat
-      length: [16]
-      cvcLength: [3]
-      luhn: true
-  }
-  {
-      type: 'dankort'
-      pattern: /^5019/
       format: defaultFormat
       length: [16]
       cvcLength: [3]

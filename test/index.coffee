@@ -50,8 +50,9 @@ describe 'jquery.payment', ->
 
       assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
 
-      assert($.payment.validateCardNumber('630495060000000000'), 'laser')
-      assert($.payment.validateCardNumber('630490017740292441'), 'laser')
+      assert($.payment.validateCardNumber('6007220000000004'), 'forbrugsforeningen')
+
+      assert($.payment.validateCardNumber('5019717010103742'), 'dankort')
 
       assert($.payment.validateCardNumber('4111111111111111'), 'visa')
       assert($.payment.validateCardNumber('4012888888881881'), 'visa')
@@ -81,12 +82,6 @@ describe 'jquery.payment', ->
 
       assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
       assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
-
-      assert($.payment.validateCardNumber('6007220000000000'), 'forbrugsforeningen')
-      assert($.payment.validateCardNumber('6007221111111111'), 'forbrugsforeningen')
-
-      assert($.payment.validateCardNumber('5019000000000000'), 'dankort')
-      assert($.payment.validateCardNumber('5019111111111111'), 'dankort')
 
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
@@ -232,8 +227,9 @@ describe 'jquery.payment', ->
 
       assert.equal($.payment.cardType('6759649826438453'), 'maestro')
 
-      assert.equal($.payment.cardType('630495060000000000'), 'laser')
-      assert.equal($.payment.cardType('630490017740292441'), 'laser')
+      assert.equal($.payment.cardType('6007220000000004'), 'forbrugsforeningen')
+
+      assert.equal($.payment.cardType('5019717010103742'), 'dankort')
 
       assert.equal($.payment.cardType('4111111111111111'), 'visa')
       assert.equal($.payment.cardType('4012888888881881'), 'visa')
