@@ -82,6 +82,12 @@ describe 'jquery.payment', ->
       assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
       assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
 
+      assert($.payment.validateCardNumber('6007220000000000'), 'forbrugsforeningen')
+      assert($.payment.validateCardNumber('6007221111111111'), 'forbrugsforeningen')
+
+      assert($.payment.validateCardNumber('5019000000000000'), 'dankort')
+      assert($.payment.validateCardNumber('5019111111111111'), 'dankort')
+
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
       topic = $.payment.validateCardCVC ''
