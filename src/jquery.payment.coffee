@@ -18,7 +18,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: true
+      kind: 'debit'
   }
   {
       type: 'maestro'
@@ -27,7 +27,7 @@ cards = [
       length: [12..19]
       cvcLength: [3]
       luhn: true
-      debit: true
+      kind: 'debit'
   }
   {
       type: 'forbrugsforeningen'
@@ -36,7 +36,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: true
+      kind: 'debit'
   }
   {
       type: 'dankort'
@@ -45,7 +45,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: true
+      kind: 'debit'
   }
   # Credit cards
   {
@@ -55,7 +55,7 @@ cards = [
       length: [13, 16]
       cvcLength: [3]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'mastercard'
@@ -64,7 +64,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'amex'
@@ -73,7 +73,7 @@ cards = [
       length: [15]
       cvcLength: [3..4]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'dinersclub'
@@ -82,7 +82,7 @@ cards = [
       length: [14]
       cvcLength: [3]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'discover'
@@ -91,7 +91,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'unionpay'
@@ -100,7 +100,7 @@ cards = [
       length: [16..19]
       cvcLength: [3]
       luhn: false
-      debit: false
+      kind: 'credit'
   }
   {
       type: 'jcb'
@@ -109,7 +109,7 @@ cards = [
       length: [16]
       cvcLength: [3]
       luhn: true
-      debit: false
+      kind: 'credit'
   }
 ]
 
@@ -496,5 +496,5 @@ $.payment.formatExpiry = (expiry) ->
 
   return mon + sep + year
 
-$.payment.isDebitCard = (type) ->
-  cardFromType(type)?.debit
+$.payment.kind = (type) ->
+  cardFromType(type)?.kind

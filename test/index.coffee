@@ -321,24 +321,24 @@ describe 'jquery.payment', ->
         assert.equal $expiry.val(), '1'
         done()
 
-  describe 'isDebitCard', ->
-    it 'returns true for debit card types', ->
-      assert.equal $.payment.isDebitCard('visaelectron'), true
-      assert.equal $.payment.isDebitCard('maestro'), true
-      assert.equal $.payment.isDebitCard('forbrugsforeningen'), true
-      assert.equal $.payment.isDebitCard('dankort'), true
+  describe 'kind', ->
+    it 'returns "debit" for debit card types', ->
+      assert.equal $.payment.kind('visaelectron'), 'debit'
+      assert.equal $.payment.kind('maestro'), 'debit'
+      assert.equal $.payment.kind('forbrugsforeningen'), 'debit'
+      assert.equal $.payment.kind('dankort'), 'debit'
 
-    it 'returns false for credit card types', ->
-      assert.equal $.payment.isDebitCard('visa'), false
-      assert.equal $.payment.isDebitCard('mastercard'), false
-      assert.equal $.payment.isDebitCard('amex'), false
-      assert.equal $.payment.isDebitCard('dinersclub'), false
-      assert.equal $.payment.isDebitCard('discover'), false
-      assert.equal $.payment.isDebitCard('unionpay'), false
-      assert.equal $.payment.isDebitCard('jcb'), false
+    it 'returns "credit" for credit card types', ->
+      assert.equal $.payment.kind('visa'), 'credit'
+      assert.equal $.payment.kind('mastercard'), 'credit'
+      assert.equal $.payment.kind('amex'), 'credit'
+      assert.equal $.payment.kind('dinersclub'), 'credit'
+      assert.equal $.payment.kind('discover'), 'credit'
+      assert.equal $.payment.kind('unionpay'), 'credit'
+      assert.equal $.payment.kind('jcb'), 'credit'
 
     it 'returns null for unknown types', ->
-      assert.equal $.payment.isDebitCard('hipstercard'), null
+      assert.equal $.payment.kind('hipstercard'), null
 
     it 'returns null if no card type is given', ->
-      assert.equal $.payment.isDebitCard(), null
+      assert.equal $.payment.kind(), null
