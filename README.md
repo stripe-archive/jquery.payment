@@ -175,6 +175,8 @@ This function doesn't perform any validation of the month or year; use `$.paymen
 ### $.payment.kind(type)
 
 Returns the kind of the given card type, also known as the card function.
+This can be used for toggling additional fields that may be required for debit
+cards.
 
 Example:
 
