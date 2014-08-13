@@ -232,19 +232,9 @@ formatForwardExpiry = (e) ->
   if /^\d\d$/.test(val)
     $target.val("#{val} / ")
 
-formatForwardSlash = (e) ->
+formatForwardSlashAndSpace = (e) ->
   slash = String.fromCharCode(e.which)
-  return unless slash is '/'
-
-  $target = $(e.currentTarget)
-  val     = $target.val()
-
-  if /^\d$/.test(val) and val isnt '0'
-    $target.val("0#{val} / ")
-
-formatSpace = (e) ->
-  space = String.fromCharCode(e.which)
-  return unless space is ' '
+  return unless slash is '/' or slash is ' '
 
   $target = $(e.currentTarget)
   val     = $target.val()
@@ -332,7 +322,7 @@ setCardType = (e) ->
   val      = $target.val()
   cardType = $.payment.cardType(val) or 'unknown'
 
-  unless $target.hasClass(cardType)
+  unless $target.hasClasscd (cardType)
     allTypes = (card.type for card in cards)
 
     $target.removeClass('unknown')
@@ -355,8 +345,7 @@ $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
-  @on('keypress', formatForwardSlash)
-  @on('keypress', formatSpace)
+  @on('keypress', formatForwardSlashAndSpace)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
   @on('change', reFormatExpiry)
