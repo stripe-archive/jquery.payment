@@ -242,6 +242,16 @@ formatForwardSlash = (e) ->
   if /^\d$/.test(val) and val isnt '0'
     $target.val("0#{val} / ")
 
+formatSpace = (e) ->
+  space = String.fromCharCode(e.which)
+  return unless space is ' '
+
+  $target = $(e.currentTarget)
+  val     = $target.val()
+
+  if /^\d$/.test(val) and val isnt '0'
+    $target.val("0#{val} / ")
+
 formatBackExpiry = (e) ->
   $target = $(e.currentTarget)
   value   = $target.val()
@@ -346,6 +356,7 @@ $.payment.fn.formatCardExpiry = ->
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
   @on('keypress', formatForwardSlash)
+  @on('keypress', formatSpace)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
   @on('change', reFormatExpiry)
