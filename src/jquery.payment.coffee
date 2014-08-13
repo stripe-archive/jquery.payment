@@ -232,9 +232,9 @@ formatForwardExpiry = (e) ->
   if /^\d\d$/.test(val)
     $target.val("#{val} / ")
 
-formatForwardSlash = (e) ->
-  slash = String.fromCharCode(e.which)
-  return unless slash is '/'
+formatForwardSlashAndSpace = (e) ->
+  char = String.fromCharCode(e.which)
+  return unless char is '/' or char is ' '
 
   $target = $(e.currentTarget)
   val     = $target.val()
@@ -345,7 +345,7 @@ $.payment.fn.formatCardExpiry = ->
   @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
-  @on('keypress', formatForwardSlash)
+  @on('keypress', formatForwardSlashAndSpace)
   @on('keypress', formatForwardExpiry)
   @on('keydown',  formatBackExpiry)
   @on('change', reFormatExpiry)
