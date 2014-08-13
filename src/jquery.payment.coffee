@@ -322,7 +322,7 @@ setCardType = (e) ->
   val      = $target.val()
   cardType = $.payment.cardType(val) or 'unknown'
 
-  unless $target.hasClasscd (cardType)
+  unless $target.hasClass (cardType)
     allTypes = (card.type for card in cards)
 
     $target.removeClass('unknown')
