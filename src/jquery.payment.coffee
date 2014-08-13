@@ -278,6 +278,16 @@ restrictNumeric = (e) ->
   # Char is a number or a space
   !!/[\d\s]/.test(input)
 
+restrictNumericPaste = (e) ->
+  setTimeout ->
+    $target   = $(e.currentTarget)
+    value     = $target.val()
+    isNumeric = !!/^[\d\s]*$/.test(value)
+    if isNumeric is false
+      #rewrite the pasted input to blank since it's invalid
+      value = ''
+    $target.val(value)
+
 restrictCardNumber = (e) ->
   $target = $(e.currentTarget)
   digit   = String.fromCharCode(e.which)
@@ -368,6 +378,9 @@ $.payment.fn.formatCardNumber = ->
 
 $.payment.fn.restrictNumeric = ->
   @on('keypress', restrictNumeric)
+  @on('paste', restrictNumericPaste)
+  @on('change', restrictNumericPaste)
+  @on('input', restrictNumericPaste)
   this
 
 # Validations
