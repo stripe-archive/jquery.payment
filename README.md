@@ -131,7 +131,7 @@ Example:
 
 ``` javascript
 $.payment.validateCardCVC('123'); //=> true
-$.payment.validateCardCVC('123', 'amex'); //=> true
+$.payment.validateCardCVC('123', 'amex'); //=> no
 $.payment.validateCardCVC('1234', 'amex'); //=> true
 $.payment.validateCardCVC('12344'); //=> false
 ```
