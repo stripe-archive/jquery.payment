@@ -356,6 +356,8 @@ $.payment.fn.formatCardExpiry = ->
   @on('keydown',  formatBackExpiry)
   @on('change', reFormatExpiry)
   @on('input', reFormatExpiry)
+  #Calling it manually because we only want it to pick up keypress
+  @on('keypress', restrictNumeric)
   this
 
 $.payment.fn.formatCardNumber = ->
