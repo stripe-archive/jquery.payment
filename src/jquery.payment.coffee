@@ -282,10 +282,7 @@ restrictNumericPaste = (e) ->
   setTimeout ->
     $target   = $(e.currentTarget)
     value     = $target.val()
-    isNumeric = !!/^[\d\s]*$/.test(value)
-    if isNumeric is false
-      #rewrite the pasted input to blank since it's invalid
-      value = ''
+    value     = '' unless !!/^[\d\s]*$/.test(value)
     $target.val(value)
 
 restrictCardNumber = (e) ->
@@ -352,7 +349,6 @@ $.payment.fn.formatCardCVC = ->
   this
 
 $.payment.fn.formatCardExpiry = ->
-  @payment('restrictNumeric')
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
   @on('keypress', formatForwardSlashAndSpace)
