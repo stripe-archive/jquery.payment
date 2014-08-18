@@ -439,9 +439,10 @@ $.payment.validateCardCVC = (cvc, type) ->
   cvc = $.trim(cvc)
   return false unless /^\d+$/.test(cvc)
 
-  if type
+  card = cardFromType(type)
+  if card?
     # Check against a explicit card type
-    cvc.length in cardFromType(type)?.cvcLength
+    cvc.length in card.cvcLength
   else
     # Check against all types
     cvc.length >= 3 and cvc.length <= 4
