@@ -233,8 +233,8 @@ formatForwardExpiry = (e) ->
     $target.val("#{val} / ")
 
 formatForwardSlashAndSpace = (e) ->
-  char = String.fromCharCode(e.which)
-  return unless char is '/' or char is ' '
+  which = String.fromCharCode(e.which)
+  return unless which is '/' or which is ' '
 
   $target = $(e.currentTarget)
   val     = $target.val()
