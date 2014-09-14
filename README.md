@@ -236,7 +236,7 @@ Look in `./example/index.html`
     })
 ```
 ## Example Usage
-```
+``` html
 <input type="text" class="cc-exp" placeholder="MM/YYYY" data-bind="payment:{value:YourObservable ,format:'formatCardExpiry'}"
 ```
 
@@ -262,7 +262,7 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 
 You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
 
-``` html
+``` htmle
 <input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
 ```
 
