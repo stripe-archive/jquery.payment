@@ -172,7 +172,7 @@ This function doesn't do any validation of the month or year, use `$.payment.val
 Look in `./example/index.html`
 
 ## Knockout Bindings
-```
+``` javascript
  ko.bindingHandlers.payment = {
         init: function(element, valueAccessor, allBindingsAccessor) {
 
@@ -204,7 +204,7 @@ Look in `./example/index.html`
     }
 ```
 ## Durandal Bindings
-```
+``` javascript
  composition.addBindingHandler('payment', {
         init: function(element, valueAccessor, allBindingsAccessor) {
 
