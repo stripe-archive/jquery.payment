@@ -332,9 +332,16 @@ setCardType = (e) ->
     $target.toggleClass('identified', cardType isnt 'unknown')
     $target.trigger('payment.cardType', cardType)
 
+destroy = (element)->
+  element.off()
+  element.payment = undefined
 # Public
 
 # Formatting
+
+$.payment.fn.destroy = ->
+  destroy(@)
+  @
 
 $.payment.fn.formatCardCVC = ->
   @payment('restrictNumeric')

@@ -320,3 +320,15 @@ describe 'jquery.payment', ->
       setTimeout ->
         assert.equal $expiry.val(), '1'
         done()
+
+  describe 'Destroy', ->
+    it 'should clean up after itself', (done)->
+      # can's seem to utilize headless $.fn.data('events')
+      # to keep track of events here
+
+      $cvc = $('<input type=text>').payment('formatCardCVC')
+      $cvc.payment('destroy')
+
+      setTimeout ->
+        assert.equal $cvc.payment, undefined
+        done()
