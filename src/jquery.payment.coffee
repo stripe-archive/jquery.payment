@@ -12,6 +12,14 @@ cards = [
   # Debit cards must come first, since they have more
   # specific patterns than their credit-card equivalents.
   {
+      type: "wing"
+      pattern: /^501818/
+      format: defaultFormat
+      length: [16]
+      cvcLength: [4]
+      luhn: false
+  }
+  {
       type: 'visaelectron'
       pattern: /^4(026|17500|405|508|844|91[37])/
       format: defaultFormat
