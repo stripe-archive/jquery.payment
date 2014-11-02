@@ -149,7 +149,7 @@ describe 'jquery.payment', ->
     it 'that has string numbers', ->
       currentTime = new Date()
       currentTime.setFullYear(currentTime.getFullYear() + 1, currentTime.getMonth() + 2)
-      topic = $.payment.validateCardExpiry currentTime.getMonth() + '', currentTime.getFullYear() + ''
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1 + '', currentTime.getFullYear() + ''
       assert.equal topic, true
 
     it 'that has non-numbers', ->
