@@ -195,7 +195,7 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 </form>
 ```
 
-You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
+You should also mark up your fields using the [Autofill spec](https://html.spec.whatwg.org/multipage/forms.html#autofill). These are respected by a number of browsers, including Chrome.
 
 ``` html
 <input type="text" class="cc-number" pattern="\d*" autocomplete="cc-number" placeholder="Card number" required>
