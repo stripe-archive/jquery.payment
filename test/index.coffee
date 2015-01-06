@@ -1,6 +1,9 @@
 assert = require('assert')
-$      = require('jquery')
+window = require('jsdom').jsdom().createWindow()
+$      = require('jquery')(window)
 global.jQuery = $
+global.window = window
+global.document = window.document
 
 require('../src/jquery.payment')
 
@@ -43,31 +46,42 @@ describe 'jquery.payment', ->
       assert.equal topic, false
 
     it 'should validate for all card types', ->
+      assert($.payment.validateCardNumber('4917300800000000'), 'visaelectron')
+
+      assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
+
+      assert($.payment.validateCardNumber('6007220000000004'), 'forbrugsforeningen')
+
+      assert($.payment.validateCardNumber('5019717010103742'), 'dankort')
+
+      assert($.payment.validateCardNumber('4111111111111111'), 'visa')
+      assert($.payment.validateCardNumber('4012888888881881'), 'visa')
+      assert($.payment.validateCardNumber('4222222222222'), 'visa')
+      assert($.payment.validateCardNumber('4462030000000000'), 'visa')
+      assert($.payment.validateCardNumber('4484070000000000'), 'visa')
+
+      assert($.payment.validateCardNumber('5555555555554444'), 'mastercard')
+      assert($.payment.validateCardNumber('5454545454545454'), 'mastercard')
+
       assert($.payment.validateCardNumber('378282246310005'), 'amex')
       assert($.payment.validateCardNumber('371449635398431'), 'amex')
       assert($.payment.validateCardNumber('378734493671000'), 'amex')
 
       assert($.payment.validateCardNumber('30569309025904'), 'dinersclub')
       assert($.payment.validateCardNumber('38520000023237'), 'dinersclub')
+      assert($.payment.validateCardNumber('36700102000000'), 'dinersclub')
+      assert($.payment.validateCardNumber('36148900647913'), 'dinersclub')
 
       assert($.payment.validateCardNumber('6011111111111117'), 'discover')
       assert($.payment.validateCardNumber('6011000990139424'), 'discover')
-
-      assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
-      assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
-
-      assert($.payment.validateCardNumber('5555555555554444'), 'mastercard')
-
-      assert($.payment.validateCardNumber('4111111111111111'), 'visa')
-      assert($.payment.validateCardNumber('4012888888881881'), 'visa')
-      assert($.payment.validateCardNumber('4222222222222'), 'visa')
-
-      assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
 
       assert($.payment.validateCardNumber('6271136264806203568'), 'unionpay')
       assert($.payment.validateCardNumber('6236265930072952775'), 'unionpay')
       assert($.payment.validateCardNumber('6204679475679144515'), 'unionpay')
       assert($.payment.validateCardNumber('6216657720782466507'), 'unionpay')
+
+      assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
+      assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
 
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
@@ -122,10 +136,20 @@ describe 'jquery.payment', ->
       topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, currentTime.getFullYear() + 1
       assert.equal topic, true
 
+    it 'that is a two-digit year', ->
+      currentTime = new Date()
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, ('' + currentTime.getFullYear())[0...2]
+      assert.equal topic, true
+
+    it 'that is a two-digit year in the past (i.e. 1990s)', ->
+      currentTime = new Date()
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1, 99
+      assert.equal topic, false
+
     it 'that has string numbers', ->
       currentTime = new Date()
       currentTime.setFullYear(currentTime.getFullYear() + 1, currentTime.getMonth() + 2)
-      topic = $.payment.validateCardExpiry currentTime.getMonth() + '', currentTime.getFullYear() + ''
+      topic = $.payment.validateCardExpiry currentTime.getMonth() + 1 + '', currentTime.getFullYear() + ''
       assert.equal topic, true
 
     it 'that has non-numbers', ->
@@ -135,7 +159,7 @@ describe 'jquery.payment', ->
     it 'should fail if year or month is NaN', ->
       topic = $.payment.validateCardExpiry '12', NaN
       assert.equal topic, false
-    
+
     it 'should support year shorthand', ->
       assert.equal $.payment.validateCardExpiry('05', '20'), true
 
@@ -199,34 +223,45 @@ describe 'jquery.payment', ->
       assert.equal topic, null
 
     it 'should return correct type for all test numbers', ->
+      assert.equal($.payment.cardType('4917300800000000'), 'visaelectron')
+
+      assert.equal($.payment.cardType('6759649826438453'), 'maestro')
+
+      assert.equal($.payment.cardType('6007220000000004'), 'forbrugsforeningen')
+
+      assert.equal($.payment.cardType('5019717010103742'), 'dankort')
+
+      assert.equal($.payment.cardType('4111111111111111'), 'visa')
+      assert.equal($.payment.cardType('4012888888881881'), 'visa')
+      assert.equal($.payment.cardType('4222222222222'), 'visa')
+      assert.equal($.payment.cardType('4462030000000000'), 'visa')
+      assert.equal($.payment.cardType('4484070000000000'), 'visa')
+
+      assert.equal($.payment.cardType('5555555555554444'), 'mastercard')
+      assert.equal($.payment.cardType('5454545454545454'), 'mastercard')
+
       assert.equal($.payment.cardType('378282246310005'), 'amex')
       assert.equal($.payment.cardType('371449635398431'), 'amex')
       assert.equal($.payment.cardType('378734493671000'), 'amex')
 
       assert.equal($.payment.cardType('30569309025904'), 'dinersclub')
       assert.equal($.payment.cardType('38520000023237'), 'dinersclub')
+      assert.equal($.payment.cardType('36700102000000'), 'dinersclub')
+      assert.equal($.payment.cardType('36148900647913'), 'dinersclub')
 
       assert.equal($.payment.cardType('6011111111111117'), 'discover')
       assert.equal($.payment.cardType('6011000990139424'), 'discover')
-
-      assert.equal($.payment.cardType('3530111333300000'), 'jcb')
-      assert.equal($.payment.cardType('3566002020360505'), 'jcb')
-
-      assert.equal($.payment.cardType('5555555555554444'), 'mastercard')
-
-      assert.equal($.payment.cardType('4111111111111111'), 'visa')
-      assert.equal($.payment.cardType('4012888888881881'), 'visa')
-      assert.equal($.payment.cardType('4222222222222'), 'visa')
-
-      assert.equal($.payment.cardType('6759649826438453'), 'maestro')
 
       assert.equal($.payment.cardType('6271136264806203568'), 'unionpay')
       assert.equal($.payment.cardType('6236265930072952775'), 'unionpay')
       assert.equal($.payment.cardType('6204679475679144515'), 'unionpay')
       assert.equal($.payment.cardType('6216657720782466507'), 'unionpay')
 
+      assert.equal($.payment.cardType('3530111333300000'), 'jcb')
+      assert.equal($.payment.cardType('3566002020360505'), 'jcb')
+
   describe 'formatCardNumber', ->
-    it 'should format cc number correctly', ->
+    it 'should format cc number correctly', (done) ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('4242')
 
@@ -234,19 +269,35 @@ describe 'jquery.payment', ->
       e.which = 52 # '4'
       $number.trigger(e)
 
-      assert.equal $number.val(), '4242 4'
+      setTimeout ->
+        assert.equal $number.val(), '4242 4'
+        done()
+
+    it 'should format amex cc number correctly', (done) ->
+      $number = $('<input type=text>').payment('formatCardNumber')
+      $number.val('3782')
+
+      e = $.Event('keypress');
+      e.which = 56 # '8'
+      $number.trigger(e)
+
+      setTimeout ->
+        assert.equal $number.val(), '3782 8'
+        done()
 
   describe 'formatCardExpiry', ->
-    it 'should format month shorthand correctly', ->
+    it 'should format month shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
 
       e = $.Event('keypress');
       e.which = 52 # '4'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '04 / '
+      setTimeout ->
+        assert.equal $expiry.val(), '04 / '
+        done()
 
-    it 'should format forward slash shorthand correctly', ->
+    it 'should format forward slash shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
@@ -254,9 +305,11 @@ describe 'jquery.payment', ->
       e.which = 47 # '/'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '01 / '
+      setTimeout ->
+        assert.equal $expiry.val(), '01 / '
+        done()
 
-    it 'should only allow numbers', ->
+    it 'should only allow numbers', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
@@ -264,4 +317,6 @@ describe 'jquery.payment', ->
       e.which = 100 # 'd'
       $expiry.trigger(e)
 
-      assert.equal $expiry.val(), '1'
+      setTimeout ->
+        assert.equal $expiry.val(), '1'
+        done()

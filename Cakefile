@@ -1,25 +1,18 @@
-{print} = require 'util'
 {spawn} = require 'child_process'
+path    = require 'path'
+
+binPath = (bin) -> path.resolve(__dirname, "./node_modules/.bin/#{bin}")
+
+runExternal = (cmd, args) ->
+  child = spawn(binPath(cmd), args, stdio: 'inherit')
+  child.on('error', console.error)
+  child.on('close', process.exit)
 
 task 'build', 'Build lib/ from src/', ->
-  coffee = spawn 'coffee', ['-c', '-o', 'lib', 'src']
-  coffee.stderr.on 'data', (data) ->
-    process.stderr.write data.toString()
-  coffee.stdout.on 'data', (data) ->
-    print data.toString()
-  coffee.on 'exit', (code) ->
-    callback?() if code is 0
+  runExternal 'coffee', ['-c', '-o', 'lib', 'src']
 
 task 'watch', 'Watch src/ for changes', ->
-  coffee = spawn 'coffee', ['-w', '-c', '-o', 'lib', 'src']
-  coffee.stderr.on 'data', (data) ->
-    process.stderr.write data.toString()
-  coffee.stdout.on 'data', (data) ->
-    print data.toString()
+  runExternal 'coffee', ['-w', '-c', '-o', 'lib', 'src']
 
 task 'test', 'Run tests', ->
-  mocha = spawn 'mocha', ['--compilers', 'coffee:coffee-script']
-  mocha.stderr.on 'data', (data) ->
-    process.stderr.write data.toString()
-  mocha.stdout.on 'data', (data) ->
-    print data.toString()
+  runExternal 'mocha', ['--compilers', 'coffee:coffee-script/register']

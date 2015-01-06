@@ -1,37 +1,39 @@
-# jQuery.payment
+# jQuery.payment [![Build Status](https://travis-ci.org/stripe/jquery.payment.svg?branch=master)](https://travis-ci.org/stripe/jquery.payment)
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-For example, you can make a input act like a credit card field (with number formatting, and length restriction):
+For example, you can make a input act like a credit card field (with number formatting and length restriction):
 
 ``` javascript
 $('input.cc-num').payment('formatCardNumber');
 ```
 
-Then, when say the payment form is submitted, you can validate the card number on the client-side like so:
+Then, when the payment form is submitted, you can validate the card number on the client-side:
 
 ``` javascript
 var valid = $.payment.validateCardNumber($('input.cc-num').val());
 
-if ( !valid ) {
+if (!valid) {
   alert('Your card is not valid!');
   return false;
 }
 ```
 
-You can find a full [demo here](http://stripe.github.com/jquery.payment/example).
+You can find a full [demo here](http://stripe.github.io/jquery.payment/example).
 
 Supported card types are:
 
 * Visa
 * MasterCard
 * American Express
-* Discover
-* JCB
 * Diners Club
-* Maestro
-* Laster
+* Discover
 * UnionPay
+* JCB
+* Visa Electron
+* Maestro
+* Forbrugsforeningen
+* Dankort
 
 ## API
 
@@ -39,11 +41,11 @@ Supported card types are:
 
 Formats card numbers:
 
-* Including a space between every 4 digits
+* Includes a space between every 4 digits
 * Restricts input to numbers
 * Limits to 16 numbers
-* American Express formatting support
-* Adds a class of the card type (i.e. 'visa') to the input
+* Supports American Express formatting
+* Adds a class of the card type (e.g. 'visa') to the input
 
 Example:
 
@@ -85,7 +87,7 @@ General numeric input restriction.
 Example:
 
 ``` javascript
-$('data-numeric').payment('restrictNumeric');
+$('[data-numeric]').payment('restrictNumeric');
 ```
 
 ### $.payment.validateCardNumber(number)
@@ -140,12 +142,15 @@ Returns a card type. Either:
 
 * `visa`
 * `mastercard`
-* `discover`
 * `amex`
 * `dinersclub`
-* `maestro`
-* `laser`
+* `discover`
 * `unionpay`
+* `jcb`
+* `visaelectron`
+* `maestro`
+* `forbrugsforeningen`
+* `dankort`
 
 The function will return `null` if the card type can't be determined.
 
@@ -165,11 +170,11 @@ $.payment.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
 $('input.cc-exp').payment('cardExpiryVal') //=> {month: 4, year: 2020}
 ```
 
-This function doesn't do any validation of the month or year, use `$.payment.validateCardExpiry(month, year)` for that.
+This function doesn't perform any validation of the month or year; use `$.payment.validateCardExpiry(month, year)` for that.
 
 ## Example
 
-Look in `./example/index.html`
+Look in [`./example/index.html`](example/index.html)
 
 ## Knockout Bindings
 ``` javascript
@@ -245,13 +250,13 @@ Look in `./example/index.html`
 
 Run `cake build`
 
-## Run tests
+## Running tests
 
-Run `mocha --compilers coffee:coffee-script`
+Run `cake test`
 
 ## Autocomplete recommendations
 
-We recommend you turn autocomplete on for credit card forms, except for the CVC field. You can do this by setting the `autocomplete` attribute:
+We recommend you turn autocomplete on for credit card forms, except for the CVC field (which should never be stored). You can do this by setting the `autocomplete` attribute:
 
 ``` html
 <form autocomplete="on">
@@ -260,13 +265,13 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 </form>
 ```
 
-You should also mark up your fields using the [Autocomplete Types spec](http://wiki.whatwg.org/wiki/Autocomplete_Types). These are respected by a number of browsers, including Chrome.
+You should also mark up your fields using the [Autofill spec](https://html.spec.whatwg.org/multipage/forms.html#autofill). These are respected by a number of browsers, including Chrome.
 
-``` htmle
-<input type="text" class="cc-number" pattern="\d*" autocompletetype="cc-number" placeholder="Card number" required>
+``` html
+<input type="text" class="cc-number" pattern="\d*" autocomplete="cc-number" placeholder="Card number" required>
 ```
 
-Set `autocompletetype` to `cc-number` for credit card numbers, `cc-exp` for credit card expiry and `cc-csc` for the CVC (security code).
+Set `autocomplete` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
 
 ## Mobile recommendations
 
