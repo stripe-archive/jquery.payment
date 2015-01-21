@@ -477,12 +477,11 @@ $.payment.cardType = (num) ->
   cardFromNumber(num)?.type or null
 
 $.payment.formatCardNumber = (num) ->
+  num = num.replace(/\D/g, '')
   card = cardFromNumber(num)
   return num unless card
 
   upperLength = card.length[card.length.length - 1]
-
-  num = num.replace(/\D/g, '')
   num = num[0...upperLength]
 
   if card.format.global
