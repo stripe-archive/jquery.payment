@@ -128,7 +128,8 @@ hasTextSelected = ($target) ->
     $target.prop('selectionStart') isnt $target.prop('selectionEnd')
 
   # If some text is selected in IE
-  return true if document?.selection?.createRange?().text
+  if document?.selection?.createRange?
+    return true if document.selection.createRange().text
 
   false
 
