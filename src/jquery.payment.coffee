@@ -258,7 +258,16 @@ formatBackExpiry = (e) ->
     e.preventDefault()
     setTimeout -> $target.val(value.replace(/\d\s\/\s$/, ''))
 
-#  Restrictions
+# Format CVC
+
+reFormatCVC = (e) ->
+  setTimeout ->
+    $target = $(e.currentTarget)
+    value   = $target.val()
+    value   = value.replace(/\D/g, '')[0...4]
+    $target.val(value)
+
+# Restrictions
 
 restrictNumeric = (e) ->
   # Key event is for a browser shortcut
@@ -339,6 +348,9 @@ setCardType = (e) ->
 $.payment.fn.formatCardCVC = ->
   @payment('restrictNumeric')
   @on('keypress', restrictCVC)
+  @on('paste', reFormatCVC)
+  @on('change', reFormatCVC)
+  @on('input', reFormatCVC)
   this
 
 $.payment.fn.formatCardExpiry = ->
