@@ -198,17 +198,15 @@ We recommend you turn autocomplete on for credit card forms, except for the CVC 
 You should also mark up your fields using the [Autofill spec](https://html.spec.whatwg.org/multipage/forms.html#autofill). These are respected by a number of browsers, including Chrome.
 
 ``` html
-<input type="tel" class="cc-number" pattern="\d*" autocomplete="cc-number" placeholder="Card number" required>
+<input type="tel" class="cc-number" autocomplete="cc-number">
 ```
 
 Set `autocomplete` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
 
 ## Mobile recommendations
 
-We recommend you to use `<input type="tel">` which will cause the numeric keyboard to be displayed on mobiles:
+We recommend you to use `<input type="tel">` which will cause the numeric keyboard to be displayed on mobile devices:
 
 ``` html
 <input type="tel" class="cc-number">
 ```
-
-You may have to turn off HTML5 validation (using the `novalidate` form attribute) when using this `type`, as it won't match space formatting.
