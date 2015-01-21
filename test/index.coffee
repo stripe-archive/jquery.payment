@@ -50,6 +50,8 @@ describe 'jquery.payment', ->
 
       assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
 
+      assert($.payment.validateCardNumber('5018188000001614'), 'wing')
+
       assert($.payment.validateCardNumber('6007220000000004'), 'forbrugsforeningen')
 
       assert($.payment.validateCardNumber('5019717010103742'), 'dankort')
@@ -184,6 +186,14 @@ describe 'jquery.payment', ->
       topic = $.payment.validateCardCVC('1234', 'amex')
       assert.equal topic, true
 
+    it 'should validate a four digit number with card type wing', ->
+      topic = $.payment.validateCardCVC('1234', 'wing')
+      assert.equal topic, true
+
+    it 'should validate a three digit number with card type wing', ->
+      topic = $.payment.validateCardCVC('123', 'wing')
+      assert.equal topic, false
+
     it 'should not validate a number larger than 4 digits', ->
       topic = $.payment.validateCardCVC('12344')
       assert.equal topic, false
@@ -226,6 +236,8 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('4917300800000000'), 'visaelectron')
 
       assert.equal($.payment.cardType('6759649826438453'), 'maestro')
+
+      assert.equal($.payment.cardType('5018188000001614'), 'wing')
 
       assert.equal($.payment.cardType('6007220000000004'), 'forbrugsforeningen')
 

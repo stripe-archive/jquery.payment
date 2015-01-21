@@ -34,6 +34,7 @@ Supported card types are:
 * Maestro
 * Forbrugsforeningen
 * Dankort
+* Wing
 
 ## API
 
