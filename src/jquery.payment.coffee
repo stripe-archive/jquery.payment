@@ -189,13 +189,14 @@ formatBackCardNumber = (e) ->
   return if $target.prop('selectionStart')? and
     $target.prop('selectionStart') isnt value.length
 
-  # Remove the trailing space
+  # Remove the digit + trailing space
   if /\d\s$/.test(value)
     e.preventDefault()
     setTimeout -> $target.val(value.replace(/\d\s$/, ''))
+  # Remove digit if ends in space + digit
   else if /\s\d?$/.test(value)
     e.preventDefault()
-    setTimeout -> $target.val(value.replace(/\s\d?$/, ''))
+    setTimeout -> $target.val(value.replace(/\d$/, ''))
 
 # Format Expiry
 
@@ -253,10 +254,10 @@ formatBackExpiry = (e) ->
   return if $target.prop('selectionStart')? and
     $target.prop('selectionStart') isnt value.length
 
-  # Remove the trailing space
-  if /\s\/\s\d?$/.test(value)
+  # Remove the trailing space + last digit
+  if /\d\s\/\s$/.test(value)
     e.preventDefault()
-    setTimeout -> $target.val(value.replace(/\s\/\s\d?$/, ''))
+    setTimeout -> $target.val(value.replace(/\d\s\/\s$/, ''))
 
 #  Restrictions
 
