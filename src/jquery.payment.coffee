@@ -135,6 +135,15 @@ hasTextSelected = ($target) ->
 
 # Private
 
+# Format Numeric
+
+reFormatNumeric = (e) ->
+  setTimeout ->
+    $target = $(e.currentTarget)
+    value   = $target.val()
+    value   = value.replace(/\D/g, '')
+    $target.val(value)
+
 # Format Card Number
 
 reFormatCardNumber = (e) ->
@@ -347,7 +356,7 @@ setCardType = (e) ->
 # Formatting
 
 $.payment.fn.formatCardCVC = ->
-  @payment('restrictNumeric')
+  @on('keypress', restrictNumeric)
   @on('keypress', restrictCVC)
   @on('paste', reFormatCVC)
   @on('change', reFormatCVC)
@@ -355,7 +364,7 @@ $.payment.fn.formatCardCVC = ->
   this
 
 $.payment.fn.formatCardExpiry = ->
-  @payment('restrictNumeric')
+  @on('keypress', restrictNumeric)
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
   @on('keypress', formatForwardSlashAndSpace)
@@ -366,7 +375,7 @@ $.payment.fn.formatCardExpiry = ->
   this
 
 $.payment.fn.formatCardNumber = ->
-  @payment('restrictNumeric')
+  @on('keypress', restrictNumeric)
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
   @on('keydown', formatBackCardNumber)
@@ -381,6 +390,9 @@ $.payment.fn.formatCardNumber = ->
 
 $.payment.fn.restrictNumeric = ->
   @on('keypress', restrictNumeric)
+  @on('paste', reFormatNumeric)
+  @on('change', reFormatNumeric)
+  @on('input', reFormatNumeric)
   this
 
 # Validations
