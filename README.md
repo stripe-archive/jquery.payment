@@ -35,7 +35,7 @@ Supported card types are:
 * Forbrugsforeningen
 * Dankort
 
-(Additional card types are supported by extending the `$.payment.cards` array.)
+(Additional card types are supported by extending the [`$.payment.cards`](#paymentcards) array.)
 
 ## API
 
