@@ -260,6 +260,27 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('3530111333300000'), 'jcb')
       assert.equal($.payment.cardType('3566002020360505'), 'jcb')
 
+  describe 'Extending the card collection', ->
+    it 'should expose an array of standard card types', ->
+      cards = $.payment.cards
+      assert Array.isArray(cards)
+
+      visa = card for card in cards when card.type is 'visa'
+      assert.notEqual visa, null
+
+    it 'should support new card types', ->
+      wing = {
+        type: 'wing'
+        pattern: /^501818/
+        length: [16]
+        luhn: false
+      }
+      $.payment.cards.unshift wing
+
+      wingCard = '5018 1818 1818 1818'
+      assert.equal $.payment.cardType(wingCard), 'wing'
+      assert.equal $.payment.validateCardNumber(wingCard), true
+
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', (done) ->
       $number = $('<input type=text>').payment('formatCardNumber')

@@ -35,6 +35,8 @@ Supported card types are:
 * Forbrugsforeningen
 * Dankort
 
+(Additional card types are supported by extending the `$.payment.cards` array.)
+
 ## API
 
 ### $.fn.payment('formatCardNumber')
@@ -171,6 +173,30 @@ $('input.cc-exp').payment('cardExpiryVal') //=> {month: 4, year: 2020}
 ```
 
 This function doesn't perform any validation of the month or year; use `$.payment.validateCardExpiry(month, year)` for that.
+
+### $.payment.cards
+
+Array of objects that describe valid card types. Each object should contain the following fields:
+
+``` javascript
+{
+  // Card type, as returned by $.payment.cardType.
+  type: 'mastercard',
+  // Regex used to identify the card type. For the best experience, this should be
+  // the shortest pattern that can guarantee the card is of a particular type.
+  pattern: /^5[0-5]/,
+  // Array of valid card number lengths.
+  length: [16],
+  // Array of valid card CVC lengths.
+  cvcLength: [3],
+  // Boolean indicating whether a valid card number should satisfy the Luhn check.
+  luhn: true,
+  // Regex used to format the card number. Each match is joined with a space.
+  format: /(\d{1,4})/g
+}
+```
+
+When identifying a card type, the array is traversed in order until the card number matches a `pattern`. For this reason, patterns with higher specificity should appear towards the beginning of the array.
 
 ## Example
 
