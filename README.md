@@ -205,10 +205,8 @@ Set `autocomplete` to `cc-number` for credit card numbers and `cc-exp` for credi
 
 ## Mobile recommendations
 
-We recommend you set the `pattern` attribute which will cause the numeric keyboard to be displayed on mobiles:
+We recommend you set the `tel` type which will cause the numeric keyboard to be displayed on mobiles:
 
 ``` html
-<input class="cc-number" pattern="\d*">
+<input type="tel" class="cc-number">
 ```
-
-You may have to turn off HTML5 validation (using the `novalidate` form attribute) when using this `pattern`, as it won't match space formatting.
