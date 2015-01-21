@@ -1,11 +1,4 @@
 assert = require('assert')
-window = require('jsdom').jsdom().createWindow()
-$      = require('jquery')(window)
-global.jQuery = $
-global.window = window
-global.document = window.document
-
-require('../src/jquery.payment')
 
 describe 'jquery.payment', ->
   describe 'Validating a card number', ->
@@ -309,6 +302,7 @@ describe 'jquery.payment', ->
   describe 'formatCardExpiry', ->
     it 'should format month shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('')
 
       e = $.Event('keypress');
       e.which = 52 # '4'

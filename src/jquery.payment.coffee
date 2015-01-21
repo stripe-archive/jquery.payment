@@ -1,5 +1,4 @@
-$            = jQuery
-$.payment    = {}
+$.payment = {}
 $.payment.fn = {}
 $.fn.payment = (method, args...) ->
   $.payment.fn[method].apply(this, args)
