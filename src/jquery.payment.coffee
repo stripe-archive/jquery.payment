@@ -501,10 +501,17 @@ $.payment.formatExpiry = (expiry) ->
   sep = parts[2] || ''
   year = parts[3] || ''
 
-  if year.length > 0 || (sep.length > 0 && !(/\ \/?\ ?/.test(sep)))
+  if year.length > 0
     sep = ' / '
 
-  if mon.length == 1 and mon not in ['0', '1']
+  else if sep is ' /'
+    mon = mon.substring(0, 1)
+    sep = ''
+
+  else if mon.length == 2 or sep.length > 0
+    sep = ' / '
+
+  else if mon.length == 1 and mon not in ['0', '1']
     mon = "0#{mon}"
     sep = ' / '
 
