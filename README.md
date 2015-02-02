@@ -2,7 +2,7 @@
 
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
-For example, you can make a input act like a credit card field (with number formatting and length restriction):
+For example, you can make an input act like a credit card field (with number formatting and length restriction):
 
 ``` javascript
 $('input.cc-num').payment('formatCardNumber');
