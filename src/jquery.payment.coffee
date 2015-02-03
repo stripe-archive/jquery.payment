@@ -151,7 +151,11 @@ reFormatCardNumber = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
-    $target.val(value)
+    cursor  = $target.prop('selectionStart')
+    if cursor != null && e.type != 'change'
+      $target.prop('selectionStart', cursor)
+    else
+      $target.val(value)
 
 formatCardNumber = (e) ->
   # Only format if input is a number
@@ -214,7 +218,11 @@ reFormatExpiry = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatExpiry(value)
-    $target.val(value)
+    cursor  = $target.prop('selectionStart')
+    if cursor != null && e.type != 'change'
+      $target.prop('selectionStart', cursor)
+    else
+      $target.val(value)
 
 formatExpiry = (e) ->
   # Only format if input is a number
@@ -275,7 +283,11 @@ reFormatCVC = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = value.replace(/\D/g, '')[0...4]
-    $target.val(value)
+    cursor  = $target.prop('selectionStart')
+    if (cursor != null && e.type != 'change')
+      $target.prop('selectionStart', cursor)
+    else
+      $target.val(value)
 
 # Restrictions
 
