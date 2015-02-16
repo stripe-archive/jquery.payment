@@ -152,7 +152,9 @@ reFormatCardNumber = (e) ->
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
     cursor  = $target.prop('selectionStart')
-    if cursor != null && e.type != 'change'
+    eventBlacklist = ['change', 'input']
+
+    if cursor != null && eventBlacklist.indexOf(e.type) == -1
       $target.prop('selectionStart', cursor)
     else
       $target.val(value)
@@ -219,7 +221,9 @@ reFormatExpiry = (e) ->
     value   = $target.val()
     value   = $.payment.formatExpiry(value)
     cursor  = $target.prop('selectionStart')
-    if cursor != null && e.type != 'change'
+    eventBlacklist = ['change', 'input']
+
+    if cursor != null && eventBlacklist.indexOf(e.type) == -1
       $target.prop('selectionStart', cursor)
     else
       $target.val(value)
@@ -284,7 +288,9 @@ reFormatCVC = (e) ->
     value   = $target.val()
     value   = value.replace(/\D/g, '')[0...4]
     cursor  = $target.prop('selectionStart')
-    if (cursor != null && e.type != 'change')
+    eventBlacklist = ['change', 'input']
+
+    if cursor != null && eventBlacklist.indexOf(e.type) == -1
       $target.prop('selectionStart', cursor)
     else
       $target.val(value)
