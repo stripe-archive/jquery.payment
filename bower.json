@@ -1,6 +1,6 @@
 {
   "name": "jquery.payment",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "main": "lib/jquery.payment.js",
   "dependencies": {
     "jquery": ">=1.5"
