@@ -401,8 +401,7 @@ $.payment.fn.cardExpiryVal = ->
   $.payment.cardExpiryVal($(this).val())
 
 $.payment.cardExpiryVal = (value) ->
-  value = value.replace(/\s/g, '')
-  [month, year] = value.split('/', 2)
+  [month, year] = value.split(/[\s\/]+/, 2)
 
   # Allow for year shortcut
   if year?.length is 2 and /^\d+$/.test(year)
