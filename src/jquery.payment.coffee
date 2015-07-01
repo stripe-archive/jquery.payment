@@ -53,7 +53,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'mastercard'
-    pattern: /^5[0-5]/
+    pattern: /^(5[0-5]|2[2-7])/
     format: defaultFormat
     length: [16]
     cvcLength: [3]
