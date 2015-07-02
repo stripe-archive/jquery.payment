@@ -55,6 +55,7 @@ describe 'jquery.payment', ->
 
       assert($.payment.validateCardNumber('5555555555554444'), 'mastercard')
       assert($.payment.validateCardNumber('5454545454545454'), 'mastercard')
+      assert($.payment.validateCardNumber('2221000002222221'), 'mastercard')
 
       assert($.payment.validateCardNumber('378282246310005'), 'amex')
       assert($.payment.validateCardNumber('371449635398431'), 'amex')
@@ -199,6 +200,10 @@ describe 'jquery.payment', ->
       topic = $.payment.cardType '4012121212121212'
       assert.equal topic, 'visa'
 
+    it 'that begins with 2 should return MasterCard', ->
+      topic = $.payment.cardType '2221000002222221'
+      assert.equal topic, 'mastercard'
+
     it 'that begins with 5 should return MasterCard', ->
       topic = $.payment.cardType '5555555555554444'
       assert.equal topic, 'mastercard'
@@ -232,6 +237,7 @@ describe 'jquery.payment', ->
 
       assert.equal($.payment.cardType('5555555555554444'), 'mastercard')
       assert.equal($.payment.cardType('5454545454545454'), 'mastercard')
+      assert.equal($.payment.cardType('2221000002222221'), 'mastercard')
 
       assert.equal($.payment.cardType('378282246310005'), 'amex')
       assert.equal($.payment.cardType('371449635398431'), 'amex')
