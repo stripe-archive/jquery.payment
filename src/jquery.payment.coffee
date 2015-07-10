@@ -138,9 +138,12 @@ hasTextSelected = ($target) ->
 # Safe Val
 
 safeVal = (value, $target) ->
-  cursor  = $target.prop('selectionStart')
+  try
+    cursor = $target.prop('selectionStart')
+  catch error
+    cursor = null
   $target.val(value)
-  if cursor != null
+  if cursor != null && $target.is(":focus")
     $target.prop('selectionStart', cursor)
     $target.prop('selectionEnd', cursor)
 
