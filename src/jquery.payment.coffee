@@ -135,6 +135,15 @@ hasTextSelected = ($target) ->
 
 # Private
 
+# Safe Val
+
+safeVal = (value, $target) ->
+  cursor  = $target.prop('selectionStart')
+  $target.val(value)
+  if cursor != null
+    $target.prop('selectionStart', cursor)
+    $target.prop('selectionEnd', cursor)
+
 # Format Numeric
 
 reFormatNumeric = (e) ->
@@ -142,7 +151,7 @@ reFormatNumeric = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = value.replace(/\D/g, '')
-    $target.val(value)
+    safeVal(value, $target)
 
 # Format Card Number
 
@@ -151,13 +160,7 @@ reFormatCardNumber = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
-    cursor  = $target.prop('selectionStart')
-    eventBlacklist = ['change', 'input']
-
-    if cursor != null && eventBlacklist.indexOf(e.type) == -1
-      $target.prop('selectionStart', cursor)
-    else
-      $target.val(value)
+    safeVal(value, $target)
 
 formatCardNumber = (e) ->
   # Only format if input is a number
@@ -220,13 +223,7 @@ reFormatExpiry = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatExpiry(value)
-    cursor  = $target.prop('selectionStart')
-    eventBlacklist = ['change', 'input']
-
-    if cursor != null && eventBlacklist.indexOf(e.type) == -1
-      $target.prop('selectionStart', cursor)
-    else
-      $target.val(value)
+    safeVal(value, $target)
 
 formatExpiry = (e) ->
   # Only format if input is a number
@@ -287,13 +284,7 @@ reFormatCVC = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = value.replace(/\D/g, '')[0...4]
-    cursor  = $target.prop('selectionStart')
-    eventBlacklist = ['change', 'input']
-
-    if cursor != null && eventBlacklist.indexOf(e.type) == -1
-      $target.prop('selectionStart', cursor)
-    else
-      $target.val(value)
+    safeVal(value, $target)
 
 # Restrictions
 
