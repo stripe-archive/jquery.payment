@@ -1,3 +1,4 @@
+$ = window.jQuery or window.Zepto or window.$
 $.payment = {}
 $.payment.fn = {}
 $.fn.payment = (method, args...) ->
