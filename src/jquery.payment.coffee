@@ -135,6 +135,18 @@ hasTextSelected = ($target) ->
 
 # Private
 
+# Safe Val
+
+safeVal = (value, $target) ->
+  try
+    cursor = $target.prop('selectionStart')
+  catch error
+    cursor = null
+  $target.val(value)
+  if cursor != null && $target.is(":focus")
+    $target.prop('selectionStart', cursor)
+    $target.prop('selectionEnd', cursor)
+
 # Format Numeric
 
 reFormatNumeric = (e) ->
@@ -142,7 +154,7 @@ reFormatNumeric = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = value.replace(/\D/g, '')
-    $target.val(value)
+    safeVal(value, $target)
 
 # Format Card Number
 
@@ -151,7 +163,7 @@ reFormatCardNumber = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatCardNumber(value)
-    $target.val(value)
+    safeVal(value, $target)
 
 formatCardNumber = (e) ->
   # Only format if input is a number
@@ -214,7 +226,7 @@ reFormatExpiry = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = $.payment.formatExpiry(value)
-    $target.val(value)
+    safeVal(value, $target)
 
 formatExpiry = (e) ->
   # Only format if input is a number
@@ -275,7 +287,7 @@ reFormatCVC = (e) ->
     $target = $(e.currentTarget)
     value   = $target.val()
     value   = value.replace(/\D/g, '')[0...4]
-    $target.val(value)
+    safeVal(value, $target)
 
 # Restrictions
 
