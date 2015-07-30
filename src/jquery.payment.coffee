@@ -143,8 +143,10 @@ safeVal = (value, $target) ->
     cursor = $target.prop('selectionStart')
   catch error
     cursor = null
+  last = $target.val()
   $target.val(value)
   if cursor != null && $target.is(":focus")
+    cursor = value.length if cursor is last.length
     $target.prop('selectionStart', cursor)
     $target.prop('selectionEnd', cursor)
 
@@ -290,6 +292,24 @@ reFormatCVC = (e) ->
     value   = value.replace(/\D/g, '')[0...4]
     safeVal(value, $target)
 
+# IME handlers
+# When an IME is active, a 'keydown' event is dispatched with
+# VK_PROCESSKEY(229) code. We take note and then simulate the
+# keypress on the 'keyup' event, which has the actual keycode
+# associated with it.
+
+handleIMEKeydown = (e) ->
+  if e.which is 229
+    $(e.currentTarget).data('ime', true)
+
+handleIMEKeyup = (e) ->
+  $target = $(e.currentTarget)
+  key = String.fromCharCode(e.which)
+  if $target.data('ime') is true
+    $target.data('ime', false)
+    $target.val($target.val() + key)
+    $target.trigger('input')
+
 # Restrictions
 
 restrictNumeric = (e) ->
@@ -369,6 +389,8 @@ setCardType = (e) ->
 # Formatting
 
 $.payment.fn.formatCardCVC = ->
+  @on('keydown', handleIMEKeydown)
+  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictCVC)
   @on('paste', reFormatCVC)
@@ -377,6 +399,8 @@ $.payment.fn.formatCardCVC = ->
   this
 
 $.payment.fn.formatCardExpiry = ->
+  @on('keydown', handleIMEKeydown)
+  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
@@ -388,6 +412,8 @@ $.payment.fn.formatCardExpiry = ->
   this
 
 $.payment.fn.formatCardNumber = ->
+  @on('keydown', handleIMEKeydown)
+  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
@@ -402,6 +428,8 @@ $.payment.fn.formatCardNumber = ->
 # Restrictions
 
 $.payment.fn.restrictNumeric = ->
+  @on('keydown', handleIMEKeydown)
+  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('paste', reFormatNumeric)
   @on('change', reFormatNumeric)
