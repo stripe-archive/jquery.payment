@@ -143,8 +143,10 @@ safeVal = (value, $target) ->
     cursor = $target.prop('selectionStart')
   catch error
     cursor = null
+  last = $target.val()
   $target.val(value)
   if cursor != null && $target.is(":focus")
+    cursor = value.length if cursor is last.length
     $target.prop('selectionStart', cursor)
     $target.prop('selectionEnd', cursor)
 
