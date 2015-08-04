@@ -305,6 +305,17 @@ describe 'jquery.payment', ->
         assert.equal $number.val(), '3782 8'
         done()
 
+    it 'should format full-width cc number correctly', (done) ->
+      $number = $('<input type=text>').payment('formatCardNumber')
+      $number.val('\uff14\uff12\uff14\uff12')
+
+      e = $.Event('input');
+      $number.trigger(e)
+
+      setTimeout ->
+        assert.equal $number.val(), '4242'
+        done()
+
   describe 'formatCardExpiry', ->
     it 'should format month shorthand correctly', (done) ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
@@ -340,4 +351,15 @@ describe 'jquery.payment', ->
 
       setTimeout ->
         assert.equal $expiry.val(), '1'
+        done()
+
+    it 'should format full-width expiry correctly', (done) ->
+      $number = $('<input type=text>').payment('formatCardExpiry')
+      $number.val('\uff10\uff18\uff11\uff15')
+
+      e = $.Event('input');
+      $number.trigger(e)
+
+      setTimeout ->
+        assert.equal $number.val(), '08 / 15'
         done()

@@ -150,12 +150,29 @@ safeVal = (value, $target) ->
     $target.prop('selectionStart', cursor)
     $target.prop('selectionEnd', cursor)
 
+# Replace Full-Width Chars
+
+replaceFullWidthChars = (str = '') ->
+  fullWidth = '\uff10\uff11\uff12\uff13\uff14\uff15\uff16\uff17\uff18\uff19'
+  halfWidth = '0123456789'
+
+  value = ''
+  chars = str.split('')
+
+  for char in chars
+    idx = fullWidth.indexOf(char)
+    char = halfWidth[idx] if idx > -1
+    value += char
+
+  value
+
 # Format Numeric
 
 reFormatNumeric = (e) ->
   setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
+    value   = replaceFullWidthChars(value)
     value   = value.replace(/\D/g, '')
     safeVal(value, $target)
 
@@ -165,6 +182,7 @@ reFormatCardNumber = (e) ->
   setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
+    value   = replaceFullWidthChars(value)
     value   = $.payment.formatCardNumber(value)
     safeVal(value, $target)
 
@@ -228,6 +246,7 @@ reFormatExpiry = (e) ->
   setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
+    value   = replaceFullWidthChars(value)
     value   = $.payment.formatExpiry(value)
     safeVal(value, $target)
 
@@ -289,26 +308,9 @@ reFormatCVC = (e) ->
   setTimeout ->
     $target = $(e.currentTarget)
     value   = $target.val()
+    value   = replaceFullWidthChars(value)
     value   = value.replace(/\D/g, '')[0...4]
     safeVal(value, $target)
-
-# IME handlers
-# When an IME is active, a 'keydown' event is dispatched with
-# VK_PROCESSKEY(229) code. We take note and then simulate the
-# keypress on the 'keyup' event, which has the actual keycode
-# associated with it.
-
-handleIMEKeydown = (e) ->
-  if e.which is 229
-    $(e.currentTarget).data('ime', true)
-
-handleIMEKeyup = (e) ->
-  $target = $(e.currentTarget)
-  key = String.fromCharCode(e.which)
-  if $target.data('ime') is true
-    $target.data('ime', false)
-    $target.val($target.val() + key)
-    $target.trigger('input')
 
 # Restrictions
 
@@ -389,8 +391,6 @@ setCardType = (e) ->
 # Formatting
 
 $.payment.fn.formatCardCVC = ->
-  @on('keydown', handleIMEKeydown)
-  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictCVC)
   @on('paste', reFormatCVC)
@@ -399,8 +399,6 @@ $.payment.fn.formatCardCVC = ->
   this
 
 $.payment.fn.formatCardExpiry = ->
-  @on('keydown', handleIMEKeydown)
-  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictExpiry)
   @on('keypress', formatExpiry)
@@ -412,8 +410,6 @@ $.payment.fn.formatCardExpiry = ->
   this
 
 $.payment.fn.formatCardNumber = ->
-  @on('keydown', handleIMEKeydown)
-  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('keypress', restrictCardNumber)
   @on('keypress', formatCardNumber)
@@ -428,8 +424,6 @@ $.payment.fn.formatCardNumber = ->
 # Restrictions
 
 $.payment.fn.restrictNumeric = ->
-  @on('keydown', handleIMEKeydown)
-  @on('keyup', handleIMEKeyup)
   @on('keypress', restrictNumeric)
   @on('paste', reFormatNumeric)
   @on('change', reFormatNumeric)
