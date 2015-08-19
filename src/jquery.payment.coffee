@@ -159,10 +159,11 @@ replaceFullWidthChars = (str = '') ->
   value = ''
   chars = str.split('')
 
-  for char in chars
-    idx = fullWidth.indexOf(char)
-    char = halfWidth[idx] if idx > -1
-    value += char
+  # Avoid using reserved word `char`
+  for chr in chars
+    idx = fullWidth.indexOf(chr)
+    chr = halfWidth[idx] if idx > -1
+    value += chr
 
   value
 
