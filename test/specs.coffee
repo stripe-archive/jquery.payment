@@ -285,7 +285,7 @@ describe 'jquery.payment', ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('4242')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 52 # '4'
       $number.trigger(e)
 
@@ -297,7 +297,7 @@ describe 'jquery.payment', ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('3782')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 56 # '8'
       $number.trigger(e)
 
@@ -309,7 +309,7 @@ describe 'jquery.payment', ->
       $number = $('<input type=text>').payment('formatCardNumber')
       $number.val('\uff14\uff12\uff14\uff12')
 
-      e = $.Event('input');
+      e = $.Event('input')
       $number.trigger(e)
 
       setTimeout ->
@@ -321,7 +321,7 @@ describe 'jquery.payment', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 52 # '4'
       $expiry.trigger(e)
 
@@ -333,7 +333,7 @@ describe 'jquery.payment', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 47 # '/'
       $expiry.trigger(e)
 
@@ -345,7 +345,7 @@ describe 'jquery.payment', ->
       $expiry = $('<input type=text>').payment('formatCardExpiry')
       $expiry.val('1')
 
-      e = $.Event('keypress');
+      e = $.Event('keypress')
       e.which = 100 # 'd'
       $expiry.trigger(e)
 
@@ -357,7 +357,7 @@ describe 'jquery.payment', ->
       $number = $('<input type=text>').payment('formatCardExpiry')
       $number.val('\uff10\uff18\uff11\uff15')
 
-      e = $.Event('input');
+      e = $.Event('input')
       $number.trigger(e)
 
       setTimeout ->
