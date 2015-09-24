@@ -224,6 +224,7 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('4917300800000000'), 'visaelectron')
 
       assert.equal($.payment.cardType('6759649826438453'), 'maestro')
+      assert.equal($.payment.cardType('6220180012340012345'), 'maestro')
 
       assert.equal($.payment.cardType('6007220000000004'), 'forbrugsforeningen')
 
@@ -270,7 +271,7 @@ describe 'jquery.payment', ->
     it 'should support new card types', ->
       wing = {
         type: 'wing'
-        patterns: ['501818']
+        patterns: [501818]
         length: [16]
         luhn: false
       }
