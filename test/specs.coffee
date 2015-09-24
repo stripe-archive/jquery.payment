@@ -270,7 +270,7 @@ describe 'jquery.payment', ->
     it 'should support new card types', ->
       wing = {
         type: 'wing'
-        pattern: /^501818/
+        patterns: ['501818']
         length: [16]
         luhn: false
       }
