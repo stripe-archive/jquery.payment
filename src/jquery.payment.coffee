@@ -113,8 +113,8 @@ cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
   for card in cards
     for pattern in card.patterns
-      r = new RegExp("^#{pattern}")
-      return card if r.exec(num)?
+      p = pattern + ''
+      return card if num.substr(0, p.length) == p
 
 cardFromType = (type) ->
   return card for card in cards when card.type is type
