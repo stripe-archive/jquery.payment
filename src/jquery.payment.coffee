@@ -265,7 +265,15 @@ formatExpiry = (e) ->
 
   else if /^\d\d$/.test(val)
     e.preventDefault()
-    setTimeout -> $target.val("#{val} / ")
+    setTimeout ->
+      # Split for months where we have the second digit > 2 (past 12) and turn
+      # that into (m1)(m2) => 0(m1) / (m2)
+      m1 = parseInt(val[0], 10)
+      m2 = parseInt(val[1], 10)
+      if m2 > 2
+        $target.val("0#{m1} / #{m2}")
+      else
+        $target.val("#{val} / ")
 
 formatForwardExpiry = (e) ->
   digit = String.fromCharCode(e.which)

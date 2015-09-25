@@ -354,12 +354,24 @@ describe 'jquery.payment', ->
         done()
 
     it 'should format full-width expiry correctly', (done) ->
-      $number = $('<input type=text>').payment('formatCardExpiry')
-      $number.val('\uff10\uff18\uff11\uff15')
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('\uff10\uff18\uff11\uff15')
 
       e = $.Event('input')
-      $number.trigger(e)
+      $expiry.trigger(e)
 
       setTimeout ->
-        assert.equal $number.val(), '08 / 15'
+        assert.equal $expiry.val(), '08 / 15'
+        done()
+
+    it 'should format month expiry correctly when val is past 12', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('1')
+
+      e = $.Event('keypress')
+      e.which = 52 # '4'
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '01 / 4'
         done()
