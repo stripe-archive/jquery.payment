@@ -13,7 +13,9 @@ $.payment.cards = cards = [
   # specific patterns than their credit-card equivalents.
   {
     type: 'visaelectron'
-    pattern: /^4(026|17500|405|508|844|91[37])/
+    patterns: [
+      4026, 417500, 4405, 4508, 4844, 4913, 4917
+    ]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -21,7 +23,9 @@ $.payment.cards = cards = [
   }
   {
     type: 'maestro'
-    pattern: /^(5(018|0[23]|[68])|6(39|7))/
+    patterns: [
+      5018, 502, 503, 56, 58, 639, 6220, 67
+    ]
     format: defaultFormat
     length: [12..19]
     cvcLength: [3]
@@ -29,7 +33,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'forbrugsforeningen'
-    pattern: /^600/
+    patterns: [600]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -37,7 +41,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'dankort'
-    pattern: /^5019/
+    patterns: [5019]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -46,7 +50,7 @@ $.payment.cards = cards = [
   # Credit cards
   {
     type: 'visa'
-    pattern: /^4/
+    patterns: [4]
     format: defaultFormat
     length: [13, 16]
     cvcLength: [3]
@@ -54,7 +58,10 @@ $.payment.cards = cards = [
   }
   {
     type: 'mastercard'
-    pattern: /^(5[1-5]|2[2-7])/
+    patterns: [
+      51, 52, 53, 54, 55,
+      22, 23, 24, 25, 26, 27
+    ]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -62,7 +69,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'amex'
-    pattern: /^3[47]/
+    patterns: [34, 37]
     format: /(\d{1,4})(\d{1,6})?(\d{1,5})?/
     length: [15]
     cvcLength: [3..4]
@@ -70,7 +77,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'dinersclub'
-    pattern: /^3[0689]/
+    patterns: [30, 36, 38, 39]
     format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/
     length: [14]
     cvcLength: [3]
@@ -78,7 +85,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'discover'
-    pattern: /^6([045]|22)/
+    patterns: [60, 64, 65, 622]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -86,7 +93,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'unionpay'
-    pattern: /^(62|88)/
+    patterns: [62, 88]
     format: defaultFormat
     length: [16..19]
     cvcLength: [3]
@@ -94,7 +101,7 @@ $.payment.cards = cards = [
   }
   {
     type: 'jcb'
-    pattern: /^35/
+    patterns: [35]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
@@ -104,7 +111,10 @@ $.payment.cards = cards = [
 
 cardFromNumber = (num) ->
   num = (num + '').replace(/\D/g, '')
-  return card for card in cards when card.pattern.test(num)
+  for card in cards
+    for pattern in card.patterns
+      p = pattern + ''
+      return card if num.substr(0, p.length) == p
 
 cardFromType = (type) ->
   return card for card in cards when card.type is type
