@@ -15,7 +15,18 @@ runSequential = (cmds, status = 0) ->
   runExternal.apply null, cmd
 
 task 'build', 'Build lib/ from src/', ->
-  runExternal 'coffee', ['-c', '-o', 'lib', 'src']
+  runExternal 'coffee',
+    ['-c', '-o', 'lib', 'src'],
+    -> invoke 'minify'
+
+task 'minify', 'Minify lib/', ->
+  runExternal 'uglifyjs', [
+    'lib/jquery.payment.js',
+    '--mangle',
+    '--compress',
+    '--output',
+    'lib/jquery.payment.min.js'
+  ]
 
 task 'watch', 'Watch src/ for changes', ->
   runExternal 'coffee', ['-w', '-c', '-o', 'lib', 'src']
