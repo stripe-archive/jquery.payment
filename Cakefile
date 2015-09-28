@@ -15,7 +15,9 @@ runSequential = (cmds, status = 0) ->
   runExternal(cmd)
 
 task 'build', 'Build lib/ from src/', ->
-  runExternal 'coffee', ['-c', '-o', 'lib', 'src']
+  runExternal 'coffee',
+    ['-c', '-o', 'lib', 'src'],
+    -> invoke 'minify'
 
 task 'minify', 'Minify lib/', ->
   runExternal 'uglifyjs', [
