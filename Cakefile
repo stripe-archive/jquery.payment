@@ -12,10 +12,19 @@ runSequential = (cmds, status = 0) ->
   process.exit status if status or !cmds.length
   cmd = cmds.shift()
   cmd.push (status) -> runSequential cmds, status
-  runExternal.apply null, cmd
+  runExternal(cmd)
 
 task 'build', 'Build lib/ from src/', ->
   runExternal 'coffee', ['-c', '-o', 'lib', 'src']
+
+task 'minify', 'Minify lib/', ->
+  runExternal 'uglifyjs', [
+    'lib/jquery.payment.js',
+    '--mangle',
+    '--compress',
+    '--output',
+    'lib/jquery.payment.min.js'
+  ]
 
 task 'watch', 'Watch src/ for changes', ->
   runExternal 'coffee', ['-w', '-c', '-o', 'lib', 'src']
