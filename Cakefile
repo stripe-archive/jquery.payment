@@ -12,7 +12,7 @@ runSequential = (cmds, status = 0) ->
   process.exit status if status or !cmds.length
   cmd = cmds.shift()
   cmd.push (status) -> runSequential cmds, status
-  runExternal(cmd)
+  runExternal.apply null, cmd
 
 task 'build', 'Build lib/ from src/', ->
   runExternal 'coffee',
