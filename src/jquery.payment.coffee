@@ -181,7 +181,8 @@ replaceFullWidthChars = (str = '') ->
 
 reFormatNumeric = (e) ->
   setTimeout ->
-    $target = $(e.currentTarget)
+    currentTarget = e.currentTarget || e.target
+    $target = $(currentTarget)
     value   = $target.val()
     value   = replaceFullWidthChars(value)
     value   = value.replace(/\D/g, '')
@@ -191,7 +192,8 @@ reFormatNumeric = (e) ->
 
 reFormatCardNumber = (e) ->
   setTimeout ->
-    $target = $(e.currentTarget)
+    currentTarget = e.currentTarget || e.target
+    $target = $(currentTarget)
     value   = $target.val()
     value   = replaceFullWidthChars(value)
     value   = $.payment.formatCardNumber(value)
@@ -255,7 +257,8 @@ formatBackCardNumber = (e) ->
 
 reFormatExpiry = (e) ->
   setTimeout ->
-    $target = $(e.currentTarget)
+    currentTarget = e.currentTarget || e.target
+    $target = $(currentTarget)
     value   = $target.val()
     value   = replaceFullWidthChars(value)
     value   = $.payment.formatExpiry(value)
