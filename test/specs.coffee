@@ -376,3 +376,15 @@ describe 'jquery.payment', ->
       setTimeout ->
         assert.equal $expiry.val(), '01 / 4'
         done()
+
+    it 'should format month expiry correctly when val is past 05', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('0')
+
+      e = $.Event('keypress')
+      e.which = 53 # '5'
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '05 / '
+        done()

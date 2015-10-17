@@ -281,7 +281,10 @@ formatExpiry = (e) ->
       m1 = parseInt(val[0], 10)
       m2 = parseInt(val[1], 10)
       if m2 > 2
-        $target.val("0#{m1} / #{m2}")
+        if m1 is 0
+          $target.val("#{m1}#{m2} / ")
+        else
+          $target.val("0#{m1} / #{m2}")
       else
         $target.val("#{val} / ")
 
