@@ -1,4 +1,4 @@
-window = require("jsdom").jsdom().parentWindow;
+window = require('jsdom').jsdom().parentWindow;
 global.window = window
 global.document = window.document
 global.getComputedStyle = window.getComputedStyle
