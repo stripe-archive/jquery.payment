@@ -386,5 +386,5 @@ describe 'jquery.payment', ->
       $expiry.trigger(e)
 
       setTimeout ->
-        assert.equal $expiry.val(), '05 / '
+        assert.equal $expiry.val(), '5 / '
         done()
