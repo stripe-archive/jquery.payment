@@ -582,4 +582,4 @@ do (plugin = paymentPlugin, window) ->
     module.exports = plugin require('jquery')
   else
     # Browser globals
-    plugin window.jQuery or window.$
+    plugin window.jQuery or window.Zepto or window.$
