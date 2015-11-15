@@ -1,4 +1,6 @@
-plugin = ($) ->
+paymentPlugin = ($) ->
+  "use strict"
+
   $.payment = {}
   $.payment.fn = {}
   $.fn.payment = (method, args...) ->
@@ -571,16 +573,13 @@ plugin = ($) ->
     return mon + sep + year
 
 # UMD
-do (plugin) ->
-  if typeof define is 'function' and define.amd
+do (plugin = paymentPlugin, window) ->
+  if typeof define is 'function' and define.amd?
     # AMD. Register as an anonymous module.
-    define(['jquery'], plugin);
-  else if typeof module is 'object' && module.exports
+    define ['jquery'], plugin
+  else if typeof module is 'object' and module.exports?
     # CommonJS
-    module.exports = (root, jQuery) ->
-      unless jQuery?
-        jQuery = if window? then require('jquery') else require('jquery')(root)
-      plugin(jQuery)
+    module.exports = plugin require('jquery')
   else
     # Browser globals
-    plugin(jQuery)
+    plugin window.jQuery or window.$
