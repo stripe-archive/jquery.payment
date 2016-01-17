@@ -1,4 +1,4 @@
-window = require('jsdom').jsdom().createWindow()
+window = require('jsdom').jsdom().defaultView
 global.window = window
 global.document = window.document
 global.getComputedStyle = window.getComputedStyle

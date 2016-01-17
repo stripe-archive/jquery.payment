@@ -23,7 +23,7 @@
   "devDependencies": {
     "cake": "~0.1",
     "coffee-script": "~1.7",
-    "jsdom": "~0.10",
+    "jsdom": "~7.2",
     "mocha": "~1.18",
     "uglify-js": "~2.4.24",
     "zeptojs": "~1.1"
