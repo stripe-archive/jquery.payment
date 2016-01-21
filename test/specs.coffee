@@ -284,7 +284,7 @@ describe 'jquery.payment', ->
   describe 'formatCardNumber', ->
     it 'should format cc number correctly', (done) ->
       $number = $('<input type=text>').payment('formatCardNumber')
-      $number.val('4242')
+      $number.val('4242').prop('selectionStart', 4)
 
       e = $.Event('keypress')
       e.which = 52 # '4'
@@ -296,7 +296,7 @@ describe 'jquery.payment', ->
 
     it 'should format amex cc number correctly', (done) ->
       $number = $('<input type=text>').payment('formatCardNumber')
-      $number.val('3782')
+      $number.val('3782').prop('selectionStart', 4)
 
       e = $.Event('keypress')
       e.which = 56 # '8'
