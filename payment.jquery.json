@@ -24,6 +24,6 @@
   "bugs": "https://github.com/stripe/jquery.payment/issues",
   "demo": "http://stripe.github.io/jquery.payment/example",
   "dependencies": {
-    "jquery": ">=1.5"
+    "jquery": ">=1.7"
   }
 }

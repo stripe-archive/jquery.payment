@@ -18,7 +18,7 @@
     "test": "cake test"
   },
   "dependencies": {
-    "jquery": ">=1.5"
+    "jquery": ">=1.7"
   },
   "devDependencies": {
     "cake": "~0.1",
