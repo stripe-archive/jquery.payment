@@ -167,7 +167,7 @@ $.payment.cardType('4242 4242 4242 4242'); //=> 'visa'
 Parses a credit card expiry in the form of MM/YYYY, returning an object containing the `month` and `year`. Shorthand years, such as `13` are also supported (and converted into the longhand, e.g. `2013`).
 
 ``` javascript
-$.payment.cardExpiryVal('03 / 2025'); //=> {month: 3: year: 2025}
+$.payment.cardExpiryVal('03 / 2025'); //=> {month: 3, year: 2025}
 $.payment.cardExpiryVal('05 / 04'); //=> {month: 5, year: 2004}
 $('input.cc-exp').payment('cardExpiryVal') //=> {month: 4, year: 2020}
 ```
