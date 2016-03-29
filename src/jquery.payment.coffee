@@ -76,6 +76,14 @@ $.payment.cards = cards = [
     luhn: true
   }
   {
+    type: 'hipercard'
+    patterns: [38, 60]
+    format: /(\d{1,4})(\d{1,4})?(\d{1,2})?(\d{1,3})? | (\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})? | (\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,7})?/
+    length: [13, 16, 19]
+    cvcLength: [3]
+    luhn: false
+  }
+  {
     type: 'dinersclub'
     patterns: [30, 36, 38, 39]
     format: /(\d{1,4})(\d{1,6})?(\d{1,4})?/
@@ -138,14 +146,6 @@ $.payment.cards = cards = [
     length: [16]
     cvcLength: [3]
     luhn: true
-  }
-  {
-    type: 'hipercard'
-    patterns: [38, 60]
-    format: /(\d{1,4})(\d{1,4})?(\d{1,2})?(\d{1,3})? | (\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,4})? | (\d{1,4})(\d{1,4})?(\d{1,4})?(\d{1,7})?/
-    length: [13, 16, 19]
-    cvcLength: [3]
-    luhn: false
   }
 ]
 
