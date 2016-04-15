@@ -182,9 +182,11 @@ Array of objects that describe valid card types. Each object should contain the 
 {
   // Card type, as returned by $.payment.cardType.
   type: 'mastercard',
-  // Regex used to identify the card type. For the best experience, this should be
-  // the shortest pattern that can guarantee the card is of a particular type.
-  pattern: /^5[0-5]/,
+  // Array of prefixes used to identify the card type.
+  patterns: [
+      51, 52, 53, 54, 55,
+      22, 23, 24, 25, 26, 27
+  ],
   // Array of valid card number lengths.
   length: [16],
   // Array of valid card CVC lengths.
@@ -196,7 +198,7 @@ Array of objects that describe valid card types. Each object should contain the 
 }
 ```
 
-When identifying a card type, the array is traversed in order until the card number matches a `pattern`. For this reason, patterns with higher specificity should appear towards the beginning of the array.
+When identifying a card type, the array is traversed in order until the card number matches a prefix in `patterns`. For this reason, patterns with higher specificity should appear towards the beginning of the array.
 
 ## Example
 
