@@ -24,7 +24,7 @@ $.payment.cards = cards = [
   {
     type: 'maestro'
     patterns: [
-      5018, 502, 503, 56, 58, 639, 6220, 67
+      5018, 502, 503, 506, 56, 58, 639, 6220, 67
     ]
     format: defaultFormat
     length: [12..19]
