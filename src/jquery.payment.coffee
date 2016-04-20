@@ -1,9 +1,11 @@
 $ = window.jQuery or window.Zepto or window.$
 $.payment = {}
 $.payment.fn = {}
+$.payment.options =
+  shortYear: false
+
 $.fn.payment = (method, args...) ->
   $.payment.fn[method].apply(this, args)
-
 # Utils
 
 defaultFormat = /(\d{1,4})/g
@@ -403,7 +405,9 @@ restrictExpiry = (e) ->
   value = $target.val() + digit
   value = value.replace(/\D/g, '')
 
-  return false if value.length > 6
+  expLen = if $.payment.options.shortYear then 4 else 6
+
+  return false if value.length > expLen
 
 restrictCVC = (e) ->
   $target = $(e.currentTarget)
