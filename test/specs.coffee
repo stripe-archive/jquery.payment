@@ -77,6 +77,9 @@ describe 'jquery.payment', ->
       assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
       assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
 
+      assert($.payment.validateCardNumber('6363689826438453'), 'elo')
+      assert($.payment.validateCardNumber('6362979826438453'), 'elo')
+
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
       topic = $.payment.validateCardCVC ''
@@ -212,6 +215,10 @@ describe 'jquery.payment', ->
       topic = $.payment.cardType '3412121212121212'
       assert.equal topic, 'amex'
 
+    it 'that begins with 457393 should return Elo', ->
+      topic = Payment.fns.cardType '4573931212121212'
+      assert.equal topic, 'elo'
+
     it 'that is not numbers should return null', ->
       topic = $.payment.cardType 'aoeu'
       assert.equal topic, null
@@ -259,6 +266,9 @@ describe 'jquery.payment', ->
 
       assert.equal($.payment.cardType('3530111333300000'), 'jcb')
       assert.equal($.payment.cardType('3566002020360505'), 'jcb')
+
+      assert.equal($.payment.cardType('6363689826438453'), 'elo')
+      assert.equal($.payment.cardType('6362979826438453'), 'elo')
 
   describe 'Extending the card collection', ->
     it 'should expose an array of standard card types', ->
