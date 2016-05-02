@@ -219,6 +219,14 @@ describe 'jquery.payment', ->
       topic = $.payment.cardType '4573931212121212'
       assert.equal topic, 'elo'
 
+    it 'that begins with 431274 should return Elo', ->
+      topic = $.payment.cardType '4312740000000000'
+      assert.equal topic, 'elo'
+
+    it 'that begins with 650031 should return Elo', ->
+      topic = $.payment.cardType '6500310000000000'
+      assert.equal topic, 'elo'
+
     it 'that is not numbers should return null', ->
       topic = $.payment.cardType 'aoeu'
       assert.equal topic, null
@@ -268,7 +276,6 @@ describe 'jquery.payment', ->
       assert.equal($.payment.cardType('3566002020360505'), 'jcb')
 
       assert.equal($.payment.cardType('6363689826438453'), 'elo')
-      assert.equal($.payment.cardType('6362979826438453'), 'elo')
 
   describe 'Extending the card collection', ->
     it 'should expose an array of standard card types', ->
