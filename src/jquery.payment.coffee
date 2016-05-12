@@ -9,8 +9,20 @@ $.fn.payment = (method, args...) ->
 defaultFormat = /(\d{1,4})/g
 
 $.payment.cards = cards = [
-  # Debit cards must come first, since they have more
-  # specific patterns than their credit-card equivalents.
+  # Specifics patterns must be analysed first or it 
+  # will generate false positives
+  {
+    type: 'elo'
+    patterns: [
+      4011, 4312, 4389, 4514, 4573, 4576,
+      5041, 5066, 5067, 509,
+      6277, 6362, 6363, 650, 6516, 6550
+    ]
+    format: defaultFormat
+    length: [16]
+    cvcLength: [3]
+    luhn: true
+  }
   {
     type: 'visaelectron'
     patterns: [
@@ -48,18 +60,6 @@ $.payment.cards = cards = [
     luhn: true
   }
   # Credit cards
-  {
-    type: 'elo'
-    patterns: [
-      4011, 4312, 4389, 4514, 4573, 4576,
-      5041, 5066, 5067, 509,
-      6277, 6362, 6363, 650, 6516, 6550
-    ]
-    format: defaultFormat
-    length: [16]
-    cvcLength: [3]
-    luhn: true
-  }
   {
     type: 'visa'
     patterns: [4]
