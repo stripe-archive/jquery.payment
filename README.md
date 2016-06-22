@@ -226,22 +226,17 @@ Run `cake test`
 
 ## Autocomplete recommendations
 
-We recommend you turn autocomplete on for credit card forms, except for the CVC field (which should never be stored). You can do this by setting the `autocomplete` attribute:
+We recommend you turn autocomplete on for credit card forms, *except for the CVC field (which should never be stored)*. You can do this by setting the `autocomplete` attribute:
 
 ``` html
 <form autocomplete="on">
-  <input class="cc-number">
+  <input class="cc-number" autocomplete="cc-number">
+  <input class="cc-exp" autocomplete="cc-exp">
   <input class="cc-cvc" autocomplete="off">
 </form>
 ```
 
-You should also mark up your fields using the [Autofill spec](https://html.spec.whatwg.org/multipage/forms.html#autofill). These are respected by a number of browsers, including Chrome.
-
-``` html
-<input type="tel" class="cc-number" autocomplete="cc-number">
-```
-
-Set `autocomplete` to `cc-number` for credit card numbers and `cc-exp` for credit card expiry.
+You should mark up your fields using the [Autofill spec](https://html.spec.whatwg.org/multipage/forms.html#autofill). These are respected by a number of browsers, including Chrome, Safari, Firefox.
 
 ## Mobile recommendations
 
