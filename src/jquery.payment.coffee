@@ -9,14 +9,30 @@ $.fn.payment = (method, args...) ->
 defaultFormat = /(\d{1,4})/g
 
 $.payment.cards = cards = [
-  # Specifics patterns must be analysed first or it 
-  # will generate false positives
+  # Elo has a lot of bins scattered throughout bin-space. Some are one-off, and
+  # some are large ranges. We include the full one-offs here and some range
+  # prefixes.
   {
     type: 'elo'
     patterns: [
-      4011, 4312, 4389, 4514, 4573, 4576,
-      5041, 5066, 5067, 509,
-      6277, 6362, 6363, 650, 6516, 6550
+      401178,
+      401179,
+      431274,
+      438935,
+      451416,
+      457393,
+      457631,
+      457632,
+      504175,
+      506699,
+      5067,
+      509,
+      627780,
+      636297,
+      636368,
+      650,
+      6516,
+      6550,
     ]
     format: defaultFormat
     length: [16]
