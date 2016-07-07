@@ -203,6 +203,11 @@ describe 'jquery.payment', ->
       topic = $.payment.cardType '4012121212121212'
       assert.equal topic, 'visa'
 
+    # This was a regression from an overly-aggressive Elo prefix.
+    it 'should return Visa that begins with 4514', ->
+      topic = $.payment.cardType '4514'
+      assert.equal topic, 'visa'
+
     it 'that begins with 2 should return MasterCard', ->
       topic = $.payment.cardType '2221000002222221'
       assert.equal topic, 'mastercard'
