@@ -1,3 +1,5 @@
+<!-- NOTE: Please do not use issues for feature requests. Please read the README and contributing guidelines before filing issues -->
+
 ## Expected behavior
 
 Describe the expected behavior. For new credit card BIN numbers, please include supporting references.
