@@ -39,8 +39,6 @@ describe 'jquery.payment', ->
       assert.equal topic, false
 
     it 'should validate for all card types', ->
-      assert($.payment.validateCardNumber('4917300800000000'), 'visaelectron')
-
       assert($.payment.validateCardNumber('6759649826438453'), 'maestro')
 
       assert($.payment.validateCardNumber('6007220000000004'), 'forbrugsforeningen')
@@ -241,8 +239,6 @@ describe 'jquery.payment', ->
       assert.equal topic, null
 
     it 'should return correct type for all test numbers', ->
-      assert.equal($.payment.cardType('4917300800000000'), 'visaelectron')
-
       assert.equal($.payment.cardType('6759649826438453'), 'maestro')
       assert.equal($.payment.cardType('6220180012340012345'), 'maestro')
 
