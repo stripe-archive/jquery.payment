@@ -1,6 +1,6 @@
 {
   "name": "payment",
-  "version": "1.4.4",
+  "version": "2.0.0",
   "title": "jQuery.payment",
   "description": "A general purpose library for building credit card forms, validating inputs and formatting numbers.",
   "keywords": [
