@@ -40,7 +40,6 @@ Supported card types are:
 * Discover
 * UnionPay
 * JCB
-* Visa Electron
 * Maestro
 * Forbrugsforeningen
 * Dankort
@@ -160,7 +159,6 @@ Returns a card type. Either:
 * `discover`
 * `unionpay`
 * `jcb`
-* `visaelectron`
 * `maestro`
 * `forbrugsforeningen`
 * `dankort`
