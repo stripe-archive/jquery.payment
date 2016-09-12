@@ -12,6 +12,7 @@ $.payment.cards = cards = [
   # Elo has a lot of bins scattered throughout bin-space. Some are one-off, and
   # some are large ranges. We include the full one-offs here and some range
   # prefixes.
+    
   {
     type: 'elo'
     patterns: [
@@ -25,15 +26,36 @@ $.payment.cards = cards = [
       457632,
       504175,
       506699,
-      5067,
-      509,
+      506770,
+      506771,
+      506772,
+      506773,
+      506774,
+      506775,
+      506776,
+      506777,
+      506778,
       627780,
       636297,
       636368,
-      650,
-      6516,
-      6550,
-    ]
+      650485,
+      650486,
+      650487,
+      650488,
+      651652,
+      651653,
+      651654,
+      655000,
+      655001,
+      50670,
+      50671,
+      50672,
+      50673,
+      50674,
+      50675,
+      50676,
+      509
+  ]
     format: defaultFormat
     length: [16]
     cvcLength: [3]
