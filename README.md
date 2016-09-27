@@ -43,7 +43,6 @@ Supported card types are:
 * Maestro
 * Forbrugsforeningen
 * Dankort
-* Elo
 
 (Additional card types are supported by extending the [`$.payment.cards`](#paymentcards) array.)
 
@@ -162,7 +161,6 @@ Returns a card type. Either:
 * `maestro`
 * `forbrugsforeningen`
 * `dankort`
-* `elo`
 
 The function will return `null` if the card type can't be determined.
 

@@ -9,36 +9,6 @@ $.fn.payment = (method, args...) ->
 defaultFormat = /(\d{1,4})/g
 
 $.payment.cards = cards = [
-  # Elo has a lot of bins scattered throughout bin-space. Some are one-off, and
-  # some are large ranges. We include the full one-offs here and some range
-  # prefixes.
-  {
-    type: 'elo'
-    patterns: [
-      401178,
-      401179,
-      431274,
-      438935,
-      451416,
-      457393,
-      457631,
-      457632,
-      504175,
-      506699,
-      5067,
-      509,
-      627780,
-      636297,
-      636368,
-      650,
-      6516,
-      6550,
-    ]
-    format: defaultFormat
-    length: [16]
-    cvcLength: [3]
-    luhn: true
-  }
   {
     type: 'maestro'
     patterns: [
