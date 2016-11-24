@@ -236,8 +236,8 @@ You should mark up your fields using the [Autofill spec](https://html.spec.whatw
 
 ## Mobile recommendations
 
-We recommend you to use `<input type="tel">` which will cause the numeric keyboard to be displayed on mobile devices:
+We recommend you to use `<input type="text" pattern="[0-9]*">` which will cause the numeric keyboard to be displayed on mobile devices:
 
 ``` html
-<input type="tel" class="cc-number">
+<input type="text" pattern="[0-9]*" class="cc-number">
 ```
