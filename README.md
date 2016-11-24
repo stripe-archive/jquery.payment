@@ -212,6 +212,76 @@ When identifying a card type, the array is traversed in order until the card num
 
 Look in [`./example/index.html`](example/index.html)
 
+## Knockout Bindings
+``` javascript
+ ko.bindingHandlers.payment = {
+        init: function(element, valueAccessor, allBindingsAccessor) {
+
+            var mask = valueAccessor();
+
+            var observable = mask.value;
+            var format = mask.format;
+
+            if (ko.isObservable(observable)) {
+
+                $(element).on('focusout change', function() {
+
+                        observable($(element).val());
+
+                });
+            }
+           $(element).payment(format);
+
+
+        },
+        update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var mask = valueAccessor();
+            var observable = mask.value;
+            if (ko.isObservable(observable)) {
+                var valuetoWrite = observable();
+                $(element).val(valuetoWrite);
+            }
+        }
+    }
+```
+## Durandal Bindings
+``` javascript
+ composition.addBindingHandler('payment', {
+        init: function(element, valueAccessor, allBindingsAccessor) {
+
+            var mask = valueAccessor();
+
+            var observable = mask.value;
+            var format = mask.format;
+
+            if (ko.isObservable(observable)) {
+
+                $(element).on('focusout change', function() {
+
+                        observable($(element).val());
+
+                });
+            }
+           $(element).payment(format);
+
+
+        },
+        update: function(element, valueAccessor, allBindings, viewModel, bindingContext) {
+            var mask = valueAccessor();
+            var observable = mask.value;
+            if (ko.isObservable(observable)) {
+                var valuetoWrite = observable();
+                $(element).val(valuetoWrite);
+            }
+        }
+    })
+```
+## Example Usage
+``` html
+<input type="text" class="cc-exp" placeholder="MM/YYYY" data-bind="payment:{value:YourObservable ,format:'formatCardExpiry'}"
+```
+
+
 ## Building
 
 Run `cake build`
