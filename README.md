@@ -29,6 +29,12 @@ if (!valid) {
 }
 ```
 
+## Installation
+
+```bash
+npm install --save jquery.payment
+```
+
 You can find a full [demo here](http://stripe.github.io/jquery.payment/example).
 
 Supported card types are:
