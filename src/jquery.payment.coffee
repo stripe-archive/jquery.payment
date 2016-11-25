@@ -334,6 +334,12 @@ formatBackExpiry = (e) ->
     e.preventDefault()
     setTimeout -> $target.val(value.replace(/\d\s\/\s$/, ''))
 
+maxCVCLength = () ->
+  maxLength = 0
+  for card in cards
+    maxLength = Math.max(maxLength, Math.max.apply(null, card.cvcLength))
+  maxLength
+
 # Format CVC
 
 reFormatCVC = (e) ->
@@ -341,7 +347,7 @@ reFormatCVC = (e) ->
   setTimeout ->
     value   = $target.val()
     value   = replaceFullWidthChars(value)
-    value   = value.replace(/\D/g, '')[0...4]
+    value   = value.replace(/\D/g, '')[0...maxCVCLength()]
     safeVal(value, $target)
 
 # Restrictions
@@ -401,7 +407,7 @@ restrictCVC = (e) ->
   return if hasTextSelected($target)
 
   val     = $target.val() + digit
-  val.length <= 4
+  val.length <= maxCVCLength()
 
 setCardType = (e) ->
   $target  = $(e.currentTarget)
