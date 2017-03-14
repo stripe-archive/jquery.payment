@@ -569,6 +569,8 @@ $.payment.formatExpiry = (expiry) ->
 
   if year.length > 0
     sep = ' / '
+    if year.length > 2 and year[0] == '0'
+      year = "00#{year}".slice(-2)
 
   else if sep is ' /'
     mon = mon.substring(0, 1)

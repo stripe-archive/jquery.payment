@@ -384,3 +384,25 @@ describe 'jquery.payment', ->
       setTimeout ->
         assert.equal $expiry.val(), '05 / '
         done()
+
+    it 'should format year expiry correctly for 0 followed by 2 digits', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('06018')
+
+      e = $.Event('input')
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '06 / 18'
+        done()
+
+    it 'should format year expiry correctly for 0 followed by 3 digits', (done) ->
+      $expiry = $('<input type=text>').payment('formatCardExpiry')
+      $expiry.val('050017')
+
+      e = $.Event('input')
+      $expiry.trigger(e)
+
+      setTimeout ->
+        assert.equal $expiry.val(), '05 / 17'
+        done()
