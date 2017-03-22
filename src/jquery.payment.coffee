@@ -423,43 +423,43 @@ setCardType = (e) ->
 # Formatting
 
 $.payment.fn.formatCardCVC = ->
-  @on('keypress', restrictNumeric)
-  @on('keypress', restrictCVC)
-  @on('paste', reFormatCVC)
-  @on('change', reFormatCVC)
-  @on('input', reFormatCVC)
+  @on('keypress.payment', restrictNumeric)
+  @on('keypress.payment', restrictCVC)
+  @on('paste.payment', reFormatCVC)
+  @on('change.payment', reFormatCVC)
+  @on('input.payment', reFormatCVC)
   this
 
 $.payment.fn.formatCardExpiry = ->
-  @on('keypress', restrictNumeric)
-  @on('keypress', restrictExpiry)
-  @on('keypress', formatExpiry)
-  @on('keypress', formatForwardSlashAndSpace)
-  @on('keypress', formatForwardExpiry)
-  @on('keydown',  formatBackExpiry)
-  @on('change', reFormatExpiry)
-  @on('input', reFormatExpiry)
+  @on('keypress.payment', restrictNumeric)
+  @on('keypress.payment', restrictExpiry)
+  @on('keypress.payment', formatExpiry)
+  @on('keypress.payment', formatForwardSlashAndSpace)
+  @on('keypress.payment', formatForwardExpiry)
+  @on('keydown.payment',  formatBackExpiry)
+  @on('change.payment', reFormatExpiry)
+  @on('input.payment', reFormatExpiry)
   this
 
 $.payment.fn.formatCardNumber = ->
-  @on('keypress', restrictNumeric)
-  @on('keypress', restrictCardNumber)
-  @on('keypress', formatCardNumber)
-  @on('keydown', formatBackCardNumber)
-  @on('keyup', setCardType)
-  @on('paste', reFormatCardNumber)
-  @on('change', reFormatCardNumber)
-  @on('input', reFormatCardNumber)
-  @on('input', setCardType)
+  @on('keypress.payment', restrictNumeric)
+  @on('keypress.payment', restrictCardNumber)
+  @on('keypress.payment', formatCardNumber)
+  @on('keydown.payment', formatBackCardNumber)
+  @on('keyup.payment', setCardType)
+  @on('paste.payment', reFormatCardNumber)
+  @on('change.payment', reFormatCardNumber)
+  @on('input.payment', reFormatCardNumber)
+  @on('input.payment', setCardType)
   this
 
 # Restrictions
 
 $.payment.fn.restrictNumeric = ->
-  @on('keypress', restrictNumeric)
-  @on('paste', reFormatNumeric)
-  @on('change', reFormatNumeric)
-  @on('input', reFormatNumeric)
+  @on('keypress.payment', restrictNumeric)
+  @on('paste.payment', reFormatNumeric)
+  @on('change.payment', reFormatNumeric)
+  @on('input.payment', reFormatNumeric)
   this
 
 # Validations
