@@ -1,5 +1,4 @@
-# jQuery.payment [![Build Status](https://travis-ci.org/stripe/jquery.payment.svg?branch=master)](https://travis-ci.org/stripe/jquery.payment)
-
+# jQuery.payment [![Build Status](https://travis-ci.org/stripe/jquery.payment.svg?branch=master)](https://travis-ci.org/stripe/jquery.payment) [![GitHub version](https://badge.fury.io/gh/stripe%2Fjquery.payment.svg)](https://badge.fury.io/gh/stripe%2Fjquery.payment)
 A general purpose library for building credit card forms, validating inputs and formatting numbers.
 
 ## Project status
