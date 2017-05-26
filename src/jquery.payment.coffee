@@ -95,6 +95,14 @@ $.payment.cards = cards = [
     cvcLength: [3]
     luhn: true
   }
+  {
+    type: 'uzcard'
+    patterns: [8600]
+    format: defaultFormat
+    length: [16]
+    cvcLength: [0]
+    luhn: true
+  }
 ]
 
 cardFromNumber = (num) ->

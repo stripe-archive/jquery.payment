@@ -75,6 +75,8 @@ describe 'jquery.payment', ->
       assert($.payment.validateCardNumber('3530111333300000'), 'jcb')
       assert($.payment.validateCardNumber('3566002020360505'), 'jcb')
 
+      assert($.payment.validateCardNumber('8600111100000001'), 'uzcard')
+
   describe 'Validating a CVC', ->
     it 'should fail if is empty', ->
       topic = $.payment.validateCardCVC ''
@@ -255,6 +257,8 @@ describe 'jquery.payment', ->
 
       assert.equal($.payment.cardType('3530111333300000'), 'jcb')
       assert.equal($.payment.cardType('3566002020360505'), 'jcb')
+
+      assert.equal($.payment.cardType('8600111100000001'), 'uzcard')
 
   describe 'Extending the card collection', ->
     it 'should expose an array of standard card types', ->
