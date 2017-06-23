@@ -94,7 +94,15 @@ $.payment.cards = cards = [
     length: [16]
     cvcLength: [3]
     luhn: true
-  }
+  },
+  {
+		type: 'troy',
+		patterns: [9792, 979289],
+		format: defaultFormat,
+		length: [16],
+		cvcLength: [3],
+		luhn: true
+	}
 ]
 
 cardFromNumber = (num) ->
