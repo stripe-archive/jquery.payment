@@ -4,11 +4,9 @@ A general purpose library for building credit card forms, validating inputs and 
 
 ## Project status
 
-We consider `jQuery.payment` to be feature complete. We continue to use it in production, and we will happily accept bug reports and pull requests fixing those bugs, but we will not be adding new features or modifying the project for new frameworks or build systems.
+**jquery.payment is deprecated. We recommend that you use either [Stripe Checkout](https://stripe.com/docs/checkout) or [Stripe Elements](https://stripe.com/docs/elements) to collect card information.**
 
-### Why?
-
-The library was born in a different age, and we think it has served tremendously, but it is fundamentally doing too many things. Complecting DOM element manipulation, input masking, card formatting, and cursor positioning makes it difficult to test and modify. An ideal version of this library would separate the independent components and make the internal logic functional.
+We will patch jquery.payment for major critical/security issues, but we won't be adding new features.
 
 ## Usage
 
